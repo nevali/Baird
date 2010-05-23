@@ -1,0 +1,119 @@
+/*
+ * window.tv object WebIDL
+ * Mo McRoberts <mo.mcroberts@nexgenta.com> - 2010-05-23
+ */
+
+module tv {
+	// Implemented by the window object of conforming implementations.
+	interface TVWindow {
+		readonly attribute TV tv;
+	};
+
+	interface TV {
+		readonly attribute TunerCollection tuner;
+		readonly attribute Guide guide;
+	};
+
+	interface TunerCollection {
+		getter TVTuner item(in unsigned long index);
+		readonly attribute unsigned long length;
+	};
+
+	interface Tuner implements events::EventTarget {
+		// if the tuner is disabled for some reason, both of these will
+		// return null.
+		readonly attribute Location? location;
+		readonly attribute Channel? channel;
+		// shorthand for channel.station.programmes[0] and channel.station.programmes[1]
+		readonly attribute Programme? currentProgramme;
+		readonly attribute Programme? nextProgramme;
+	};
+
+	interface Guide {
+		getter Channel item(in unsigned long channelId);
+		readonly attribute unsigned long length;
+		// station is an implementation-defined URL. e.g.,
+		// a dvb:/// URL, or a TVA serviceId
+		Channel channelForStation(in dom::DOMString station);
+		Channel channelForStation(in URI station);
+		Channel channelForStation(in Station station);
+	};
+	
+	interface URI {
+		stringifier attribute dom::DOMString href;
+
+		// pieces of the URI, per the generic URI syntax
+		attribute dom::DOMString hash;
+		attribute dom::DOMString host;
+		attribute dom::DOMString hostname;
+		attribute dom::DOMString pathname;
+		attribute dom::DOMString port;
+		attribute dom::DOMString protocol;
+		attribute dom::DOMString search;
+	};
+	
+	interface Location : URI {
+		// Note that in this specification, assign() and replace() will
+		// effectively be equivalent, as no history mechanism is afforded.
+		void assign(in dom::DOMString uri);
+		void replace(in dom::DOMString uri);
+	};
+
+	interface Channel implements events::EventTarget {
+		// numeric identifier of the channel; usually user-exposed
+		readonly attribute unsigned long id;
+		// implementation-defined URI for the channel (note: distinct
+		// from station URL) - e.g., identifies frequency and
+		// transport
+		readonly attribute URI location;
+		// null if the channel is not tuned to any station
+		readonly attribute Station? station;
+	};
+
+	interface Station {
+		// implementation-defined URI for the station, e.g., a
+		// dvb:/// URL
+		readonly attribute URI location;
+		// TV-Anytime serviceId, if available
+		readonly attribute dom::DOMString? serviceId;
+		// Display name
+		stringifier readonly attribute dom::DOMString name;
+		// Transmitter name
+		readonly attribute dom::DOMString? transmitter;
+		// Programme information
+		readonly attribute ProgrammeCollection programmes;
+	};
+	
+	interface ProgrammeCollection {
+		// index = 0 means “on now”, index = 1 “on next”, index = -1 “on last”
+		getter Programme item(in long index);
+		Programme? programmeAtTime(dom::DOMTimeStamp when);
+	};
+	
+	interface Programme {
+		// Identifier of the programme — e.g., a CRID
+		readonly attribute URI uri;
+		// Series identifier, if this information is available
+		readonly attribute URI? series;
+		readonly attribute dom::DOMTimeStamp startTime;
+		readonly attribute dom::DOMTimeStamp endTime;
+		// Duration in seconds
+		readonly attribute unsigned long duration;
+		stringifier readonly attribute dom::DOMString title;
+		readonly attribute dom::DocumentFragment description;
+		readonly attribute AdvisoryCollection? advisories;
+		// XXX namespace for the Image object? it specified by W3C anywhere?
+		readonly attribute Image? depiction;
+		readonly attribute Station station;
+	};
+	
+	interface AdvisoryCollection {
+		getter Advisory item(in unsigned long index);
+		readonly attribute unsigned long length;
+	};
+	
+	interface Advisory {
+		stringifier readonly attribute dom::DOMString description;
+		readonly attribute unsigned minimumAge;
+	};
+};
