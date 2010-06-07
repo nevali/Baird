@@ -1,0 +1,158 @@
+html {
+	padding: 0 20px 0 20px;
+	margin: 0;
+	background: #444;
+	min-height: 100%;
+}
+body {
+	margin: 0;
+	background: #fff;
+	padding: 0 16px 0 16px;
+	height: 100%;
+}
+
+#surround {
+	background: #efefef;
+	padding: 16px;
+}
+
+#footer {
+	clear: both;
+	margin-top: 1em;
+	border-top: solid #ddd 1px;
+}
+#footer p {
+	color: #666;
+	font-size: 85%;
+	padding: 1em;
+	margin: 0;
+}
+
+body.default h1 {
+	display: block;
+	height: 160px;
+	background: #000 url('logo.png') 32px 50% no-repeat;
+	text-indent: -11000em;
+	margin: 0;
+	-moz-border-radius-topleft: 6px;
+	-webkit-border-top-left-radius: 6px;
+	-moz-border-radius-topright: 6px;
+	-webkit-border-top-right-radius: 6px;
+}
+
+body.draft h1, body.ns h1 {
+	background: #000;
+	color: #fff;
+	-moz-border-radius-topleft: 6px;
+	-webkit-border-top-left-radius: 6px;
+	-moz-border-radius-topright: 6px;
+	-webkit-border-top-right-radius: 6px;
+	margin: 0;
+	padding: 16px;
+}
+
+a:link, a:visited {
+	color: #700;
+	text-decoration: none;
+	font-weight: bold;
+}
+a:hover, a:active {
+	text-decoration: underline;
+}
+#contents {
+	background: #444;
+	border-bottom: solid #222 1px;
+	margin: 0;
+	display: block;
+}
+p#contents {
+	line-height: 2em;
+	padding: 0 1em 0 1em; 
+}
+#contents li {
+	display: inline;
+	line-height: 2em;
+}
+#contents a:link, #contents a:visited {
+	color: #efefef;
+	font-weight: normal;
+	height: 2em;
+	color: #ccc;
+}
+#contents a:hover, #contents a:active {
+	color: #fff;
+	text-decoration: underline;
+}
+
+.section {
+	padding: 1em;
+	background: #fff;
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	margin: 16px 0 16px 0;
+}
+.section h2 {
+	margin: 0 0 0.75em 0;
+	color: #444;
+}
+
+#contents li {
+	margin: 0;
+	padding: 0.75em;
+	list-style: none;
+}
+
+.section p {
+	margin: 1em;
+}
+
+.section p.internal-nav {
+	font-size: 93%;
+	color: #888;
+	padding-left: 0;
+	margin-left: 0;
+}
+
+.section dt {
+	font-size: 108%;
+}
+.section dd {
+	border-left: solid #ccc 1px;
+}
+
+.section li {
+	margin: 1em;
+}
+
+pre {
+	overflow: auto;
+	background: #d0d0d0;
+	padding: 1em;
+	margin: 1em 4em 1em 4em;
+}
+
+code {
+	color: #007;
+}
+
+.optional {
+	font-style: italic;
+}
+.optional:before {
+	content: '[';
+}
+.optional:after {
+	content: ']';
+}
+
+table.refs {
+	border: none;
+}
+table.refs td, table.refs th {
+	padding: 1em;
+	border: none;
+}
+
+ol.preface li {
+	list-style-type: lower-roman;
+}

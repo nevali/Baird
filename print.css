@@ -1,0 +1,6 @@
+.no-print {
+	display: none;
+}
+ol.preface li {
+	list-style-type: lower-roman;
+}

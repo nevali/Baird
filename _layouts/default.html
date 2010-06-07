@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+		<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.7.0/build/reset/reset-min.css" />
+		<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.7.0/build/base/base-min.css" />
+		<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.7.0/build/fonts/fonts-min.css" />
+		<link rel="stylesheet" type="text/css" href="/Baird/screen.css" media="screen" />
+		<link rel="stylesheet" type="text/css" href="/Baird/print.css" media="print" />
+		<title>Project Baird: {{ page.title }}</title>
+	</head>
+	<body class="default">
+		<div id="surround">
+			<h1>Project Baird: {{ page.title }}</h1>
+			<ul id="contents" class="no-print">
+				<li><a href="/Baird/">Introduction</a></li>
+				<li><a href="/Baird/aims/">Aims</a></li>
+				<li><a href="/Baird/specs/">Specifications</a></li>
+			</ul>
+			<div class="section">
+				{{ content }}
+			</div>
+		</div>
+		<div id="footer">
+			<p>Copyright © 2009-2010. Dèanta ann an Alba.</p>
+		</div>
+		<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-9096696-3");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+	</body>
+</html>
