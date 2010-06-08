@@ -8,17 +8,19 @@
 		<base href="http://projectbaird.com/">
 		<link rel="stylesheet" type="text/css" href="/screen.css" media="screen" />
 		<link rel="stylesheet" type="text/css" href="/print.css" media="print" />
-		<title>Project Baird: {{ page.title }}</title>
+		<title>{{ page.title }} &bull; Project Baird</title>
 	</head>
 	<body class="default">
 		<div id="surround">
-			<h1>Project Baird: {{ page.title }}</h1>
+			<h1>Project Baird</h1>
 			<ul id="contents" class="no-print">
 				<li><a href="/">Introduction</a></li>
 				<li><a href="/aims/">Aims</a></li>
 				<li><a href="/specs/">Specifications</a></li>
+				<li><a href="/getting-involved/">Getting Involved</a></li>
 			</ul>
 			<div class="section">
+				<h2>{{ page.title }}</h2>
 				{{ content }}
 			</div>
 		</div>

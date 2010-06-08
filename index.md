@@ -1,9 +1,7 @@
 ---
-title: Project Baird
+title: Welcome to Project Baird
 layout: default
 ---
-
-## Project Baird
 
 Project Baird is a [collaborative effort](http://github.com/nexgenta/Baird/)
 to create a set of open-ended, device-agnostic, platform-neutral,
