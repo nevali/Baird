@@ -18,7 +18,7 @@ Baird repository.
 2. [Service manifests](http://wiki.github.com/nexgenta/Baird/service-manifests): a mechanism for a collection of related Atom feeds to be bundled together
 3. [Web application support for TV tuners](http://wiki.github.com/nexgenta/Baird/javascript-support-for-tuners)
 4. [Device profiles](http://wiki.github.com/nexgenta/Baird/device-profiles): tailoring content to different classes of device (e.g., mobile, handheld, full HD)
-5. Content feeds: describing both linear and on-demand primary and secondary content to devices
+5. [Content feeds](http://wiki.github.com/nexgenta/Baird/content-feeds): describing both linear and on-demand primary and secondary content to devices
 6. [Metadata services](http://wiki.github.com/nexgenta/Baird/programmes-ontology-resolver): providing rich metadata about broadcast programming to devices
 7. [Recommendations and sharing across the social graph](http://wiki.github.com/nexgenta/Baird/social-graph)
 8. Dynamic EPG allocation: integrating linear IP-delivered content and over-the-air broadcasts into a single programme guide
