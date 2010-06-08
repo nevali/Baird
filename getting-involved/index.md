@@ -11,7 +11,7 @@ all you need is a (free) GitHub account. Feel free to add comments or make
 additions and amendments to what’s there.
 
 Once the specifications themselves begin to be drafted, they will be placed in
-the repository itself (which this website points to). Anybody can use <code>git</code>
+[the repository itself](http://github.com/nexgenta/Baird/) (which this website points to). Anybody can use <code>git</code>
 to clone the repository — collaborators can commit directly to it, but anybody
 else can fork the project and send a “Pull request” to alert us to the fact
 that you have made changes which you think should be integrated into the

@@ -3,7 +3,7 @@ title: Welcome to Project Baird
 layout: default
 ---
 
-Project Baird is a [collaborative effort](http://github.com/nexgenta/Baird/)
+Project Baird is a [collaborative effort](/getting-involved/)
 to create a set of open-ended, device-agnostic, platform-neutral,
 cross-broadcaster specifications for delivering different kinds of content
 to digital TV devices across the Internet.
