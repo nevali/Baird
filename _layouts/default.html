@@ -5,17 +5,18 @@
 		<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.7.0/build/reset/reset-min.css" />
 		<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.7.0/build/base/base-min.css" />
 		<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.7.0/build/fonts/fonts-min.css" />
-		<link rel="stylesheet" type="text/css" href="/Baird/screen.css" media="screen" />
-		<link rel="stylesheet" type="text/css" href="/Baird/print.css" media="print" />
+		<base href="http://projectbaird.com/">
+		<link rel="stylesheet" type="text/css" href="/screen.css" media="screen" />
+		<link rel="stylesheet" type="text/css" href="/print.css" media="print" />
 		<title>Project Baird: {{ page.title }}</title>
 	</head>
 	<body class="default">
 		<div id="surround">
 			<h1>Project Baird: {{ page.title }}</h1>
 			<ul id="contents" class="no-print">
-				<li><a href="/Baird/">Introduction</a></li>
-				<li><a href="/Baird/aims/">Aims</a></li>
-				<li><a href="/Baird/specs/">Specifications</a></li>
+				<li><a href="/">Introduction</a></li>
+				<li><a href="/aims/">Aims</a></li>
+				<li><a href="/specs/">Specifications</a></li>
 			</ul>
 			<div class="section">
 				{{ content }}
