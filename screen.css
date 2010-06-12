@@ -124,6 +124,10 @@ p#contents {
 	margin: 1em;
 }
 
+.section h4 {
+	color: #444;
+}
+
 pre {
 	overflow: auto;
 	background: #d0d0d0;
@@ -133,6 +137,13 @@ pre {
 
 code {
 	color: #007;
+}
+
+blockquote {
+	margin: 1em;
+	padding: 0 0 0 0.5em;
+	border-left: solid #eee 4px;
+	color: #666;
 }
 
 .optional {
@@ -156,3 +167,4 @@ table.refs td, table.refs th {
 ol.preface li {
 	list-style-type: lower-roman;
 }
+
