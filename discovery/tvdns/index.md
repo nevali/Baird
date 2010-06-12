@@ -100,6 +100,8 @@ Replace:
 
 <blockquote>Devices must lookup SRV records on the inital FQDN that the stream is located and not the resultng domain afer CNAME resoluton.</blockquote>
 
+with:
+
 <blockquote>Devices must perform DNS queries for SRV records on the initial FQDN specified in the stream URL, even if that FQDN is known to be a CNAME, or where initiating streaming from that URL results in a response temporarily redirecting the client to an alternative URL.</blockquote>
 
 #### Technical Specification → Implementation → Application discovery
