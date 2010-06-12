@@ -13,4 +13,4 @@ Early drafts and notes can be found on the [GitHub Wiki](http://wiki.github.com/
 
 1. [TVDNS Specification](/discovery/tvdns/) — r01 — 2010-06-12
 2. [Explanatory note regarding service discovery on a local network](/discovery/bonjour/)
-3. Manual service subscriptions (see [wiki pages](http://projectbaird.com/discovery/subscriptions/))
+3. Manual service subscriptions (see [wiki pages](http://wiki.github.com/nexgenta/Baird/manual-service-subscription))
