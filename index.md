@@ -14,15 +14,19 @@ Baird repository.
 
 ### Focus areas
 
-1. [Service discovery](http://wiki.github.com/nexgenta/Baird/tvdns): how devices can automatically locate services relating to over-the-air broadcasts, and how users can easily subscribe to new (IP-only) services.
-2. [Service manifests](http://wiki.github.com/nexgenta/Baird/service-manifests): a mechanism for a collection of related Atom feeds to be bundled together
+1. [Service discovery](discovery): how devices can automatically locate services relating to over-the-air broadcasts, and how users can easily subscribe to new (IP-only) services.
+	* [TVDNS](discovery/tvdns/) - allowing automatic discovery of broadcasters' IP-delivered services relating over-the-air broadcasts
+	* Advertising and locating IP-delivered services on a local network with [Bonjour](discovery/bonjour/)
+	* [Subscribing](discovery/subscriptions/) to services manually (i.e., user-initiated subscriptions)
+2. <strong>IP-delivered services</strong>
+	* [Content feeds](http://wiki.github.com/nexgenta/Baird/content-feeds): describing both linear and on-demand primary and secondary content to devices
+	* [Service manifests](http://wiki.github.com/nexgenta/Baird/service-manifests): a mechanism for a collection of related Atom feeds to be bundled together
+	* [URI resolver](http://wiki.github.com/nexgenta/Baird/programmes-ontology-resolver): resolving a broadcast URI to a canonical URL
+	* [Recommendations and sharing across the social graph](http://wiki.github.com/nexgenta/Baird/social-graph)
+	* [Remote control and introspection](http://wiki.github.com/nexgenta/Baird/ip-remote-control)
 3. [Web application support for TV tuners](http://wiki.github.com/nexgenta/Baird/javascript-support-for-tuners)
 4. [Device profiles](http://wiki.github.com/nexgenta/Baird/device-profiles): tailoring content to different classes of device (e.g., mobile, handheld, full HD)
-5. [Content feeds](http://wiki.github.com/nexgenta/Baird/content-feeds): describing both linear and on-demand primary and secondary content to devices
-6. [Metadata services](http://wiki.github.com/nexgenta/Baird/programmes-ontology-resolver): providing rich metadata about broadcast programming to devices
-7. [Recommendations and sharing across the social graph](http://wiki.github.com/nexgenta/Baird/social-graph)
 8. Dynamic EPG allocation: integrating linear IP-delivered content and over-the-air broadcasts into a single programme guide
-9. [Device advertisements and remote control over the local network](http://wiki.github.com/nexgenta/Baird/ip-remote-control)
 
 ### Key standards and related projects
 
