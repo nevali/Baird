@@ -36,7 +36,7 @@ indicating that the availability window has already passed.
 
 9. [Indicate on-demand availability to the user](http://emberapp.com/nevali/collections/nxtv-stb-mock-ups/nevali:epg-viewing-programme-details/)
 
-Notes:
+### Notes
 
 1. Broadcaster prerequisites:
 	* TVDNS domains for the services it broadcasts are configured and registered with the
@@ -48,3 +48,4 @@ attribute and link relation extensions
 3. See [the device profiles](http://wiki.github.com/nexgenta/Baird/device-profiles)
 for information on anticipated content type support on different devices
 4. See [Atom Link Extensions](http://tools.ietf.org/html/draft-snell-atompub-link-extensions-06) for information on the <code>le:media</code> attribute.
+5. Media queries are defined by the Atom Link Extensions specification to match those specified [by CSS3](http://www.w3.org/TR/css3-mediaqueries/)

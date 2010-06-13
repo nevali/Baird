@@ -18,7 +18,7 @@ request header according to the data format required
 
 5. [Present the data to the user](http://emberapp.com/nevali/collections/nxtv-stb-mock-ups/nevali:details/)
 
-Notes:
+### Notes
 
 1. Broadcaster prerequisites:
 	* TVDNS domains for the services it broadcasts are configured and registered with the
