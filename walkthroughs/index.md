@@ -4,7 +4,7 @@ layout: default
 ---
 
 This section contains process walkthroughs: step-by-step recipes for how to
-accomplish different kinds of things with the different parts of Project Baird.
+accomplish different kinds of things with the various parts of Project Baird.
 
 To aid in readability, none of these walkthroughs describe the caching procedures
 which would ordinary take place — they assume a clean slate.
