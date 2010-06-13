@@ -23,7 +23,7 @@ or some platform-specific URI (e.g., a <code>dvb://</code> URL).
 upon Atom’s parsing rules)
 
 7. Filter those <code>atom:link</code> elements matching the above by their <code>type</code>
-(based upon those content types supported by the device) and
+(based upon those content types supported by the device), <code>le:media</code> (if present) and
 <code>baird:dtend</code> attributes, removing any which have <code>type</code>
 values indicating unsupported content or <code>baird:dtend</code> values
 indicating that the availability window has already passed.
@@ -47,3 +47,4 @@ Notes:
 attribute and link relation extensions
 3. See [the device profiles](http://wiki.github.com/nexgenta/Baird/device-profiles)
 for information on anticipated content type support on different devices
+4. See [Atom Link Extensions](http://tools.ietf.org/html/draft-snell-atompub-link-extensions-06) for information on the <code>le:media</code> attribute.
