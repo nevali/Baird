@@ -14,7 +14,7 @@ which would ordinary take place — they assume a clean slate.
 * [Determining whether a programme is or will be available for on-demand viewing](alternate-on-demand/)
 * [Collating a list of all services provided by an over-the-air broadcaster](service-manifests/)
 * Locating a stream on a companion device for a programme being delivered over-the-air
-* Locating MHEG and HTML applications related to programmes
+* [Locating MHEG and HTML applications related to programmes](locating-interactive-apps/)
 * Locating alternate views/streams related to programmes
 
 This list is a work-in-progress; it will be expanded over time as specifications are finalised.
