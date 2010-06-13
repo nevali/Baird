@@ -17,17 +17,20 @@ over-the-air service can be added immediately to a list of broadcaster’s servi
 5. For the remainder, download each feed.
 
 6. For each feed, examine the <code>atom:link</code> entries which are children of
-the root <code>atom:feed</code> element. If one is available which contains an
-<code>rel="alternate http://projectbaird.com/ns/demand"</code> or
-<code>rel="alternate http://projectbaird.com/ns/linear"</code> attribute and whose
-<code>type</code> attribute contains a MIME type supported by the device, add the
-service described by the feed to the list of broadcaster’s services.
+the root <code>atom:feed</code> element. If:
+	* <code>rel="alternate http://projectbaird.com/ns/demand"</code> is specified, or
+	* <code>rel="alternate http://projectbaird.com/ns/linear"</code> is specified; and if
+	* the <code>type</code> attribute contains a MIME type supported by the device; and if
+	* (if present) the <code>le:media</code> attribute matches the device type and constraints; then
+	* add the service described by the feed to the list of broadcaster’s services.
 
-7. If no match was made by step 6, if an <code>atom:entry</code> is present
-which contains an <code>rel="alternate http://projectbaird.com/ns/demand"</code> or
-<code>rel="alternate http://projectbaird.com/ns/linear"</code> attribute and whose
-<code>type</code> attribute contains a MIME type supported by the device, add the
-service described by the feed to the list of broadcaster’s services
+7. If no match was made by step 6, then if an <code>atom:entry</code> is present which contains
+an <code>atom:link</code> element where:
+	* <code>rel="alternate http://projectbaird.com/ns/demand"</code> is specified, or
+	* <code>rel="alternate http://projectbaird.com/ns/linear"</code> is specified; and if
+	* the <code>type</code> attribute contains a MIME type supported by the device; and if
+	* (if present) the <code>le:media</code> attribute matches the device type and constraints; then
+	* add the service described by the feed to the list of broadcaster’s services.
 
 8. Present the list to the user
 
@@ -42,7 +45,8 @@ Notes:
 attribute and link relation extensions
 3. See [the device profiles](http://wiki.github.com/nexgenta/Baird/device-profiles)
 for information on anticipated content type support on different devices
-4. The collated list of services will in many cases include a combination of
+4. See [Atom Link Extensions](http://tools.ietf.org/html/draft-snell-atompub-link-extensions-06) for information on the <code>le:media</code> attribute.
+5. The collated list of services will in many cases include a combination of
 linear-only, demand-only and hybrid services, in part depending upon which
 might be available over-the-air.
 
