@@ -1,6 +1,7 @@
 ---
 title: Getting involved
 layout: default
+path: getting-involved/
 ---
 
 There are a few different ways that you can get involved in Project Baird,

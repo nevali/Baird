@@ -1,6 +1,7 @@
 ---
 title: Aims
 layout: default
+path: aims/
 ---
 
 Project Baird seeks to collate and build upon existing Internet and broadcasting

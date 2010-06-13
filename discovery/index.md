@@ -1,6 +1,7 @@
 ---
 title: Service Discovery
 layout: default
+path: discovery/
 ---
 
 <em>Service discovery</em> is the process by which IP-based applications, 

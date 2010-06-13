@@ -1,6 +1,7 @@
 ---
 title: Service discovery on a local network
 layout: default
+path: discovery/bonjour/
 ---
 
 For some [services](/services/), it is more appropriate that they be

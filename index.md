@@ -14,11 +14,11 @@ Baird repository.
 
 ### Focus areas
 
-1. [Service discovery](discovery): how devices can automatically locate services relating to over-the-air broadcasts, and how users can easily subscribe to new (IP-only) services.
+1. [Service discovery](discovery/): how devices can automatically locate services relating to over-the-air broadcasts, and how users can easily subscribe to new (IP-only) services.
 	* [TVDNS](discovery/tvdns/) - allowing automatic discovery of broadcasters' IP-delivered services relating over-the-air broadcasts
 	* Advertising and locating IP-delivered services on a local network with [Bonjour](discovery/bonjour/)
 	* [Subscribing](discovery/subscriptions/) to services manually (i.e., user-initiated subscriptions)
-2. <strong>IP-delivered services</strong>
+2. [IP-delivered applications](applications/):
 	* [Content feeds](http://wiki.github.com/nexgenta/Baird/content-feeds): describing both linear and on-demand primary and secondary content to devices
 	* [Service manifests](http://wiki.github.com/nexgenta/Baird/service-manifests): a mechanism for a collection of related Atom feeds to be bundled together
 	* [URI resolver](http://wiki.github.com/nexgenta/Baird/programmes-ontology-resolver): resolving a broadcast URI to a canonical URL

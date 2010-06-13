@@ -1,6 +1,7 @@
 ---
 title: Specifications
 layout: default
+path: specs/
 ---
 
 The Project Baird Specifications will be published here as they are written.

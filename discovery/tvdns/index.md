@@ -1,6 +1,7 @@
 ---
 title: Automatic Service Discovery with TVDNS
 layout: default
+path: discovery/tvdns/
 ---
 
 ### Preamble
