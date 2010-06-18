@@ -23,7 +23,8 @@ the project, either with feature requests (for example, support for particular
 kinds of device, new services, and so on), or to highlight problems with
 the specifications.
 
-If all else fails, you can send an e-mail to [baird@projectbaird.com](mailto:baird@projectbaird.com).
+A mailing list for discussing Project Baird is being generously hosted by
+[Martyn Drake](http://www.drake.org.uk/). You can subscribe and browse the
+archives at the [list information page](http://lists.drake.org.uk/mailman/listinfo/baird-discuss).
 
-We don’t have a mailing list for discussions yet, but if you have a Mailman installation you
-don’t mind donating, please get in touch!
+If all else fails, you can send an e-mail to [baird@projectbaird.com](mailto:baird@projectbaird.com).
