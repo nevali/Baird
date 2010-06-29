@@ -1,0 +1,262 @@
+Network Working Group                                      M. McRoberts
+Internet-Draft                                            Project Baird
+Intended status: Informational                            June 29, 2010
+Expires: December 29, 2010
+
+
+
+    Uniform Resource Identifiers for Digital Video Broadcasting (DVB)
+                    draft-mcroberts-uri-dvb-00.txt
+
+
+Abstract
+
+   This document defines the "dvb" URI scheme for the benefit of the
+   Internet community, given its definition as part of the Digital
+   Video Broadcasting (DVB) suite of ETSI standards.
+
+Status of this Memo
+
+   This Internet-Draft is submitted to IETF in full conformance with the
+   provisions of BCP 78 and BCP 79.
+
+   Internet-Drafts are working documents of the Internet Engineering
+   Task Force (IETF), its areas, and its working groups.  Note that
+   other groups may also distribute working documents as Internet-
+   Drafts.
+
+   Internet-Drafts are draft documents valid for a maximum of six
+   months and may be updated, replaced, or obsoleted by other documents
+   at any time.  It is inappropriate to use Internet-Drafts as
+   reference material or to cite them other than as "work in progress."
+
+   The list of current Internet-Drafts can be accessed at
+   http://www.ietf.org/ietf/1id-abstracts.txt
+
+   The list of Internet-Draft Shadow Directories can be accessed at
+   http://www.ietf.org/shadow.html
+
+   This Internet-Draft will expire on December 29, 2010.
+
+Copyright Notice
+
+   Copyright (c) 2010 IETF Trust and the persons identified as the
+   document authors. All rights reserved.
+
+
+
+
+
+
+
+McRoberts             Expires December 29, 2010                [Page 1]
+
+Internet-Draft              URIs for DVB                      June 2010
+
+
+   This document is subject to BCP 78 and the IETF Trust's Legal
+   Provisions Relating to IETF Documents
+   (http://trustee.ietf.org/license-info) in effect on the date of
+   publication of this document. Please review these documents
+   carefully, as they describe your rights and restrictions with respect
+   to this document. Code Components extracted from this document must
+   include Simplified BSD License text as described in Section 4.e of
+   the Trust Legal Provisions and are provided without warranty as
+   described in the BSD License.
+
+
+
+Table of Contents
+
+
+   1. Introduction...................................................2
+   2. dvb URI Registration...........................................2
+   3. Digital Video Broadcasting URI.................................4
+   4. IANA Considerations............................................4
+   5. Security Considerations........................................4
+   6. References.....................................................4
+      6.1 Normative References.......................................4
+      6.2 Informative References.....................................5
+
+1. Introduction
+
+   Standards governing televisions, set-top boxes and other consumer
+   electronics devices have for some time been developed with the
+   Internet in mind. The use of Universal Resource Identifiers (URIs)
+   [RFC 2396] is now commonplace, including for the purpose of
+   identifying resources delivered by way of terrestrial, satellite
+   and cable broadcasts.
+
+   For this purpose, a URI scheme was developed as part of the Digital
+   Video Broadcasting (DVB) suite of standards specifically for the
+   purpose of identifying broadcasts delivered by way of DVB-compliant
+   broadcasting systems.
+
+
+
+2. dvb URI Registration
+
+   URI scheme name.
+
+      dvb
+
+
+
+
+McRoberts             Expires December 29, 2010                [Page 2]
+
+Internet-Draft              URIs for DVB                      June 2010
+
+
+   Status.
+
+      provisional
+
+   URI scheme syntax.
+
+      See Table 1 of [ETSI TS 102 851]
+
+   URI scheme semantics.
+
+      The dvb scheme references services and resources which are transmitted
+      using Digital Video Broadcasting-compliant broadcasting systems.
+
+   Encoding considerations.
+
+      See Section 5 of [ETSI TS 102 851]
+
+   Applications/protocols that use this URI scheme name.
+
+      dvb URIs are used throughout DVB-compliant broadcasting systems, for
+      example within Freeview and Freesat in the United Kingdom. They are
+      also used in TV-Anytime [tva] metadata where it relates to services
+      transmitted by DVB systems.
+
+   Interoperability considerations.
+
+      None known.
+
+   Security considerations.
+
+      Section 7 of RFC 3986 describes general security considerations
+      for URI schemes. The sections relating to reliability and
+      consistency, malicious construction, back-end transcoding, rare
+      IP address formats and semantic attacks all apply to dvb URIs.
+      The section relating to sensitive information does not apply,
+      given that dvb URIs do not contain authentication information.
+
+   Contact.
+
+      Mo McRoberts <mo.mcroberts@nexgenta.com>
+   
+   Author/Change controller.
+
+      Mo McRoberts <mo.mcroberts@nexgenta.com>
+
+
+
+
+
+McRoberts             Expires December 29, 2010                [Page 3]
+
+Internet-Draft              URIs for DVB                      June 2010
+
+
+   References.
+
+      See section 6.
+
+
+
+3. Digital Video Broadcasting URI
+
+   The DVB URI is defined by [ETSI TS 102 851], and that shall be
+   considered the authoritative source of the definition of the
+   scheme-specific-part of the DVB URI.
+
+
+
+4. IANA Considerations
+
+   Registration will be submitted to IANA for the scheme described in
+   Section 3.
+
+
+
+5. Security Considerations
+
+   Section 7 of RFC 3986 describes general security considerations for
+   URI schemes. The sections relating to reliability and consistency,
+   malicious construction, back-end transcoding, rare IP address
+   formats, and semantic attacks all apply to dvb URIs. The section
+   relating to sensitive information does not apply, given that dvb
+   URIs do not contain authentication information.
+
+   The security considerations of the Digital Video Broadcasting suite
+   of standards in general are not covered in this document.
+
+
+
+6. Normative References
+
+   6.1 Normative References
+
+   [RFC 3986] Berners-Lee, T., Fielding, R., and L. Masinter, "Uniform
+              Resource Identifier (URI): Generic Syntax", STD 66, RFC
+              3986, January 2005.
+
+
+
+
+
+McRoberts             Expires December 29, 2010                [Page 4]
+
+Internet-Draft              URIs for DVB                      June 2010
+
+
+   [ETSI TS 102 851] EBU-UER, DVB, ETSI, "Digital Video Broadcasting
+                     (DVB); Uniform Resource Identifiers (URI) for DVB
+                     Systems", ETSI TS 102 851, V1.1.1, January 2010.
+
+
+
+   6.2 Informative References
+
+   [tva] http://www.tv-anytime.org/
+
+
+
+Author's Address
+
+   Mo McRoberts
+   Project Baird
+   Email: mo.mcroberts@nexgenta.com
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+McRoberts             Expires December 29, 2010                [Page 5]
+
