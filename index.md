@@ -19,8 +19,9 @@ Baird repository.
 	* Advertising and locating IP-delivered services on a local network with [Multicast DNS and DNS-SD](discovery/bonjour/)
 	* [Subscribing](discovery/subscriptions/) to services manually (i.e., user-initiated subscriptions)
 2. [IP-delivered applications](applications/):
+	* [Service manifests](http://wiki.github.com/nexgenta/Baird/service-manifests): a mechanism for a collection of related Atom feeds and other resources to be bundled together
 	* [Content feeds](http://wiki.github.com/nexgenta/Baird/content-feeds): describing both linear and on-demand primary and secondary content to devices
-	* [Service manifests](http://wiki.github.com/nexgenta/Baird/service-manifests): a mechanism for a collection of related Atom feeds to be bundled together
+	* [Electronic Programme Guide](applications/epg/): delivered via IP
 	* [URI resolver](http://wiki.github.com/nexgenta/Baird/programmes-ontology-resolver): resolving a broadcast URI to a canonical URL
 	* [Recommendations and sharing across the social graph](http://wiki.github.com/nexgenta/Baird/social-graph)
 	* [Remote control and introspection](http://wiki.github.com/nexgenta/Baird/ip-remote-control)
