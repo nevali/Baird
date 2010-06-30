@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+<rfc ipr="trust200902" category="info" docName="draft-mcroberts-uri-dvb-00">
+	<front>
+		<title abbrev="URIs for DVB">Uniform Resource Identifiers for Digital Video Broadcasting (DVB)</title>
+		<author initials="M." surname="McRoberts" fullname="Mo McRoberts">
+			<organization>Project Baird</organization>
+			<address>
+				<email>mo.mcroberts@nexgenta.com</email>
+				<uri>http://projectbaird.com/</uri>
+			</address>
+		</author>
+		<date day="29" month="June" year="2010" />
+		<area>General</area>
+		<keyword>I-D</keyword>
+		<keyword>Internet-Draft</keyword>
+		<abstract>
+			<t>
+				This document defines the "dvb" URI scheme for the benefit of the
+				Internet community, given its definition as part of the Digital Video
+				Broadcasting (DVB) suite of ETSI standards.
+			</t>
+		</abstract>
+	</front>
+	<middle>
+		<section title="Introduction">
+			<t>
+				Standards governing televisions, set-top boxes and other consumer
+				electronics devices have for some time been developed with the
+				Internet in mind. The use of Universal Resource Identifiers (URIs)
+				<xref target="RFC 3986" /> is now commonplace, including for the
+				purpose of identifying resources delivered by way of terrestrial,
+				satellite and cable broadcasts.
+			</t>
+			<t>
+				For this purpose, a URI scheme was developed as part of the Digital
+				Video Broadcasting (DVB) suite of standards specifically for the
+				purpose of identifying broadcasts delivered by way of DVB-compliant
+				broadcasting systems.
+			</t>
+		</section>
+		<section title="dvb URI Registration">
+			<t>
+				<list style="hanging">
+					<t hangText="URI scheme name."><vspace />dvb</t>
+					<t hangText="Status."><vspace />provisional</t>
+					<t hangText="URI scheme syntax."><vspace />See Table 1 of <xref target="ETSI TS 102 851" /></t>
+					<t hangText="URI scheme semantics."><vspace />
+						The dvb scheme references services and resources which are transmitted
+						using Digital Video Broadcasting-compliant broadcasting systems.
+					</t>
+					<t hangText="Encoding considerations."><vspace />
+						See Section 5 of <xref target="ETSI TS 102 851" />
+					</t>
+					<t hangText="Applications/protocols that use this URI scheme name."><vspace />
+						dvb URIs are used throughout DVB-compliant broadcasting systems, for
+						example within Freeview and Freesat in the United Kingdom. They are
+						also used in TV-Anytime <xref target="tva" /> metadata where it relates
+						to services transmitted by DVB systems.					
+					</t>
+					<t hangText="Interoperability considerations."><vspace />None known.</t>
+					<t hangText="Security considerations."><vspace />
+						Section 7 of <xref target="RFC 3986" /> describes general security considerations
+						for URI schemes. The sections relating to reliability and
+						consistency, malicious construction, back-end transcoding, rare
+						IP address formats and semantic attacks all apply to dvb URIs.
+						The section relating to sensitive information does not apply,
+						given that dvb URIs do not contain authentication information.				
+					</t>
+					<t hangText="Contact."><vspace />
+						Mo McRoberts &lt;mo.mcroberts@nexgenta.com&gt;
+					</t>
+					<t hangText="Author/Change controller."><vspace />
+						Mo McRoberts &lt;mo.mcroberts@nexgenta.com&gt;					
+					</t>
+					<t hangText="References."><vspace />
+						See Section 6.
+					</t>
+				</list>
+			</t>
+		</section>
+		<section title="Digital Video Broadcasting URI">
+			<t>
+				The DVB URI is defined by <xref target="ETSI TS 102 851" />, and that shall be
+				considered the authoritative source of the definition of the
+				scheme-specific-part of the DVB URI.
+			</t>
+		</section>
+		<section title="IANA Considerations">
+			<t>
+				Registration will be submitted to IANA for the scheme described in
+				Section 3.
+			</t>		
+		</section>
+		<section title="Security Considerations">
+			<t>
+				Section 7 of <xref target="RFC 3986" /> describes general security considerations
+				for URI schemes. The sections relating to reliability and
+				consistency, malicious construction, back-end transcoding, rare
+				IP address formats and semantic attacks all apply to dvb URIs.
+				The section relating to sensitive information does not apply,
+				given that dvb URIs do not contain authentication information.				
+			</t>
+			<t>
+				The security considerations of the Digital Video Broadcasting suite
+				of standards in general are not covered in this document.
+			</t>
+		</section>
+	</middle>
+	<back>
+		<references title="Normative References">
+			<reference anchor="RFC 3986">
+				<front>
+					<title>Uniform Resource Identifier (URI): Generic Syntax</title>
+					<author initials="T." surname="Berners-Lee">
+						<organization abbrev="W3C/MIT">World Wide Web Consortium / Massachusetts Institute of Technology</organization>
+					</author>
+					<author initials="R." surname="Fielding">
+						<organization>Day Software</organization>
+					</author>
+					<author initials="L." surname="Masinter">
+						<organization>Adobe Systems</organization>
+					</author>
+					<date month="January" year="2005" />
+				</front>
+				<seriesInfo name="RFC" value="3986" />
+			</reference>
+			<reference anchor="ETSI TS 102 851">
+				<front>
+					<title>Digital Video Broadcasting (DVB); Uniform Resource Identifiers (URI) for DVB Systems</title>
+					<author>
+						<organization>EBU-UER</organization>
+					</author>
+					<author>
+						<organization>DVB</organization>
+					</author>
+					<author>
+						<organization>ETSI</organization>
+					</author>
+					<date month="January" year="2010" />
+				</front>
+				<seriesInfo name="ETSI TS" value="102 851" />
+			</reference>
+		</references>
+		<references title="Informative References">
+			<reference anchor="tva" target="http://www.tv-anytime.org/">
+				<front>
+					<title>TV Anytime Forum</title>
+					<author />
+					<date />
+				</front>
+			</reference>
+		</references>
+	</back>	
+</rfc>
