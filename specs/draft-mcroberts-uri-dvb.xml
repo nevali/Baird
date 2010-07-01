@@ -79,7 +79,7 @@
 				The DVB URI is defined by <xref target="ETSI TS 102 851" />, and that shall be
 				considered the authoritative source of the definition of the
 				scheme-specific-part of the DVB URI. The remainder of this section
-				should is non-normative.				
+				is therefore non-normative.				
 			</t>
 			<t>
 				URIs employing the dvb scheme are URLs. DVB URLs may refer

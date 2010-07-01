@@ -173,8 +173,8 @@ Internet-Draft                URIs for DVB                     July 2010
 
    The DVB URI is defined by [ETSI TS 102 851], and that shall be
    considered the authoritative source of the definition of the scheme-
-   specific-part of the DVB URI.  The remainder of this section should
-   is non-normative.
+   specific-part of the DVB URI.  The remainder of this section is
+   therefore non-normative.
 
    URIs employing the dvb scheme are URLs.  DVB URLs may refer to any of
    the following kinds of resource:
