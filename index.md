@@ -27,7 +27,9 @@ Baird repository.
 	* [Remote control and introspection](http://wiki.github.com/nexgenta/Baird/ip-remote-control)
 3. [Web application support for TV tuners](http://wiki.github.com/nexgenta/Baird/javascript-support-for-tuners)
 4. [Device profiles](http://wiki.github.com/nexgenta/Baird/device-profiles): tailoring content to different classes of device (e.g., mobile, handheld, full HD)
-8. Dynamic EPG allocation: integrating linear IP-delivered content and over-the-air broadcasts into a single programme guide
+5. Dynamic EPG allocation: integrating linear IP-delivered content and over-the-air broadcasts into a single programme guide
+6. Other supporting specifications:
+	* [dvb: URI scheme](specs/draft-mcroberts-uri-dvb.txt)
 
 ### Key standards and related projects
 
