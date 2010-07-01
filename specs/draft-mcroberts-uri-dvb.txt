@@ -3,12 +3,12 @@
 
 Network Working Group                                       M. McRoberts
 Internet-Draft                                             Project Baird
-Intended status: Informational                             June 29, 2010
-Expires: December 31, 2010
+Intended status: Informational                              July 1, 2010
+Expires: January 2, 2011
 
 
    Uniform Resource Identifiers for Digital Video Broadcasting (DVB)
-                       draft-mcroberts-uri-dvb-00
+                       draft-mcroberts-uri-dvb-01
 
 Abstract
 
@@ -31,7 +31,7 @@ Status of this Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on December 31, 2010.
+   This Internet-Draft will expire on January 2, 2011.
 
 Copyright Notice
 
@@ -52,9 +52,9 @@ Copyright Notice
 
 
 
-McRoberts               Expires December 31, 2010               [Page 1]
+McRoberts                Expires January 2, 2011                [Page 1]
 
-Internet-Draft                URIs for DVB                     June 2010
+Internet-Draft                URIs for DVB                     July 2010
 
 
 1.  Introduction
@@ -108,9 +108,9 @@ Internet-Draft                URIs for DVB                     June 2010
 
 
 
-McRoberts               Expires December 31, 2010               [Page 2]
+McRoberts                Expires January 2, 2011                [Page 2]
 
-Internet-Draft                URIs for DVB                     June 2010
+Internet-Draft                URIs for DVB                     July 2010
 
 
 2.  dvb URI Registration
@@ -142,12 +142,7 @@ Internet-Draft                URIs for DVB                     June 2010
       None known.
 
    Security considerations.
-      Section 7 of [RFC 3986] describes general security considerations
-      for URI schemes.  The sections relating to reliability and
-      consistency, malicious construction, back-end transcoding, rare IP
-      address formats and semantic attacks all apply to dvb URIs.  The
-      section relating to sensitive information does not apply, given
-      that dvb URIs do not contain authentication information.
+      See Section 5.
 
    Contact.
       Mo McRoberts <mo.mcroberts@nexgenta.com>
@@ -164,71 +159,244 @@ Internet-Draft                URIs for DVB                     June 2010
 
 
 
-McRoberts               Expires December 31, 2010               [Page 3]
+
+
+
+
+
+McRoberts                Expires January 2, 2011                [Page 3]
 
-Internet-Draft                URIs for DVB                     June 2010
+Internet-Draft                URIs for DVB                     July 2010
 
 
 3.  Digital Video Broadcasting URI
 
    The DVB URI is defined by [ETSI TS 102 851], and that shall be
    considered the authoritative source of the definition of the scheme-
-   specific-part of the DVB URI.
+   specific-part of the DVB URI.  The remainder of this section should
+   is non-normative.
+
+   URIs employing the dvb scheme are URLs.  DVB URLs may refer to any of
+   the following kinds of resource:
+
+   o  A DVB service
+
+   o  Components within a DVB service (such as an audio or video stream)
+
+   o  An event (for example, a programme)
+
+   o  A transport stream
+
+   o  A file contained within a DSM-CC object carousel
+
+   o  Interactive applications
+
+3.1.  Syntax
+
+   DVB URLs conform to one of the two following formats:
+
+      "dvb://" <original_network_id> "." [ <transport_stream_id> ] [ "."
+      <service_id> [ "." <component-set> [ "$" <carousel-id> ] ] [
+      <event-constraint> ] ] [ <path-absolute> ]
+
+      "dvb://'" <textual_service_id> "'" [ "." <component-set> [ "$"
+      <carousel-id> ] ] [ <event-constraint> ] [ <path-absolute> ]
+
+   The URL format is defined in terms of the Augmented Backus-Naur Form
+   (ABNF) notation of [RFC 5234] below.  The ABNF below makes use of the
+   following core ABNF syntax rules defined by that specification:
+   DIGIT, ALPHA, and HEXDIGIT.  Additionally, the ABNF below makes use
+   of host and path-absolute as defined by [RFC 3986].
+
+   dvb_url             =  scheme ":" hier-part
+
+   scheme              =  "dvb"
+
+   hier-part           =  net-path / abs-path
+
+   net-path            =  "//" ( entity [ abs-path ] ) / app-entity
+
+   entity-path         =  entity abs-path
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-McRoberts               Expires December 31, 2010               [Page 4]
+McRoberts                Expires January 2, 2011                [Page 4]
 
-Internet-Draft                URIs for DVB                     June 2010
+Internet-Draft                URIs for DVB                     July 2010
+
+
+   entity              =  ts | service | service-comp
+
+   ts                  =  original_network_id "." transport_stream_id
+
+   service             =  service-no-event [ event-constraint ]
+
+   service-comp        =  service-no-event "." component-set
+                          [ "$" carousel-id ]
+                          [ event-constraint ]
+
+   service-no-event    =  orignal_network_id "." [ transport_stream_id ]
+                          "." service_id | "'" textual_service_id "'"
+
+   component-set       =  comp-tag-set | qual-comp-set
+
+   comp-tag-set        =  component_tag *( "&" component_tag )
+
+   qual-comp-set       =  qual-comp *( "&" qual-comp )
+
+   qual-comp           =  comp-type "=" component-id
+
+   comp-type           =  "video" | "audio" | "data" | "subtitle"
+                          | "teletext" | "dvbst"
+
+   component-id        =  component_string | "default" | "current"
+                          | "hearing_impaired" | "visually_impared"
+                          | "none"
+
+   component_string    =  iso639-lang-code | component_tag
+
+   app-entity          =  svc-context | svc-comp-context
+                          | ait-specifier
+
+   svc-context         =  "current" | "original"
+
+   svc-comp-context    =  "current.audio" | "current.video"
+                          | "current.av"
+
+   ait-specifier       =  ait-filter "." "ait" ait-abs-path
+
+   ait-filter          =  "current" | service-no-event
+
+   ait-abs-path        =  "/" ait-entity
+
+   ait-entity          =  "app_root" | ait-app
+
+   ait-app             =  org_id_part "." app_id_part [ "?" ait-params ]
+
+
+
+
+McRoberts                Expires January 2, 2011                [Page 5]
+
+Internet-Draft                URIs for DVB                     July 2010
+
+
+   ait-params          =  "arg_" 1 * digit "=" *uric [ "&" ait-params ]
+
+   event-constraint    =  event-id-mode | tva-id-only-mode | timespec
+
+   event-id-mode       =  ";" event_id [ ";" tva-id ] [ timespec ]
+
+   tva-id-only-mode    =  ";;" tva-id [ timespec ]
+
+   timespec            =  "~" start-time "--" duration
+
+   start-time          =  date "T" time "Z"
+
+   duration            =  "PT" hours "H" minutes "M" [ seconds "S" ]
+
+   date                =  year month day
+
+   time                =  hours minutes [ seconds ]
+
+   carousel-id         =  transaction_id ; [ETSI EN 301 192]
+
+   original_network_id =  hex_string
+
+   transport_stream_id =  hex_string
+
+   service_id          =  hex_string
+
+   component_tag       =  hex_string
+
+   event_id            =  hex_string
+
+   transaction_id      =  hex_string
+
+   abs-path            =  path-absolute  ; [RFC 3986], Section 3.3
+
+   textual_service_id  =  host           ; [RFC 3986], Section 3.2.2
+
+   org_id_part         =  1 * HEXDIG     ; [ETSI TS 102 812]
+
+   app_id_part         =  1 * HEXDIG     ; [ETSI TS 102 812]
+
+   iso639-lang-code    =  3 * ALPHA
+
+   hex_string          =  1 * HEXDIG
+
+   tva-id              =  1 * HEXDIG
+
+   year                =  4 DIGIT
+
+
+
+
+McRoberts                Expires January 2, 2011                [Page 6]
+
+Internet-Draft                URIs for DVB                     July 2010
+
+
+   month               =  2 DIGIT
+
+   day                 =  2 DIGIT
+
+   hours               =  2 DIGIT
+
+   minutes             =  2 DIGIT
+
+   seconds             =  2 DIGIT
+
+   uric                =  unreserved / pct-encoded / ";" / "?" / ":"
+                          / "@" / "&" / "=" / "+" / "$" / "," / "/"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+McRoberts                Expires January 2, 2011                [Page 7]
+
+Internet-Draft                URIs for DVB                     July 2010
 
 
 4.  IANA Considerations
 
    Registration will be submitted to IANA for the scheme described in
-   Section 3.
+   Section 2.
 
 
 
@@ -276,9 +444,9 @@ Internet-Draft                URIs for DVB                     June 2010
 
 
 
-McRoberts               Expires December 31, 2010               [Page 5]
+McRoberts                Expires January 2, 2011                [Page 8]
 
-Internet-Draft                URIs for DVB                     June 2010
+Internet-Draft                URIs for DVB                     July 2010
 
 
 5.  Security Considerations
@@ -332,9 +500,9 @@ Internet-Draft                URIs for DVB                     June 2010
 
 
 
-McRoberts               Expires December 31, 2010               [Page 6]
+McRoberts                Expires January 2, 2011                [Page 9]
 
-Internet-Draft                URIs for DVB                     June 2010
+Internet-Draft                URIs for DVB                     July 2010
 
 
 6.  References
@@ -347,14 +515,24 @@ Internet-Draft                URIs for DVB                     June 2010
               January 2005.
 
    [ETSI TS 102 851]
-              EBU-UER, DVB, and ETSI, "Digital Video Broadcasting (DVB);
-              Uniform Resource Identifiers (URI) for DVB Systems", ETSI
-              TS 102 851, January 2010.
+              European Broadcasting Union, DVB Project, and European
+              Telecommunications Standards Institute, "Digital Video
+              Broadcasting (DVB); Uniform Resource Identifiers (URI) for
+              DVB Systems", ETSI TS 102 851, January 2010.
 
 6.2.  Informative References
 
    [tva]      "TV Anytime Forum", <http://www.tv-anytime.org/>.
 
+   [RFC 5234]
+              Crocker, D., Ed. and P. Overell, "Augmented BNF for Syntax
+              Specifications: ABNF", RFC 5234, STD 68, January 2008.
+
+   [ETSI TS 102 812]
+              European Broadcasting Union, DVB Project, and European
+              Telecommunications Standards Institute, "Digital Video
+              Broadcasting (DVB); Multimedia Home Platform (MHP)
+              Specification 1.1.1", ETSI TS 102 812, August 2008.
 
 
 
@@ -378,19 +556,9 @@ Internet-Draft                URIs for DVB                     June 2010
 
 
 
-
-
-
-
-
-
-
-
-
-
-McRoberts               Expires December 31, 2010               [Page 7]
+McRoberts                Expires January 2, 2011               [Page 10]
 
-Internet-Draft                URIs for DVB                     June 2010
+Internet-Draft                URIs for DVB                     July 2010
 
 
 Author's Address
@@ -444,5 +612,5 @@ Author's Address
 
 
 
-McRoberts               Expires December 31, 2010               [Page 8]
+McRoberts                Expires January 2, 2011               [Page 11]
 
