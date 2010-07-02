@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+<rfc ipr="trust200902" category="info" docName="draft-mcroberts-uri-resolver-00">
+	<front>
+		<title abbrev="Broadcast URI resolution service">Resolution service for Uniform Resource Identifiers (URIs) identifying broadcasts</title>
+		<author initials="M." surname="McRoberts" fullname="Mo McRoberts">
+			<organization>Project Baird</organization>
+			<address>
+				<email>mo.mcroberts@nexgenta.com</email>
+				<uri>http://projectbaird.com/</uri>
+			</address>
+		</author>
+		<author initials="C." surname="Jackson" fullname="Chris Jackson">
+			<organization>Project Baird / MetaBroadcast</organization>
+			<address>
+				<uri>http://metabroadcast.com/</uri>
+			</address>
+		</author>
+		<author initials="L." surname="Miller" fullname="Libby Miller">
+			<organization>NoTube</organization>
+			<address>
+				<uri>http://nicecupoftea.org/</uri>
+			</address>
+		</author>
+		<date day="1" month="July" year="2010" />
+		<area>General</area>
+		<keyword>I-D</keyword>
+		<keyword>Internet-Draft</keyword>
+		<abstract>
+			<t>
+				This document describes a service which accepts information, including URIs,
+				which identify television and radio broadcasts and returns a canonical
+				URL which can be used to retrieve metadata relating to the broadcast.
+			</t>
+		</abstract>
+	</front>
+	<middle>
+		<section title="Introduction">
+			<t>
+				In order for devices to retrieve metadata relating to broadcast
+				television or radio programmes, one of two mechanisms must be
+				employed: either the location of related metadata must be
+				transmitted alongside or embedded within the programme itself,
+				or alternately a means must be available which allows metadata
+				to be discovered based upon information which is already available
+				as part of the broadcast stream. The service described in this
+				document is intended for use with the latter mechanism.
+			</t>
+			<t>
+				In order to achieve this, the resolution service is specified as
+				a web service -- that is, an application made available via the
+				HTTP protocol <xref target="RFC 2616" /> which accepts a defined set of parameters
+				relating to the broadcast and returns a 301 Permanent Redirect
+				response providing to the programme metadata URL.
+			</t>
+			<t>
+				Because those best-placed to provide this service are the
+				organisations who broadcast the programmes in the first
+				place, user agents locate instances of the service using
+				RadioDNS <xref target="RadioDNS" /> or TVDNS <xref target="TVDNS" />
+				(itself an extension of RadioDNS).
+			</t>
+			<t>
+				In combination with the RadioDNS/TVDNS hostname, a user agent
+				supplies parameters to the service which are formulated based
+				upon the information which is available to it regarding the
+				programme. For example, a crid URI <xref target="RFC 4078" /> might be available.
+				Alternately, a medium-specific URI of some kind might be
+				available (such as a dvb URI <xref target="ETSI TS 102 851" />).
+			</t>
+			<t>
+				Once a user agent receives a metadata URL, it is free to use it
+				as the application dictates: it might simply record the URL
+				for later use, or use it as a means of identifying the programme
+				to other applications, or it might make a request to it in order
+				to retrieve programme metadata, or it might do none of these
+				things. The semantics of the resource linked to by this URL are
+				outside of the scope of this document and will be specified
+				separately.
+			</t>
+		</section>
+
+		<section title="Service discovery">
+			<t>
+				Discovery of an instance of the resolver is accomplished by way of
+				RadioDNS <xref target="RDNS01" /> or TVDNS <xref target="TVDNS" />
+				(an extension to RadioDNS). This specification defines a service
+				name of "broadcast-meta".
+			</t>
+			<t>
+				In other words, once a RadioDNS fully-qualified domain name (FQDN)
+				has been constructed relating to the broadcast service and DNS queries
+				performed against it as per <xref target="RDNS01" />, a user agent
+				shall query for SRV records named "_broadcast-meta._tcp" beneath the
+				target of the FQDN if it is a CNAME, or else the FQDN itself.
+			</t>
+			<t>
+				A matching TXT record MUST also be published in DNS alongside the SRV
+				record(s). The content of the TXT record takes the form:
+			</t>
+			<figure><preamble></preamble><artwork><![CDATA[txtvers=1 path=<path>]]></artwork></figure>
+			<t>
+				The value and purpose of &lt;path&gt; is defined below.
+			</t>
+		</section>
+		<section title="Resolution requests">
+			<t>
+				Requests to the resolver take the form of HTTP
+				requests <xref target="RFC 2616" />, with the following constraints:
+			</t>
+			<t>
+				<list style="symbols">
+					<t>
+						The HTTP method MUST be "GET"
+					</t>
+					<t>
+						The "Host:" request header MUST be set to the RadioDNS
+						FQDN relating to the broadcast service (and so was used
+						to discover the resolution service)
+					</t>
+					<t>
+						The request SHOULD NOT include body content
+					</t>
+					<t>
+						The request URI MUST be formulated as described below in
+						<xref target="request-uri" />
+					</t>
+				</list>
+			</t>
+						
+			<section title="Formulating a request URI" anchor="request-uri">
+				<figure>
+					<preamble>
+						Request URIs take the general form (expressed as an
+						Augmented Backus-Naur Form (ABNF) notation fragment:
+					</preamble>
+					<artwork><![CDATA[					
+request-uri =  path separator param-set
+
+param-set   =  uri-params "&" time-params / time-params
+
+uri-params  =  "uri[]=" query-uri [ "&" uri-params ]
+
+time-params =  start 
+]]></artwork>
+				</figure>					
+			</section>
+		</section>
+	</middle>
+	<back>
+		<references title="Normative References">
+			<reference anchor="RFC 2616">
+				<front>
+					<title>Hypertext Transfer Protocol -- HTTP/1.1</title>
+					<author initials="R." surname="Fielding">
+						<organization>UC Irvine</organization>
+					</author>
+					<author initials="J." surname="Gettys">
+						<organization abbrev="Compaq/W3C">Compaq / World Wide Web Consortium</organization>
+					</author>
+					<author initials="J." surname="Mogul">
+						<organization>Compaq</organization>
+					</author>
+					<author initials="H." surname="Frystyk">
+						<organization abbrev="W3C/MIT">World Wide Web Consortium / Massachusetts Institute of Technology</organization>
+					</author>
+					<author initials="L." surname="Masinter">
+						<organization>Xerox</organization>
+					</author>
+					<author initials="P." surname="Leach">
+						<organization>Microsoft</organization>
+					</author>
+					<author initials="T." surname="Berners-Lee">
+						<organization abbrev="W3C/MIT">World Wide Web Consortium / Massachusetts Institute of Technology</organization>
+					</author>
+					<date month="June" year="1999" />
+				</front>
+				<seriesInfo name="RFC" value="2616" />
+			</reference>
+			<reference anchor="RFC 3986">
+				<front>
+					<title>Uniform Resource Identifier (URI): Generic Syntax</title>
+					<author initials="T." surname="Berners-Lee">
+						<organization abbrev="W3C/MIT">World Wide Web Consortium / Massachusetts Institute of Technology</organization>
+					</author>
+					<author initials="R." surname="Fielding">
+						<organization>Day Software</organization>
+					</author>
+					<author initials="L." surname="Masinter">
+						<organization>Adobe Systems</organization>
+					</author>
+					<date month="January" year="2005" />
+				</front>
+				<seriesInfo name="RFC" value="3986" />
+			</reference>
+			<reference anchor="RFC 4078">
+				<front>
+					<title>The TV-Anytime Content Reference Identifier (CRID)</title>
+					<author initials="N." surname="Earnshaw">
+						<organization abbrev="BBC R&amp;D">BBC Research and Development</organization>
+					</author>
+					<author initials="S." surname="Aoki">
+						<organization abbrev="TokyoFM">TokyoFM Broadcasting</organization>
+					</author>
+					<author initials="A." surname="Ashley">
+						<organization abbrev="NDS">NDS Limited</organization>
+					</author>
+					<author initials="W." surname="Kameyama">
+						<organization abbrev="GITS">GITS, Waseda University</organization>
+					</author>
+					<date month="May" year="2005" />
+				</front>
+				<seriesInfo name="RFC" value="4078" />
+			</reference>
+			<reference anchor="ETSI TS 102 851">
+				<front>
+					<title>Digital Video Broadcasting (DVB); Uniform Resource Identifiers (URI) for DVB Systems</title>
+					<author>
+						<organization abbrev="EBU">European Broadcasting Union</organization>
+					</author>
+					<author>
+						<organization abbrev="DVB">DVB Project</organization>
+					</author>
+					<author>
+						<organization abbrev="ETSI">European Telecommunications Standards Institute</organization>
+					</author>
+					<date month="January" year="2010" />
+				</front>
+				<seriesInfo name="ETSI TS" value="102 851" />
+			</reference>
+			<reference anchor="RDNS01">
+				<front>
+					<title>RadioDNS; Technical Specification (RDNS01)</title>
+					<author>
+						<organization>RadioDNS</organization>
+					</author>
+					<date day="15" month="June" year="2009" />
+				</front>
+			</reference>
+		</references>
+		<references title="Informative References">
+			<reference anchor="RadioDNS" target="http://radiodns.org/">
+				<front>
+					<title>RadioDNS</title>
+					<author />
+					<date />
+				</front>
+			</reference>
+			<reference anchor="TVDNS" target="http://projectbaird.com/discovery/tvdns/">
+				<front>
+					<title>TVDNS</title>
+					<author />
+					<date />
+				</front>
+			</reference>
+		</references>
+	</back>	
+</rfc>
