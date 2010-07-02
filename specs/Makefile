@@ -1,0 +1,24 @@
+## Override these in the environment or on the command-line
+## if they don't suit.
+
+XML2RFC ?= /opt/xml2rfc/xml2rfc.tcl
+TCLSH ?= tclsh
+
+## Targets
+
+OUT = \
+	draft-mcroberts-uri-dvb.txt draft-mcroberts-uri-dvb.html \
+	draft-mcroberts-uri-resolver.txt draft-mcroberts-uri-resolver.html
+
+## Rules
+
+all: $(OUT)
+
+clean:
+	rm -f $(OUT)
+
+%.txt: %.xml
+	$(TCLSH) $(XML2RFC) xml2rfc $< $@
+
+%.html: %.xml
+	$(TCLSH) $(XML2RFC) xml2rfc $< $@
