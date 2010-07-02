@@ -241,18 +241,18 @@ Internet-Draft      Broadcast URI resolution service           July 2010
    o  The request URI MUST be formulated as described below in
       Section 3.1
 
-3.1.  Formulating a request URI
 
-   Request URIs take the general form (expressed as an Augmented Backus-
-   Naur Form (ABNF) notation fragment:
 
-   request-uri =  path separator param-set
 
-   param-set   =  uri-params "&" time-params / time-params
 
-   uri-params  =  "uri[]=" query-uri [ "&" uri-params ]
 
-   time-params =  start
+
+
+
+
+
+
+
 
 
 
@@ -277,6 +277,62 @@ Internet-Draft      Broadcast URI resolution service           July 2010
 
 
 McRoberts, et al.        Expires January 2, 2011                [Page 5]
+
+Internet-Draft      Broadcast URI resolution service           July 2010
+
+
+3.1.  Formulating a request URI
+
+   Request URIs take the general form (expressed as an Augmented Backus-
+   Naur Form (ABNF) notation fragment:
+
+   request-uri =  path separator param-set
+
+   param-set   =  first-param *( "&" uri-param ) time-params
+
+   first-param =  initial-sep uri-param
+
+   uri-param   =  "uri[]=" value
+
+   time-params =  [ "&" start-param ] [ "&" dur-param ] [ "&" tt-param ]
+
+   start-param =  "start=" datetime
+
+   dur-param   =  "duration=" duration
+
+   tt-param    =  "tranmissionTime=" duration
+
+   initial-sep =  "?" / "&"
+
+   value       =  unreserved / pct-encoded
+
+   datetime    =  date "T" time "Z"
+
+   duration    =  "PT" hours "H" minutes "M" [ seconds "S" ]
+
+   date        =  year "-" month "-" day
+
+   time        =  hours "%3A" minutes [ "%3A" seconds ]
+
+   year        =  4 DIGIT
+
+   month       =  2 DIGIT
+
+   day         =  2 DIGIT
+
+   hours       =  2 DIGIT
+
+   minutes     =  2 DIGIT
+
+   seconds     =  2 DIGIT
+
+
+
+
+
+
+
+McRoberts, et al.        Expires January 2, 2011                [Page 6]
 
 Internet-Draft      Broadcast URI resolution service           July 2010
 
@@ -332,7 +388,7 @@ Internet-Draft      Broadcast URI resolution service           July 2010
 
 
 
-McRoberts, et al.        Expires January 2, 2011                [Page 6]
+McRoberts, et al.        Expires January 2, 2011                [Page 7]
 
 Internet-Draft      Broadcast URI resolution service           July 2010
 
@@ -388,5 +444,5 @@ Authors' Addresses
 
 
 
-McRoberts, et al.        Expires January 2, 2011                [Page 7]
+McRoberts, et al.        Expires January 2, 2011                [Page 8]
 

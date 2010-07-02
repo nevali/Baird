@@ -317,11 +317,44 @@ Formulating a request URI</h3>
 </p><div style='display: table; width: 0; margin-left: 3em; margin-right: auto'><pre>
 request-uri =  path separator param-set
 
-param-set   =  uri-params "&amp;" time-params / time-params
+param-set   =  first-param *( "&amp;" uri-param ) time-params
 
-uri-params  =  "uri[]=" query-uri [ "&amp;" uri-params ]
+first-param =  initial-sep uri-param
 
-time-params =  start
+uri-param   =  "uri[]=" value
+
+time-params =  [ "&amp;" start-param ] [ "&amp;" dur-param ] [ "&amp;" tt-param ]
+
+start-param =  "start=" datetime
+
+dur-param   =  "duration=" duration
+
+tt-param    =  "tranmissionTime=" duration
+
+initial-sep =  "?" / "&amp;"
+
+value       =  unreserved / pct-encoded
+
+datetime    =  date "T" time "Z"
+
+duration    =  "PT" hours "H" minutes "M" [ seconds "S" ]
+
+date        =  year "-" month "-" day
+
+time        =  hours "%3A" minutes [ "%3A" seconds ]
+
+year        =  4 DIGIT
+
+month       =  2 DIGIT
+
+day         =  2 DIGIT
+
+hours       =  2 DIGIT
+
+minutes     =  2 DIGIT
+
+seconds     =  2 DIGIT
+
 </pre></div>
 <a name="rfc.references"></a><br /><hr />
 <a name="rfc.section.4"></a><h3>4.&nbsp;
