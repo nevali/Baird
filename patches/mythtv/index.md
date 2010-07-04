@@ -4,7 +4,7 @@ layout: default
 path: patches/mythtv/
 ---
 
-This patch populates a 'programuri' column to the 'programs' table of MythTV's
+This patch populates a <code>programuri</code> column in the <code>program</code> table of MythTV's
 database with a transport-specific URI for the program. At present, only
 dvb: URIs are supported, but other transports could do something similar.
 
@@ -15,7 +15,7 @@ schema must be performed manually.
 
 In order to do this, execute the following SQL:
 
-<p><code>ALTER TABLE `programs` ADD `programuri` TINYTEXT DEFAULT NULL;</code></p>
+<p><code>ALTER TABLE `program` ADD `programuri` TINYTEXT DEFAULT NULL;</code></p>
 
 [Download the patch](00-programuri.diff).
 
