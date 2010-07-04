@@ -1,5 +1,5 @@
 ---
-title: Patches: MythTV
+title: Patches - MythTV
 layout: default
 path: patches/mythtv/
 ---
