@@ -146,7 +146,7 @@
 <tr><td class="header">Intended status: Informational</td><td class="header">July 1, 2010</td></tr>
 <tr><td class="header">Expires: January 2, 2011</td><td class="header">&nbsp;</td></tr>
 </table></td></tr></table>
-<h1><br />Uniform Resource Identifiers for Digital Video Broadcasting (DVB)<br />draft-mcroberts-uri-dvb-01</h1>
+<h1><br />Uniform Resource Identifiers for Digital Video Broadcasting (DVB)<br />draft-mcroberts-uri-dvb-02</h1>
 
 <h3>Abstract</h3>
 
@@ -322,9 +322,9 @@ Syntax</h3>
 						The URL format is defined in terms of the Augmented Backus-Naur Form
 						(ABNF) notation of <a class='info' href='#RFC 5234'>[RFC 5234]<span> (</span><span class='info'>Crocker, D., Ed. and P. Overell, &ldquo;Augmented BNF for Syntax Specifications: ABNF,&rdquo; January&nbsp;2008.</span><span>)</span></a> below. The ABNF below
 						makes use of the following core ABNF syntax rules defined by that
-						specification: DIGIT, ALPHA, and HEXDIGIT. Additionally, the
-						ABNF below makes use of host and path-absolute as defined by
-						<a class='info' href='#RFC 3986'>[RFC 3986]<span> (</span><span class='info'>Berners-Lee, T., Fielding, R., and L. Masinter, &ldquo;Uniform Resource Identifier (URI): Generic Syntax,&rdquo; January&nbsp;2005.</span><span>)</span></a>.
+						specification: DIGIT, ALPHA, and HEXDIG. Additionally, it
+						below makes use of host, path-absolute, unreserved and
+						pct-encoded as defined by <a class='info' href='#RFC 3986'>[RFC 3986]<span> (</span><span class='info'>Berners-Lee, T., Fielding, R., and L. Masinter, &ldquo;Uniform Resource Identifier (URI): Generic Syntax,&rdquo; January&nbsp;2005.</span><span>)</span></a>.
 					
 </p><div style='display: table; width: 0; margin-left: 3em; margin-right: auto'><pre>
 dvb_url             =  scheme ":" hier-part
@@ -446,6 +446,116 @@ seconds             =  2 DIGIT
 uric                =  unreserved / pct-encoded / ";" / "?" / ":"
                        / "@" / "&amp;" / "=" / "+" / "$" / "," / "/"
 </pre></div>
+<a name="historical"></a><br /><hr />
+<a name="rfc.section.3.2"></a><h3>3.2.&nbsp;
+Historical Syntax</h3>
+
+<p>
+					Prior to the standardisation of <a class='info' href='#ETSI TS 102 851'>[ETSI TS 102 851]<span> (</span><span class='info'>European Broadcasting Union, DVB Project, and European Telecommunications Standards Institute, &ldquo;Digital Video Broadcasting (DVB); Uniform Resource Identifiers (URI) for DVB Systems,&rdquo; January&nbsp;2010.</span><span>)</span></a>,
+					a syntax for dvb URIs was defined by <a class='info' href='#DAVIC9'>[DAVIC9]<span> (</span><span class='info'>Digital Audio-Video Council, &ldquo;DAVIC 1.4.1 Specification Part 9: Information Representation,&rdquo; 1999.</span><span>)</span></a>, Section
+					9.5.2. The syntax defined in <a class='info' href='#ETSI TS 102 851'>[ETSI TS 102 851]<span> (</span><span class='info'>European Broadcasting Union, DVB Project, and European Telecommunications Standards Institute, &ldquo;Digital Video Broadcasting (DVB); Uniform Resource Identifiers (URI) for DVB Systems,&rdquo; January&nbsp;2010.</span><span>)</span></a> was
+					designed to allow applications to work with both the current DVB
+					syntax of URIs and also the historical syntax defined by DAVIC.
+				
+</p>
+<p>
+						The syntax below makes use of HEXDIG from the core ABNF syntax rules
+						defined by <a class='info' href='#RFC 5234'>[RFC 5234]<span> (</span><span class='info'>Crocker, D., Ed. and P. Overell, &ldquo;Augmented BNF for Syntax Specifications: ABNF,&rdquo; January&nbsp;2008.</span><span>)</span></a>. Additionally, it makes use of
+						unreserved and escaped as defined by <a class='info' href='#RFC 3986'>[RFC 3986]<span> (</span><span class='info'>Berners-Lee, T., Fielding, R., and L. Masinter, &ldquo;Uniform Resource Identifier (URI): Generic Syntax,&rdquo; January&nbsp;2005.</span><span>)</span></a>.
+					
+</p><div style='display: table; width: 0; margin-left: 3em; margin-right: auto'><pre>
+dvb_url             =  scheme ":" hier-part
+
+scheme              =  "dvb"
+
+hier-part           =  net-path / abs-path
+
+net-path            =  "//" entity [ abs-path ]
+
+entity              =  transport-stream / service / service-component
+
+transport-stream    =  original_network_id "." transport_stream_id
+
+service             =  original_network_id [ "."
+                       transport_stream_id ] "." service_id
+                       [ event-constraint ]
+
+service-component   =  service "." component-tag-set
+                       [ event-constraint ]
+
+component-tag-set   =  component-tag *( "&amp;" component-tag )
+
+event-constraint    =  ";" event_id
+
+abs-path            =  "/" segment
+
+path_segments       =  segment *( "/" segment )
+
+segment             =  *pchar *( ";" param )
+
+param               =  *pchar
+
+pchar               =  unreserved | escaped | ":" | "@" | "&amp;" | "="
+                       | "+" | "$" | ","
+
+original_network_id =  hex_string
+
+transport_stream_id =  hex_string
+
+service_id          =  hex_string
+
+component_tag       =  hex_string
+
+event_id            =  hex_string
+
+hex_string          =  1 * HEXDIG
+
+</pre></div>
+<a name="examples"></a><br /><hr />
+<a name="rfc.section.3.3"></a><h3>3.3.&nbsp;
+Examples</h3>
+
+<p>
+					</p>
+<blockquote class="text"><dl>
+<dt>dvb://1041.10bf</dt>
+<dd>
+							DVB transport stream
+						
+</dd>
+<dt>dvb://233a.1041.10bf</dt>
+<dd>
+							DVB service
+						
+</dd>
+<dt>dvb://233a.1004.1044;8fff</dt>
+<dd>
+							Event within a DVB service
+						
+</dd>
+<dt>dvb://233a.1004.1044;8fff~20100706T000315Z--PT00H03M00S</dt>
+<dd>
+							Time-constrained event on a DVB service
+						
+</dd>
+<dt>dvb://233a.1004.1044;8fff@2010-07-06T00:03:15Z/PT00H03M00S</dt>
+<dd>
+							Time-constrained event on a DVB service (historical syntax)
+						
+</dd>
+<dt>dvb://233a.1041.10bf/doc/form.pdf</dt>
+<dd>
+							File in a subdirectory of the default object carousel of a specific DVB service
+						
+</dd>
+<dt>dvb:/image.png</dt>
+<dd>
+							File in root directory of the default object carousel on the current service
+						
+</dd>
+</dl></blockquote><p>
+				
+</p>
 <a name="iana"></a><br /><hr />
 <a name="rfc.section.4"></a><h3>4.&nbsp;
 IANA Considerations</h3>
@@ -495,6 +605,8 @@ References</h3>
 <td class="author-text">Crocker, D., Ed. and P. Overell, &ldquo;<a href="http://tools.ietf.org/html/rfc5234">Augmented BNF for Syntax Specifications: ABNF</a>,&rdquo; RFC&nbsp;5234, STD&nbsp;68, January&nbsp;2008.</td></tr>
 <tr><td class="author-text" valign="top"><a name="ETSI TS 102 812">[ETSI TS 102 812]</a></td>
 <td class="author-text">European Broadcasting Union, DVB Project, and European Telecommunications Standards Institute, &ldquo;Digital Video Broadcasting (DVB); Multimedia Home Platform (MHP) Specification 1.1.1,&rdquo; ETSI TS&nbsp;102 812, August&nbsp;2008.</td></tr>
+<tr><td class="author-text" valign="top"><a name="DAVIC9">[DAVIC9]</a></td>
+<td class="author-text">Digital Audio-Video Council, &ldquo;DAVIC 1.4.1 Specification Part 9: Information Representation,&rdquo; 1999.</td></tr>
 </table>
 
 <a name="rfc.authors"></a><br /><hr />

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
-<rfc ipr="trust200902" category="info" docName="draft-mcroberts-uri-dvb-01">
+<rfc ipr="trust200902" category="info" docName="draft-mcroberts-uri-dvb-02">
 	<front>
 		<title abbrev="URIs for DVB">Uniform Resource Identifiers for Digital Video Broadcasting (DVB)</title>
 		<author initials="M." surname="McRoberts" fullname="Mo McRoberts">
@@ -109,9 +109,9 @@
 						The URL format is defined in terms of the Augmented Backus-Naur Form
 						(ABNF) notation of <xref target="RFC 5234" /> below. The ABNF below
 						makes use of the following core ABNF syntax rules defined by that
-						specification: DIGIT, ALPHA, and HEXDIGIT. Additionally, the
-						ABNF below makes use of host and path-absolute as defined by
-						<xref target="RFC 3986" />.
+						specification: DIGIT, ALPHA, and HEXDIG. Additionally, it
+						below makes use of host, path-absolute, unreserved and
+						pct-encoded as defined by <xref target="RFC 3986" />.
 					</preamble>
 	<!-- app-entity, event-constraint -->
 	<artwork><![CDATA[
@@ -233,8 +233,99 @@ seconds             =  2 DIGIT
 
 uric                =  unreserved / pct-encoded / ";" / "?" / ":"
                        / "@" / "&" / "=" / "+" / "$" / "," / "/"
-	]]></artwork>
+]]></artwork>
 				</figure>
+			</section>
+			<section title="Historical Syntax" anchor="historical">
+				<t>
+					Prior to the standardisation of <xref target="ETSI TS 102 851" />,
+					a syntax for dvb URIs was defined by <xref target="DAVIC9" />, Section
+					9.5.2. The syntax defined in <xref target="ETSI TS 102 851" /> was
+					designed to allow applications to work with both the current DVB
+					syntax of URIs and also the historical syntax defined by DAVIC.
+				</t>
+				<figure>
+					<preamble>
+						The syntax below makes use of HEXDIG from the core ABNF syntax rules
+						defined by <xref target="RFC 5234" />. Additionally, it makes use of
+						unreserved and escaped as defined by <xref target="RFC 3986" />.
+					</preamble>
+					<artwork><![CDATA[
+dvb_url             =  scheme ":" hier-part
+
+scheme              =  "dvb"
+
+hier-part           =  net-path / abs-path
+
+net-path            =  "//" entity [ abs-path ]
+
+entity              =  transport-stream / service / service-component
+
+transport-stream    =  original_network_id "." transport_stream_id
+
+service             =  original_network_id [ "." 
+                       transport_stream_id ] "." service_id
+                       [ event-constraint ]
+
+service-component   =  service "." component-tag-set
+                       [ event-constraint ]
+
+component-tag-set   =  component-tag *( "&" component-tag )
+
+event-constraint    =  ";" event_id
+
+abs-path            =  "/" segment
+
+path_segments       =  segment *( "/" segment )
+
+segment             =  *pchar *( ";" param )
+
+param               =  *pchar
+
+pchar               =  unreserved | escaped | ":" | "@" | "&" | "=" 
+                       | "+" | "$" | ","
+
+original_network_id =  hex_string
+
+transport_stream_id =  hex_string
+
+service_id          =  hex_string
+
+component_tag       =  hex_string
+
+event_id            =  hex_string
+
+hex_string          =  1 * HEXDIG
+
+]]></artwork>
+					</figure>
+			</section>
+			<section title="Examples" anchor="examples">
+				<t>
+					<list style="hanging">
+						<t hangText="dvb://1041.10bf"><vspace />
+							DVB transport stream
+						</t>
+						<t hangText="dvb://233a.1041.10bf"><vspace />
+							DVB service
+						</t>
+						<t hangText="dvb://233a.1004.1044;8fff"><vspace />
+							Event within a DVB service
+						</t>				
+						<t hangText="dvb://233a.1004.1044;8fff~20100706T000315Z--PT00H03M00S"><vspace />
+							Time-constrained event on a DVB service
+						</t>
+						<t hangText="dvb://233a.1004.1044;8fff@2010-07-06T00:03:15Z/PT00H03M00S"><vspace />
+							Time-constrained event on a DVB service (historical syntax)
+						</t>
+						<t hangText="dvb://233a.1041.10bf/doc/form.pdf"><vspace />
+							File in a subdirectory of the default object carousel of a specific DVB service
+						</t>
+						<t hangText="dvb:/image.png"><vspace />
+							File in root directory of the default object carousel on the current service
+						</t>
+					</list>
+				</t>
 			</section>
 		</section>
 		<section title="IANA Considerations" anchor="iana">
@@ -331,6 +422,16 @@ uric                =  unreserved / pct-encoded / ";" / "?" / ":"
 				</front>			
 				<seriesInfo name="ETSI TS" value="102 812" />
 			</reference>
+			<reference anchor="DAVIC9">
+				<front>
+					<title>DAVIC 1.4.1 Specification Part 9: Information Representation</title>
+					<author>
+						<organization abbrev="DAVIC">Digital Audio-Video Council</organization>
+					</author>
+					<date year="1999" />
+				</front>			
+			</reference>
+
 		</references>
 	</back>	
 </rfc>

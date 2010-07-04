@@ -8,7 +8,7 @@ Expires: January 2, 2011
 
 
    Uniform Resource Identifiers for Digital Video Broadcasting (DVB)
-                       draft-mcroberts-uri-dvb-01
+                       draft-mcroberts-uri-dvb-02
 
 Abstract
 
@@ -205,8 +205,8 @@ Internet-Draft                URIs for DVB                     July 2010
    The URL format is defined in terms of the Augmented Backus-Naur Form
    (ABNF) notation of [RFC 5234] below.  The ABNF below makes use of the
    following core ABNF syntax rules defined by that specification:
-   DIGIT, ALPHA, and HEXDIGIT.  Additionally, the ABNF below makes use
-   of host and path-absolute as defined by [RFC 3986].
+   DIGIT, ALPHA, and HEXDIG.  Additionally, it below makes use of host,
+   path-absolute, unreserved and pct-encoded as defined by [RFC 3986].
 
    dvb_url             =  scheme ":" hier-part
 
@@ -350,13 +350,13 @@ Internet-Draft                URIs for DVB                     July 2010
    uric                =  unreserved / pct-encoded / ";" / "?" / ":"
                           / "@" / "&" / "=" / "+" / "$" / "," / "/"
 
+3.2.  Historical Syntax
 
-
-
-
-
-
-
+   Prior to the standardisation of [ETSI TS 102 851], a syntax for dvb
+   URIs was defined by [DAVIC9], Section 9.5.2.  The syntax defined in
+   [ETSI TS 102 851] was designed to allow applications to work with
+   both the current DVB syntax of URIs and also the historical syntax
+   defined by DAVIC.
 
 
 
@@ -389,6 +389,118 @@ Internet-Draft                URIs for DVB                     July 2010
 
 
 McRoberts                Expires January 2, 2011                [Page 7]
+
+Internet-Draft                URIs for DVB                     July 2010
+
+
+   The syntax below makes use of HEXDIG from the core ABNF syntax rules
+   defined by [RFC 5234].  Additionally, it makes use of unreserved and
+   escaped as defined by [RFC 3986].
+
+   dvb_url             =  scheme ":" hier-part
+
+   scheme              =  "dvb"
+
+   hier-part           =  net-path / abs-path
+
+   net-path            =  "//" entity [ abs-path ]
+
+   entity              =  transport-stream / service / service-component
+
+   transport-stream    =  original_network_id "." transport_stream_id
+
+   service             =  original_network_id [ "."
+                          transport_stream_id ] "." service_id
+                          [ event-constraint ]
+
+   service-component   =  service "." component-tag-set
+                          [ event-constraint ]
+
+   component-tag-set   =  component-tag *( "&" component-tag )
+
+   event-constraint    =  ";" event_id
+
+   abs-path            =  "/" segment
+
+   path_segments       =  segment *( "/" segment )
+
+   segment             =  *pchar *( ";" param )
+
+   param               =  *pchar
+
+   pchar               =  unreserved | escaped | ":" | "@" | "&" | "="
+                          | "+" | "$" | ","
+
+   original_network_id =  hex_string
+
+   transport_stream_id =  hex_string
+
+   service_id          =  hex_string
+
+   component_tag       =  hex_string
+
+   event_id            =  hex_string
+
+
+
+
+McRoberts                Expires January 2, 2011                [Page 8]
+
+Internet-Draft                URIs for DVB                     July 2010
+
+
+   hex_string          =  1 * HEXDIG
+
+
+3.3.  Examples
+
+   dvb://1041.10bf
+      DVB transport stream
+
+   dvb://233a.1041.10bf
+      DVB service
+
+   dvb://233a.1004.1044;8fff
+      Event within a DVB service
+
+   dvb://233a.1004.1044;8fff~20100706T000315Z--PT00H03M00S
+      Time-constrained event on a DVB service
+
+   dvb://233a.1004.1044;8fff@2010-07-06T00:03:15Z/PT00H03M00S
+      Time-constrained event on a DVB service (historical syntax)
+
+   dvb://233a.1041.10bf/doc/form.pdf
+      File in a subdirectory of the default object carousel of a
+      specific DVB service
+
+   dvb:/image.png
+      File in root directory of the default object carousel on the
+      current service
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+McRoberts                Expires January 2, 2011                [Page 9]
 
 Internet-Draft                URIs for DVB                     July 2010
 
@@ -444,7 +556,7 @@ Internet-Draft                URIs for DVB                     July 2010
 
 
 
-McRoberts                Expires January 2, 2011                [Page 8]
+McRoberts                Expires January 2, 2011               [Page 10]
 
 Internet-Draft                URIs for DVB                     July 2010
 
@@ -500,7 +612,7 @@ Internet-Draft                URIs for DVB                     July 2010
 
 
 
-McRoberts                Expires January 2, 2011                [Page 9]
+McRoberts                Expires January 2, 2011               [Page 11]
 
 Internet-Draft                URIs for DVB                     July 2010
 
@@ -534,6 +646,8 @@ Internet-Draft                URIs for DVB                     July 2010
               Broadcasting (DVB); Multimedia Home Platform (MHP)
               Specification 1.1.1", ETSI TS 102 812, August 2008.
 
+   [DAVIC9]   Digital Audio-Video Council, "DAVIC 1.4.1 Specification
+              Part 9: Information Representation", 1999.
 
 
 
@@ -554,9 +668,7 @@ Internet-Draft                URIs for DVB                     July 2010
 
 
 
-
-
-McRoberts                Expires January 2, 2011               [Page 10]
+McRoberts                Expires January 2, 2011               [Page 12]
 
 Internet-Draft                URIs for DVB                     July 2010
 
@@ -612,5 +724,5 @@ Author's Address
 
 
 
-McRoberts                Expires January 2, 2011               [Page 11]
+McRoberts                Expires January 2, 2011               [Page 13]
 
