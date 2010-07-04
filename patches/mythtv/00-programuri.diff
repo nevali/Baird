@@ -1,0 +1,224 @@
+Index: mythtv/libs/libmythtv/eithelper.cpp
+===================================================================
+--- mythtv/libs/libmythtv/eithelper.cpp	(revision 25261)
++++ mythtv/libs/libmythtv/eithelper.cpp	(working copy)
+@@ -401,7 +401,17 @@
+         if (!(eit->DurationInSeconds(i) % 60))
+             EITFixUp::TimeFix(starttime);
+         QDateTime endtime   = starttime.addSecs(eit->DurationInSeconds(i));
++        QString dateFormat = "yyyyMMdd", timeFormat = "hhmmss";                                                                                                                   
++        char uribuf[64];                                                                                                                                                          
++        uint dur = eit->DurationInSeconds(i);                                                                                                                                     
+ 
++        sprintf(uribuf, "dvb://%04x.%04x.%04x;%04x~%sT%sZ--PT%02dH%02dM%02dS",
++                eit->OriginalNetworkID(), eit->TSID(), eit->ServiceID(),                                                                                                          
++                eit->EventID(i), eit->StartTimeUTC(i).toString(dateFormat).toStdString().c_str(),
++                eit->StartTimeUTC(i).toString(timeFormat).toStdString().c_str(),
++                dur / 3600, (dur % 3600) / 60, dur % 60);
++        QString programUri = uribuf;
++
+         DBEventEIT *event = new DBEventEIT(
+             chanid,
+             title,     subtitle,      description,
+@@ -410,7 +420,7 @@
+             subtitle_type,
+             audio_props,
+             video_props,
+-            seriesId,  programId);
++            seriesId,  programId, programUri);
+ 
+         db_events.enqueue(event);
+     }
+@@ -516,7 +526,7 @@
+                 subtitle_type,
+                 audio_props,
+                 video_props,
+-                "",  "");
++                "",  "", "");
+ 
+             db_events.enqueue(event);
+         }
+Index: mythtv/libs/libmythtv/programdata.cpp
+===================================================================
+--- mythtv/libs/libmythtv/programdata.cpp	(revision 25261)
++++ mythtv/libs/libmythtv/programdata.cpp	(working copy)
+@@ -177,7 +177,7 @@
+     seriesId        = other.seriesId;
+     programId       = other.programId;
+     previouslyshown = other.previouslyshown;
+-
++	programUri      = other.programUri;
+     Squeeze();
+ 
+     return *this;
+@@ -203,6 +203,7 @@
+     squeeze_str(syndicatedepisodenumber);
+     squeeze_str(seriesId);
+     squeeze_str(programId);
++	squeeze_str(programUri);
+ }
+ 
+ void DBEvent::AddPerson(DBPerson::Role role, const QString &name)
+@@ -307,7 +308,7 @@
+             query.value(9).toUInt(),
+             query.value(10).toString(),
+             query.value(11).toString(),
+-            query.value(18).toUInt());
++            query.value(18).toUInt(), "");
+ 
+         prog.partnumber = query.value(12).toUInt();
+         prog.parttotal  = query.value(13).toUInt();
+@@ -489,6 +490,7 @@
+     uint16_t lairdate   = airdate;
+     QString  lprogramId = programId;
+     QString  lseriesId  = seriesId;
++	QString  lprogramUri = programUri;
+     QDate loriginalairdate = originalairdate;
+ 
+     if (match.title.length() >= ltitle.length())
+@@ -515,6 +517,9 @@
+     if (lseriesId.isEmpty() && !match.seriesId.isEmpty())
+         lseriesId = match.seriesId;
+ 
++    if (lprogramUri.isEmpty() && !match.programUri.isEmpty())
++        lprogramUri = match.programUri;
++
+     uint tmp = categoryType;
+     if (!categoryType && match.categoryType)
+         tmp = match.categoryType;
+@@ -554,7 +559,7 @@
+         "    airdate        = :AIRDATE,   originalairdate=:ORIGAIRDATE, "
+         "    listingsource  = :LSOURCE, "
+         "    seriesid       = :SERIESID,  programid     = :PROGRAMID, "
+-        "    previouslyshown = :PREVSHOWN "
++        "    previouslyshown = :PREVSHOWN, programuri   = :PROGRAMURI "
+         "WHERE chanid    = :CHANID AND "
+         "      starttime = :OLDSTART ");
+ 
+@@ -583,6 +588,7 @@
+     query.bindValue(":SERIESID",    lseriesId);
+     query.bindValue(":PROGRAMID",   lprogramId);
+     query.bindValue(":PREVSHOWN",   lpreviouslyshown);
++    query.bindValue(":PROGRAMURI",  lprogramUri);
+ 
+     if (!query.exec())
+     {
+@@ -708,7 +714,7 @@
+         "  partnumber,     parttotal, "
+         "  syndicatedepisodenumber, "
+         "  airdate,        originalairdate,listingsource, "
+-        "  seriesid,       programid,      previouslyshown ) "
++        "  seriesid,       programid,      previouslyshown, programuri ) "
+         "VALUES ("
+         " :CHANID,        :TITLE,         :SUBTITLE,       :DESCRIPTION, "
+         " :CATEGORY,      :CATTYPE, "
+@@ -718,7 +724,7 @@
+         " :PARTNUMBER,    :PARTTOTAL, "
+         " :SYNDICATENO, "
+         " :AIRDATE,       :ORIGAIRDATE,   :LSOURCE, "
+-        " :SERIESID,      :PROGRAMID,     :PREVSHOWN) ");
++        " :SERIESID,      :PROGRAMID,     :PREVSHOWN,      :PROGRAMURI) ");
+ 
+     QString cattype = myth_category_type_to_string(categoryType);
+ 
+@@ -746,6 +752,7 @@
+     query.bindValue(":SERIESID",    seriesId);
+     query.bindValue(":PROGRAMID",   programId);
+     query.bindValue(":PREVSHOWN",   previouslyshown);
++    query.bindValue(":PROGRAMURI",  programUri);
+ 
+     if (!query.exec())
+     {
+@@ -836,7 +843,8 @@
+         "  syndicatedepisodenumber, "
+         "  airdate,        originalairdate,listingsource, "
+         "  seriesid,       programid,      previouslyshown, "
+-        "  stars,          showtype,       title_pronounce, colorcode ) "
++        "  stars,          showtype,       title_pronounce, colorcode, "
++        "  programuri ) "
+ 
+         "VALUES("
+         " :CHANID,        :TITLE,         :SUBTITLE,       :DESCRIPTION, "
+@@ -848,7 +856,8 @@
+         " :SYNDICATENO, "
+         " :AIRDATE,       :ORIGAIRDATE,   :LSOURCE, "
+         " :SERIESID,      :PROGRAMID,     :PREVSHOWN, "
+-        " :STARS,         :SHOWTYPE,      :TITLEPRON,      :COLORCODE)");
++        " :STARS,         :SHOWTYPE,      :TITLEPRON,      :COLORCODE, "
++        " :PROGRAMURI )");
+ 
+     QString cattype = myth_category_type_to_string(categoryType);
+ 
+@@ -884,7 +893,7 @@
+     query.bindValue(":SHOWTYPE",    showtype);
+     query.bindValue(":TITLEPRON",   title_pronounce);
+     query.bindValue(":COLORCODE",   colorcode);
+-
++    query.bindValue(":PROGRAMURI",  programUri);
+     if (!query.exec())
+     {
+         MythDB::DBError("program insert", query);
+Index: mythtv/libs/libmythtv/programdata.h
+===================================================================
+--- mythtv/libs/libmythtv/programdata.h	(revision 25261)
++++ mythtv/libs/libmythtv/programdata.h	(working copy)
+@@ -81,7 +81,8 @@
+         seriesId(QString::null),
+         programId(QString::null),
+         previouslyshown(false),
+-        listingsource(_listingsource) {}
++        listingsource(_listingsource),
++        programUri(QString::null) {}
+ 
+     DBEvent(const QString   &_title,     const QString   &_subtitle,
+             const QString   &_desc,
+@@ -91,7 +92,7 @@
+             unsigned char    _audioProps,
+             unsigned char    _videoProps,
+             const QString   &_seriesId,  const QString   &_programId,
+-            uint32_t         _listingsource) :
++            uint32_t         _listingsource, const QString &_programUri) :
+         title(_title),           subtitle(_subtitle),
+         description(_desc),
+         category(_category),
+@@ -106,7 +107,8 @@
+         seriesId(_seriesId),
+         programId(_programId),
+         previouslyshown(false),
+-        listingsource(_listingsource)
++        listingsource(_listingsource),
++        programUri(_programUri)
+     {
+     }
+ 
+@@ -157,6 +159,7 @@
+     QString       programId;
+     bool          previouslyshown;
+     uint32_t      listingsource;
++	QString       programUri;
+ };
+ 
+ class MPUBLIC DBEventEIT : public DBEvent
+@@ -171,10 +174,11 @@
+                unsigned char    _subtitleType,
+                unsigned char    _audioProps,
+                unsigned char    _videoProps,
+-               const QString   &_seriesId,  const QString   &_programId) :
++               const QString   &_seriesId,  const QString   &_programId,
++               const QString   &_programUri) :
+         DBEvent(_title, _subtitle, _desc, _category, _category_type,
+                 _start, _end, _subtitleType, _audioProps, _videoProps,
+-                _seriesId, _programId, kListingSourceEIT),
++                _seriesId, _programId, kListingSourceEIT, _programUri),
+         chanid(_chanid), fixup(_fixup)
+     {
+     }
+@@ -188,7 +192,7 @@
+                unsigned char    _videoProps) :
+         DBEvent(_title, QString(""), _desc, QString(""), 0/*kCategoryNone*/,
+                 _start, _end, _subtitleType, _audioProps, _videoProps,
+-                QString(""), QString(""), kListingSourceEIT),
++                QString(""), QString(""), kListingSourceEIT, QString("")),
+         chanid(_chanid), fixup(_fixup)
+     {
+     }
