@@ -454,7 +454,7 @@ Internet-Draft                URIs for DVB                     July 2010
 
 3.3.  Examples
 
-   dvb://1041.10bf
+   dvb://233a.1041
       DVB transport stream
 
    dvb://233a.1041.10bf

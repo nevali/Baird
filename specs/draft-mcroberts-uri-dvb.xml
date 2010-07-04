@@ -303,7 +303,7 @@ hex_string          =  1 * HEXDIG
 			<section title="Examples" anchor="examples">
 				<t>
 					<list style="hanging">
-						<t hangText="dvb://1041.10bf"><vspace />
+						<t hangText="dvb://233a.1041"><vspace />
 							DVB transport stream
 						</t>
 						<t hangText="dvb://233a.1041.10bf"><vspace />
