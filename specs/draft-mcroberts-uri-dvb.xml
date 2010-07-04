@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
-<rfc ipr="trust200902" category="info" docName="draft-mcroberts-uri-dvb-02">
+<rfc ipr="trust200902" category="info" docName="draft-mcroberts-uri-dvb-03">
 	<front>
 		<title abbrev="URIs for DVB">Uniform Resource Identifiers for Digital Video Broadcasting (DVB)</title>
 		<author initials="M." surname="McRoberts" fullname="Mo McRoberts">
@@ -34,44 +34,9 @@
 			</t>
 			<t>
 				For this purpose, a URI scheme was developed as part of the Digital
-				Video Broadcasting (DVB) suite of standards specifically for the
+				Video Broadcasting <xref target="DVB" /> suite of standards specifically for the
 				purpose of identifying broadcasts delivered by way of DVB-compliant
 				broadcasting systems.
-			</t>
-		</section>
-		<section title="dvb URI Registration" anchor="uri">
-			<t>
-				<list style="hanging">
-					<t hangText="URI scheme name."><vspace />dvb</t>
-					<t hangText="Status."><vspace />provisional</t>
-					<t hangText="URI scheme syntax."><vspace />See Table 1 of <xref target="ETSI TS 102 851" /></t>
-					<t hangText="URI scheme semantics."><vspace />
-						The dvb scheme references services and resources which are transmitted
-						using Digital Video Broadcasting-compliant broadcasting systems.
-					</t>
-					<t hangText="Encoding considerations."><vspace />
-						See Section 5 of <xref target="ETSI TS 102 851" />
-					</t>
-					<t hangText="Applications/protocols that use this URI scheme name."><vspace />
-						dvb URIs are used throughout DVB-compliant broadcasting systems, for
-						example within Freeview and Freesat in the United Kingdom. They are
-						also used in TV-Anytime <xref target="tva" /> metadata where it relates
-						to services transmitted by DVB systems.					
-					</t>
-					<t hangText="Interoperability considerations."><vspace />None known.</t>
-					<t hangText="Security considerations."><vspace />
-						See <xref target="security" />.
-					</t>
-					<t hangText="Contact."><vspace />
-						Mo McRoberts &lt;mo.mcroberts@nexgenta.com&gt;
-					</t>
-					<t hangText="Author/Change controller."><vspace />
-						Mo McRoberts &lt;mo.mcroberts@nexgenta.com&gt;					
-					</t>
-					<t hangText="References."><vspace />
-						See Section 6.
-					</t>
-				</list>
 			</t>
 		</section>
 		<section title="Digital Video Broadcasting URI">
@@ -94,16 +59,20 @@
 				</list>
 			</t>
 			<section title="Syntax">
-				<t>
-					DVB URLs conform to one of the two following formats:
-					<list style="empty">
-						<t><![CDATA["dvb://" <original_network_id> "." [ <transport_stream_id> ]
-							[ "." <service_id> [ "." <component-set> [ "$" <carousel-id> ] ]
-							[ <event-constraint> ] ] [ <path-absolute> ] ]]></t>
-						<t><![CDATA["dvb://'" <textual_service_id> "'" [ "." <component-set>
-						[ "$" <carousel-id> ] ] [ <event-constraint> ] [ <path-absolute> ] ]]></t>
-					</list>
-				</t>
+				<figure>
+					<preamble>
+						DVB URLs conform to one of the two following formats:
+					</preamble>
+					<artwork><![CDATA[
+"dvb://" original_network_id "." [ transport_stream_id ]
+[ "." service_id [ "." component-set [ "$" carousel-id ] ]
+[ event-constraint ] ] [ path-absolute ] ]]></artwork>
+				</figure>
+				<figure>					
+					<artwork><![CDATA[
+"dvb://'" textual_service_id "'" [ "." component-set
+[ "$" carousel-id ] ] [ event-constraint ] [ path-absolute ] ]]></artwork>
+				</figure>
 				<figure>
 					<preamble>
 						The URL format is defined in terms of the Augmented Backus-Naur Form
@@ -330,9 +299,43 @@ hex_string          =  1 * HEXDIG
 		</section>
 		<section title="IANA Considerations" anchor="iana">
 			<t>
-				Registration will be submitted to IANA for the scheme described in
-				<xref target="uri" />.
-			</t>		
+				This specification requests the IANA provisionally register the
+				"dvb" URI scheme as specified in this document and summarized in the
+				following template, per <xref target="BCP 115" />:
+			</t>
+			<t>
+				<list style="hanging">
+					<t hangText="URI scheme name."><vspace />dvb</t>
+					<t hangText="Status."><vspace />provisional</t>
+					<t hangText="URI scheme syntax."><vspace />See Table 1 of <xref target="ETSI TS 102 851" /></t>
+					<t hangText="URI scheme semantics."><vspace />
+						The dvb scheme references services and resources which are transmitted
+						using Digital Video Broadcasting-compliant broadcasting systems.
+					</t>
+					<t hangText="Encoding considerations."><vspace />
+						See Section 5 of <xref target="ETSI TS 102 851" />
+					</t>
+					<t hangText="Applications/protocols that use this URI scheme name."><vspace />
+						dvb URIs are used throughout DVB-compliant broadcasting systems, for
+						example within Freeview and Freesat in the United Kingdom. They are
+						also used in TV-Anytime <xref target="TV-ANYTIME" /> metadata where it relates
+						to services transmitted by DVB systems.					
+					</t>
+					<t hangText="Interoperability considerations."><vspace />None known.</t>
+					<t hangText="Security considerations."><vspace />
+						See <xref target="security" />.
+					</t>
+					<t hangText="Contact."><vspace />
+						Mo McRoberts &lt;mo.mcroberts@nexgenta.com&gt;
+					</t>
+					<t hangText="Author/Change controller."><vspace />
+						Mo McRoberts &lt;mo.mcroberts@nexgenta.com&gt;					
+					</t>
+					<t hangText="References."><vspace />
+						See Section 5.
+					</t>
+				</list>
+			</t>
 		</section>
 		<section title="Security Considerations" anchor="security">
 			<t>
@@ -385,7 +388,14 @@ hex_string          =  1 * HEXDIG
 			</reference>
 		</references>
 		<references title="Informative References">
-			<reference anchor="tva" target="http://www.tv-anytime.org/">
+			<reference anchor="DVB" target="http://www.dvb.org/">
+				<front>
+					<title>DVB Project</title>
+					<author />
+					<date />
+				</front>
+			</reference>
+			<reference anchor="TV-ANYTIME" target="http://www.tv-anytime.org/">
 				<front>
 					<title>TV Anytime Forum</title>
 					<author />
@@ -431,7 +441,23 @@ hex_string          =  1 * HEXDIG
 					<date year="1999" />
 				</front>			
 			</reference>
-
+			<reference anchor="BCP 115">
+				<front>
+					<title>Guidelines and Registration Procedures for New URI Schemes</title>
+					<author initials="T." surname="Hansen">
+						<organization abbrev="AT&amp;T">AT&amp;T Laboratories</organization>
+					</author>
+					<author initials="T." surname="Hardie">
+						<organization abbrev="Qualcomm">Qualcomm, Inc.</organization>
+					</author>
+					<author initials="L." surname="Masinter">
+						<organization abbrev="Adobe">Adobe Systems</organization>
+					</author>
+					<date month="February" year="2006" />
+				</front>
+				<seriesInfo name="RFC" value="4395" />
+				<seriesInfo name="BCP" value="115" />
+			</reference>
 		</references>
 	</back>	
 </rfc>

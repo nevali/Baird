@@ -146,7 +146,7 @@
 <tr><td class="header">Intended status: Informational</td><td class="header">July 4, 2010</td></tr>
 <tr><td class="header">Expires: January 5, 2011</td><td class="header">&nbsp;</td></tr>
 </table></td></tr></table>
-<h1><br />Uniform Resource Identifiers for Digital Video Broadcasting (DVB)<br />draft-mcroberts-uri-dvb-02</h1>
+<h1><br />Uniform Resource Identifiers for Digital Video Broadcasting (DVB)<br />draft-mcroberts-uri-dvb-03</h1>
 
 <h3>Abstract</h3>
 
@@ -203,74 +203,13 @@ Introduction</h3>
 </p>
 <p>
 				For this purpose, a URI scheme was developed as part of the Digital
-				Video Broadcasting (DVB) suite of standards specifically for the
+				Video Broadcasting <a class='info' href='#DVB'>[DVB]<span> (</span><span class='info'>, &ldquo;DVB Project,&rdquo; .</span><span>)</span></a> suite of standards specifically for the
 				purpose of identifying broadcasts delivered by way of DVB-compliant
 				broadcasting systems.
 			
 </p>
-<a name="uri"></a><br /><hr />
-<a name="rfc.section.2"></a><h3>2.&nbsp;
-dvb URI Registration</h3>
-
-<p>
-				</p>
-<blockquote class="text"><dl>
-<dt>URI scheme name.</dt>
-<dd>dvb
-</dd>
-<dt>Status.</dt>
-<dd>provisional
-</dd>
-<dt>URI scheme syntax.</dt>
-<dd>See Table 1 of <a class='info' href='#ETSI TS 102 851'>[ETSI TS 102 851]<span> (</span><span class='info'>European Broadcasting Union, DVB Project, and European Telecommunications Standards Institute, &ldquo;Digital Video Broadcasting (DVB); Uniform Resource Identifiers (URI) for DVB Systems,&rdquo; January&nbsp;2010.</span><span>)</span></a>
-</dd>
-<dt>URI scheme semantics.</dt>
-<dd>
-						The dvb scheme references services and resources which are transmitted
-						using Digital Video Broadcasting-compliant broadcasting systems.
-					
-</dd>
-<dt>Encoding considerations.</dt>
-<dd>
-						See Section 5 of <a class='info' href='#ETSI TS 102 851'>[ETSI TS 102 851]<span> (</span><span class='info'>European Broadcasting Union, DVB Project, and European Telecommunications Standards Institute, &ldquo;Digital Video Broadcasting (DVB); Uniform Resource Identifiers (URI) for DVB Systems,&rdquo; January&nbsp;2010.</span><span>)</span></a>
-					
-</dd>
-<dt>Applications/protocols that use this URI scheme name.</dt>
-<dd>
-						dvb URIs are used throughout DVB-compliant broadcasting systems, for
-						example within Freeview and Freesat in the United Kingdom. They are
-						also used in TV-Anytime <a class='info' href='#tva'>[tva]<span> (</span><span class='info'>, &ldquo;TV Anytime Forum,&rdquo; .</span><span>)</span></a> metadata where it relates
-						to services transmitted by DVB systems.					
-					
-</dd>
-<dt>Interoperability considerations.</dt>
-<dd>None known.
-</dd>
-<dt>Security considerations.</dt>
-<dd>
-						See <a class='info' href='#security'>Section&nbsp;5<span> (</span><span class='info'>Security Considerations</span><span>)</span></a>.
-					
-</dd>
-<dt>Contact.</dt>
-<dd>
-						Mo McRoberts &lt;mo.mcroberts@nexgenta.com&gt;
-					
-</dd>
-<dt>Author/Change controller.</dt>
-<dd>
-						Mo McRoberts &lt;mo.mcroberts@nexgenta.com&gt;					
-					
-</dd>
-<dt>References.</dt>
-<dd>
-						See Section 6.
-					
-</dd>
-</dl></blockquote><p>
-			
-</p>
 <a name="anchor2"></a><br /><hr />
-<a name="rfc.section.3"></a><h3>3.&nbsp;
+<a name="rfc.section.2"></a><h3>2.&nbsp;
 Digital Video Broadcasting URI</h3>
 
 <p>
@@ -301,23 +240,18 @@ Digital Video Broadcasting URI</h3>
 			
 </p>
 <a name="anchor3"></a><br /><hr />
-<a name="rfc.section.3.1"></a><h3>3.1.&nbsp;
+<a name="rfc.section.2.1"></a><h3>2.1.&nbsp;
 Syntax</h3>
 
 <p>
-					DVB URLs conform to one of the two following formats:
-					</p>
-<blockquote class="text">
-<p>"dvb://" &lt;original_network_id&gt; "." [ &lt;transport_stream_id&gt; ]
-							[ "." &lt;service_id&gt; [ "." &lt;component-set&gt; [ "$" &lt;carousel-id&gt; ] ]
-							[ &lt;event-constraint&gt; ] ] [ &lt;path-absolute&gt; ] 
-</p>
-<p>"dvb://'" &lt;textual_service_id&gt; "'" [ "." &lt;component-set&gt;
-						[ "$" &lt;carousel-id&gt; ] ] [ &lt;event-constraint&gt; ] [ &lt;path-absolute&gt; ] 
-</p>
-</blockquote><p>
-				
-</p>
+						DVB URLs conform to one of the two following formats:
+					
+</p><div style='display: table; width: 0; margin-left: 3em; margin-right: auto'><pre>
+"dvb://" original_network_id "." [ transport_stream_id ]
+[ "." service_id [ "." component-set [ "$" carousel-id ] ]
+[ event-constraint ] ] [ path-absolute ]</pre></div><div style='display: table; width: 0; margin-left: 3em; margin-right: auto'><pre>
+"dvb://'" textual_service_id "'" [ "." component-set
+[ "$" carousel-id ] ] [ event-constraint ] [ path-absolute ]</pre></div>
 <p>
 						The URL format is defined in terms of the Augmented Backus-Naur Form
 						(ABNF) notation of <a class='info' href='#RFC 5234'>[RFC 5234]<span> (</span><span class='info'>Crocker, D., Ed. and P. Overell, &ldquo;Augmented BNF for Syntax Specifications: ABNF,&rdquo; January&nbsp;2008.</span><span>)</span></a> below. The ABNF below
@@ -447,7 +381,7 @@ uric                =  unreserved / pct-encoded / ";" / "?" / ":"
                        / "@" / "&amp;" / "=" / "+" / "$" / "," / "/"
 </pre></div>
 <a name="historical"></a><br /><hr />
-<a name="rfc.section.3.2"></a><h3>3.2.&nbsp;
+<a name="rfc.section.2.2"></a><h3>2.2.&nbsp;
 Historical Syntax</h3>
 
 <p>
@@ -512,7 +446,7 @@ hex_string          =  1 * HEXDIG
 
 </pre></div>
 <a name="examples"></a><br /><hr />
-<a name="rfc.section.3.3"></a><h3>3.3.&nbsp;
+<a name="rfc.section.2.3"></a><h3>2.3.&nbsp;
 Examples</h3>
 
 <p>
@@ -557,16 +491,74 @@ Examples</h3>
 				
 </p>
 <a name="iana"></a><br /><hr />
-<a name="rfc.section.4"></a><h3>4.&nbsp;
+<a name="rfc.section.3"></a><h3>3.&nbsp;
 IANA Considerations</h3>
 
 <p>
-				Registration will be submitted to IANA for the scheme described in
-				<a class='info' href='#uri'>Section&nbsp;2<span> (</span><span class='info'>dvb URI Registration</span><span>)</span></a>.
+				This specification requests the IANA provisionally register the
+				"dvb" URI scheme as specified in this document and summarized in the
+				following template, per <a class='info' href='#BCP 115'>[BCP 115]<span> (</span><span class='info'>Hansen, T., Hardie, T., and L. Masinter, &ldquo;Guidelines and Registration Procedures for New URI Schemes,&rdquo; February&nbsp;2006.</span><span>)</span></a>:
+			
+</p>
+<p>
+				</p>
+<blockquote class="text"><dl>
+<dt>URI scheme name.</dt>
+<dd>dvb
+</dd>
+<dt>Status.</dt>
+<dd>provisional
+</dd>
+<dt>URI scheme syntax.</dt>
+<dd>See Table 1 of <a class='info' href='#ETSI TS 102 851'>[ETSI TS 102 851]<span> (</span><span class='info'>European Broadcasting Union, DVB Project, and European Telecommunications Standards Institute, &ldquo;Digital Video Broadcasting (DVB); Uniform Resource Identifiers (URI) for DVB Systems,&rdquo; January&nbsp;2010.</span><span>)</span></a>
+</dd>
+<dt>URI scheme semantics.</dt>
+<dd>
+						The dvb scheme references services and resources which are transmitted
+						using Digital Video Broadcasting-compliant broadcasting systems.
+					
+</dd>
+<dt>Encoding considerations.</dt>
+<dd>
+						See Section 5 of <a class='info' href='#ETSI TS 102 851'>[ETSI TS 102 851]<span> (</span><span class='info'>European Broadcasting Union, DVB Project, and European Telecommunications Standards Institute, &ldquo;Digital Video Broadcasting (DVB); Uniform Resource Identifiers (URI) for DVB Systems,&rdquo; January&nbsp;2010.</span><span>)</span></a>
+					
+</dd>
+<dt>Applications/protocols that use this URI scheme name.</dt>
+<dd>
+						dvb URIs are used throughout DVB-compliant broadcasting systems, for
+						example within Freeview and Freesat in the United Kingdom. They are
+						also used in TV-Anytime <a class='info' href='#TV-ANYTIME'>[TV&#8209;ANYTIME]<span> (</span><span class='info'>, &ldquo;TV Anytime Forum,&rdquo; .</span><span>)</span></a> metadata where it relates
+						to services transmitted by DVB systems.					
+					
+</dd>
+<dt>Interoperability considerations.</dt>
+<dd>None known.
+</dd>
+<dt>Security considerations.</dt>
+<dd>
+						See <a class='info' href='#security'>Section&nbsp;4<span> (</span><span class='info'>Security Considerations</span><span>)</span></a>.
+					
+</dd>
+<dt>Contact.</dt>
+<dd>
+						Mo McRoberts &lt;mo.mcroberts@nexgenta.com&gt;
+					
+</dd>
+<dt>Author/Change controller.</dt>
+<dd>
+						Mo McRoberts &lt;mo.mcroberts@nexgenta.com&gt;					
+					
+</dd>
+<dt>References.</dt>
+<dd>
+						See Section 5.
+					
+</dd>
+</dl></blockquote><p>
 			
 </p>
 <a name="security"></a><br /><hr />
-<a name="rfc.section.5"></a><h3>5.&nbsp;
+<a name="rfc.section.4"></a><h3>4.&nbsp;
 Security Considerations</h3>
 
 <p>
@@ -584,11 +576,11 @@ Security Considerations</h3>
 			
 </p>
 <a name="rfc.references"></a><br /><hr />
-<a name="rfc.section.6"></a><h3>6.&nbsp;
+<a name="rfc.section.5"></a><h3>5.&nbsp;
 References</h3>
 
 <a name="rfc.references1"></a><br /><hr />
-<h3>6.1.&nbsp;Normative References</h3>
+<h3>5.1.&nbsp;Normative References</h3>
 <table width="99%" border="0">
 <tr><td class="author-text" valign="top"><a name="RFC 3986">[RFC 3986]</a></td>
 <td class="author-text">Berners-Lee, T., Fielding, R., and L. Masinter, &ldquo;<a href="http://tools.ietf.org/html/rfc3986">Uniform Resource Identifier (URI): Generic Syntax</a>,&rdquo; RFC&nbsp;3986, January&nbsp;2005.</td></tr>
@@ -597,9 +589,11 @@ References</h3>
 </table>
 
 <a name="rfc.references2"></a><br /><hr />
-<h3>6.2.&nbsp;Informative References</h3>
+<h3>5.2.&nbsp;Informative References</h3>
 <table width="99%" border="0">
-<tr><td class="author-text" valign="top"><a name="tva">[tva]</a></td>
+<tr><td class="author-text" valign="top"><a name="DVB">[DVB]</a></td>
+<td class="author-text">&ldquo;<a href="http://www.dvb.org/">DVB Project</a>.&rdquo;</td></tr>
+<tr><td class="author-text" valign="top"><a name="TV-ANYTIME">[TV-ANYTIME]</a></td>
 <td class="author-text">&ldquo;<a href="http://www.tv-anytime.org/">TV Anytime Forum</a>.&rdquo;</td></tr>
 <tr><td class="author-text" valign="top"><a name="RFC 5234">[RFC 5234]</a></td>
 <td class="author-text">Crocker, D., Ed. and P. Overell, &ldquo;<a href="http://tools.ietf.org/html/rfc5234">Augmented BNF for Syntax Specifications: ABNF</a>,&rdquo; RFC&nbsp;5234, STD&nbsp;68, January&nbsp;2008.</td></tr>
@@ -607,6 +601,8 @@ References</h3>
 <td class="author-text">European Broadcasting Union, DVB Project, and European Telecommunications Standards Institute, &ldquo;Digital Video Broadcasting (DVB); Multimedia Home Platform (MHP) Specification 1.1.1,&rdquo; ETSI TS&nbsp;102 812, August&nbsp;2008.</td></tr>
 <tr><td class="author-text" valign="top"><a name="DAVIC9">[DAVIC9]</a></td>
 <td class="author-text">Digital Audio-Video Council, &ldquo;DAVIC 1.4.1 Specification Part 9: Information Representation,&rdquo; 1999.</td></tr>
+<tr><td class="author-text" valign="top"><a name="BCP 115">[BCP 115]</a></td>
+<td class="author-text">Hansen, T., Hardie, T., and L. Masinter, &ldquo;<a href="http://tools.ietf.org/html/rfc4395">Guidelines and Registration Procedures for New URI Schemes</a>,&rdquo; RFC&nbsp;4395, BCP&nbsp;115, February&nbsp;2006.</td></tr>
 </table>
 
 <a name="rfc.authors"></a><br /><hr />
