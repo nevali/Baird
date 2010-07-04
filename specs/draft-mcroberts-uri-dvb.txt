@@ -3,8 +3,8 @@
 
 Network Working Group                                       M. McRoberts
 Internet-Draft                                             Project Baird
-Intended status: Informational                              July 1, 2010
-Expires: January 2, 2011
+Intended status: Informational                              July 4, 2010
+Expires: January 5, 2011
 
 
    Uniform Resource Identifiers for Digital Video Broadcasting (DVB)
@@ -31,7 +31,7 @@ Status of this Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on January 2, 2011.
+   This Internet-Draft will expire on January 5, 2011.
 
 Copyright Notice
 
@@ -52,7 +52,7 @@ Copyright Notice
 
 
 
-McRoberts                Expires January 2, 2011                [Page 1]
+McRoberts                Expires January 5, 2011                [Page 1]
 
 Internet-Draft                URIs for DVB                     July 2010
 
@@ -108,7 +108,7 @@ Internet-Draft                URIs for DVB                     July 2010
 
 
 
-McRoberts                Expires January 2, 2011                [Page 2]
+McRoberts                Expires January 5, 2011                [Page 2]
 
 Internet-Draft                URIs for DVB                     July 2010
 
@@ -164,7 +164,7 @@ Internet-Draft                URIs for DVB                     July 2010
 
 
 
-McRoberts                Expires January 2, 2011                [Page 3]
+McRoberts                Expires January 5, 2011                [Page 3]
 
 Internet-Draft                URIs for DVB                     July 2010
 
@@ -220,7 +220,7 @@ Internet-Draft                URIs for DVB                     July 2010
 
 
 
-McRoberts                Expires January 2, 2011                [Page 4]
+McRoberts                Expires January 5, 2011                [Page 4]
 
 Internet-Draft                URIs for DVB                     July 2010
 
@@ -276,7 +276,7 @@ Internet-Draft                URIs for DVB                     July 2010
 
 
 
-McRoberts                Expires January 2, 2011                [Page 5]
+McRoberts                Expires January 5, 2011                [Page 5]
 
 Internet-Draft                URIs for DVB                     July 2010
 
@@ -332,7 +332,7 @@ Internet-Draft                URIs for DVB                     July 2010
 
 
 
-McRoberts                Expires January 2, 2011                [Page 6]
+McRoberts                Expires January 5, 2011                [Page 6]
 
 Internet-Draft                URIs for DVB                     July 2010
 
@@ -388,7 +388,7 @@ Internet-Draft                URIs for DVB                     July 2010
 
 
 
-McRoberts                Expires January 2, 2011                [Page 7]
+McRoberts                Expires January 5, 2011                [Page 7]
 
 Internet-Draft                URIs for DVB                     July 2010
 
@@ -444,7 +444,7 @@ Internet-Draft                URIs for DVB                     July 2010
 
 
 
-McRoberts                Expires January 2, 2011                [Page 8]
+McRoberts                Expires January 5, 2011                [Page 8]
 
 Internet-Draft                URIs for DVB                     July 2010
 
@@ -500,7 +500,7 @@ Internet-Draft                URIs for DVB                     July 2010
 
 
 
-McRoberts                Expires January 2, 2011                [Page 9]
+McRoberts                Expires January 5, 2011                [Page 9]
 
 Internet-Draft                URIs for DVB                     July 2010
 
@@ -556,7 +556,7 @@ Internet-Draft                URIs for DVB                     July 2010
 
 
 
-McRoberts                Expires January 2, 2011               [Page 10]
+McRoberts                Expires January 5, 2011               [Page 10]
 
 Internet-Draft                URIs for DVB                     July 2010
 
@@ -612,7 +612,7 @@ Internet-Draft                URIs for DVB                     July 2010
 
 
 
-McRoberts                Expires January 2, 2011               [Page 11]
+McRoberts                Expires January 5, 2011               [Page 11]
 
 Internet-Draft                URIs for DVB                     July 2010
 
@@ -668,7 +668,7 @@ Internet-Draft                URIs for DVB                     July 2010
 
 
 
-McRoberts                Expires January 2, 2011               [Page 12]
+McRoberts                Expires January 5, 2011               [Page 12]
 
 Internet-Draft                URIs for DVB                     July 2010
 
@@ -724,5 +724,5 @@ Author's Address
 
 
 
-McRoberts                Expires January 2, 2011               [Page 13]
+McRoberts                Expires January 5, 2011               [Page 13]
 
