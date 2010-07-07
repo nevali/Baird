@@ -1,0 +1,361 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en"><head><title>Project Baird: General System Overview</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="description" content="Project Baird: General System Overview">
+<meta name="keywords" content="I-D, Internet-Draft">
+<meta name="generator" content="xml2rfc v1.35 (http://xml.resource.org/)">
+<style type='text/css'><!--
+        body {
+                font-family: verdana, charcoal, helvetica, arial, sans-serif;
+                font-size: small; color: #000; background-color: #FFF;
+                margin: 2em;
+        }
+        h1, h2, h3, h4, h5, h6 {
+                font-family: helvetica, monaco, "MS Sans Serif", arial, sans-serif;
+                font-weight: bold; font-style: normal;
+        }
+        h1 { color: #900; background-color: transparent; text-align: right; }
+        h3 { color: #333; background-color: transparent; }
+
+        td.RFCbug {
+                font-size: x-small; text-decoration: none;
+                width: 30px; height: 30px; padding-top: 2px;
+                text-align: justify; vertical-align: middle;
+                background-color: #000;
+        }
+        td.RFCbug span.RFC {
+                font-family: monaco, charcoal, geneva, "MS Sans Serif", helvetica, verdana, sans-serif;
+                font-weight: bold; color: #666;
+        }
+        td.RFCbug span.hotText {
+                font-family: charcoal, monaco, geneva, "MS Sans Serif", helvetica, verdana, sans-serif;
+                font-weight: normal; text-align: center; color: #FFF;
+        }
+
+        table.TOCbug { width: 30px; height: 15px; }
+        td.TOCbug {
+                text-align: center; width: 30px; height: 15px;
+                color: #FFF; background-color: #900;
+        }
+        td.TOCbug a {
+                font-family: monaco, charcoal, geneva, "MS Sans Serif", helvetica, sans-serif;
+                font-weight: bold; font-size: x-small; text-decoration: none;
+                color: #FFF; background-color: transparent;
+        }
+
+        td.header {
+                font-family: arial, helvetica, sans-serif; font-size: x-small;
+                vertical-align: top; width: 33%;
+                color: #FFF; background-color: #666;
+        }
+        td.author { font-weight: bold; font-size: x-small; margin-left: 4em; }
+        td.author-text { font-size: x-small; }
+
+        /* info code from SantaKlauss at http://www.madaboutstyle.com/tooltip2.html */
+        a.info {
+                /* This is the key. */
+                position: relative;
+                z-index: 24;
+                text-decoration: none;
+        }
+        a.info:hover {
+                z-index: 25;
+                color: #FFF; background-color: #900;
+        }
+        a.info span { display: none; }
+        a.info:hover span.info {
+                /* The span will display just on :hover state. */
+                display: block;
+                position: absolute;
+                font-size: smaller;
+                top: 2em; left: -5em; width: 15em;
+                padding: 2px; border: 1px solid #333;
+                color: #900; background-color: #EEE;
+                text-align: left;
+        }
+
+        a { font-weight: bold; }
+        a:link    { color: #900; background-color: transparent; }
+        a:visited { color: #633; background-color: transparent; }
+        a:active  { color: #633; background-color: transparent; }
+
+        p { margin-left: 2em; margin-right: 2em; }
+        p.copyright { font-size: x-small; }
+        p.toc { font-size: small; font-weight: bold; margin-left: 3em; }
+        table.toc { margin: 0 0 0 3em; padding: 0; border: 0; vertical-align: text-top; }
+        td.toc { font-size: small; font-weight: bold; vertical-align: text-top; }
+
+        ol.text { margin-left: 2em; margin-right: 2em; }
+        ul.text { margin-left: 2em; margin-right: 2em; }
+        li      { margin-left: 3em; }
+
+        /* RFC-2629 <spanx>s and <artwork>s. */
+        em     { font-style: italic; }
+        strong { font-weight: bold; }
+        dfn    { font-weight: bold; font-style: normal; }
+        cite   { font-weight: normal; font-style: normal; }
+        tt     { color: #036; }
+        tt, pre, pre dfn, pre em, pre cite, pre span {
+                font-family: "Courier New", Courier, monospace; font-size: small;
+        }
+        pre {
+                text-align: left; padding: 4px;
+                color: #000; background-color: #CCC;
+        }
+        pre dfn  { color: #900; }
+        pre em   { color: #66F; background-color: #FFC; font-weight: normal; }
+        pre .key { color: #33C; font-weight: bold; }
+        pre .id  { color: #900; }
+        pre .str { color: #000; background-color: #CFF; }
+        pre .val { color: #066; }
+        pre .rep { color: #909; }
+        pre .oth { color: #000; background-color: #FCF; }
+        pre .err { background-color: #FCC; }
+
+        /* RFC-2629 <texttable>s. */
+        table.all, table.full, table.headers, table.none {
+                font-size: small; text-align: center; border-width: 2px;
+                vertical-align: top; border-collapse: collapse;
+        }
+        table.all, table.full { border-style: solid; border-color: black; }
+        table.headers, table.none { border-style: none; }
+        th {
+                font-weight: bold; border-color: black;
+                border-width: 2px 2px 3px 2px;
+        }
+        table.all th, table.full th { border-style: solid; }
+        table.headers th { border-style: none none solid none; }
+        table.none th { border-style: none; }
+        table.all td {
+                border-style: solid; border-color: #333;
+                border-width: 1px 2px;
+        }
+        table.full td, table.headers td, table.none td { border-style: none; }
+
+        hr { height: 1px; }
+        hr.insert {
+                width: 80%; border-style: none; border-width: 0;
+                color: #CCC; background-color: #CCC;
+        }
+--></style>
+</head>
+<body>
+<table summary="layout" width="66%" border="0" cellpadding="0" cellspacing="0"><tr><td><table summary="layout" width="100%" border="0" cellpadding="2" cellspacing="1">
+<tr><td class="header">Network Working Group</td><td class="header">M. McRoberts</td></tr>
+<tr><td class="header">Internet-Draft</td><td class="header">Project Baird</td></tr>
+<tr><td class="header">Intended status: Informational</td><td class="header">July 4, 2010</td></tr>
+<tr><td class="header">Expires: January 5, 2011</td><td class="header">&nbsp;</td></tr>
+</table></td></tr></table>
+<h1><br />Project Baird: General System Overview<br />draft-mcroberts-baird-overview-00</h1>
+
+<h3>Abstract</h3>
+
+<p>
+				Project Baird is a collection of specifications defining means
+				by which Internet-based services can be associated to television
+				and radio broadcasts in a variety of deployment scenarios. This
+				document provides a general overview of the project and system
+				architecture.
+			
+</p>
+<h3>Status of this Memo</h3>
+<p>
+This Internet-Draft is submitted  in full
+conformance with the provisions of BCP&nbsp;78 and BCP&nbsp;79.</p>
+<p>
+Internet-Drafts are working documents of the Internet Engineering
+Task Force (IETF).  Note that other groups may also distribute
+working documents as Internet-Drafts.  The list of current
+Internet-Drafts is at http://datatracker.ietf.org/drafts/current/.</p>
+<p>
+Internet-Drafts are draft documents valid for a maximum of six months
+and may be updated, replaced, or obsoleted by other documents at any time.
+It is inappropriate to use Internet-Drafts as reference material or to cite
+them other than as &ldquo;work in progress.&rdquo;</p>
+<p>
+This Internet-Draft will expire on January 5, 2011.</p>
+
+<h3>Copyright Notice</h3>
+<p>
+Copyright (c) 2010 IETF Trust and the persons identified as the
+document authors.  All rights reserved.</p>
+<p>
+This document is subject to BCP 78 and the IETF Trust's Legal
+Provisions Relating to IETF Documents
+(http://trustee.ietf.org/license-info) in effect on the date of
+publication of this document.  Please review these documents
+carefully, as they describe your rights and restrictions with respect
+to this document. Code Components extracted from this document must
+include Simplified BSD License text as described in Section 4.e of
+the Trust Legal Provisions and are provided without warranty as
+described in the Simplified BSD License.</p>
+
+<a name="intro"></a><br /><hr />
+<a name="rfc.section.1"></a><h3>1.&nbsp;
+Introduction</h3>
+
+<p>
+				Project Baird is the name given to an effort intended to collate
+				specifications in order to define an architecture by which broadcast
+				television and radio programming can be augmented by Internet-based
+				services.
+			
+</p>
+<p>
+				Where possible, Project Baird makes use of existing standards - the
+				intent is not to invent an entire ecosystem, but to bring together
+				specifications which already exist in order to create a coherent
+				environment.
+			
+</p>
+<p>
+				Project Baird is deliberately agnostic in as many respects as possible:
+				for example, any broadcasting system can be used provided services (stations)
+				and events (programmes) can be uniquely identified in the form of
+				fully-qualified domain names and URIs respectively.
+			
+</p>
+<p>
+				The below sections outline expected deployment scenarios in general
+				terms, followed by an brief overview of each of the different aspects
+				of the Baird environment.
+			
+</p>
+<a name="deploy"></a><br /><hr />
+<a name="rfc.section.2"></a><h3>2.&nbsp;
+Deployment scenarios</h3>
+
+<p>
+				Project Baird is not a single specification to a particular environment
+				either conforms or does not in a simple binary fashion: there are a range
+				of different configurations with varying levels of functionality all of
+				which fall within the scope of the project.
+			
+</p>
+<p>
+				Project Baird is structured in this manner to allow for gradual adoption
+				on the parts of both consumers and broadcasters: wholesale upgrades, while
+				feasible to an extent on the part of broadcasters (cost permitting) is
+				rarely a realistic proposition for consumers. For this reason, the
+				first scenario described here involves no new reception hardware.
+			
+</p>
+<p>
+				As Project Baird's aims are, first and foremost, to provide an open-ended
+				architecture -- frameworks upon which applications can be developed -- the
+				services which can be made available will only grow over time. Moreover,
+				by specifying how existing systems can be augmented in order to make this possible,
+				rather than seeking to define every aspect of a hybrid TV/Internet environment,
+				it does not restrict the applications which can be developed: there is no
+				central authority which must grant approval to content providers,
+				independent developers or hardware vendors before applications, products and
+				devices can be distributed -- each party only has to conform to the specifications
+				for the functionality they implement.
+			
+</p>
+<a name="anchor1"></a><br /><hr />
+<a name="rfc.section.2.1"></a><h3>2.1.&nbsp;
+Traditional receiver with secondary devices</h3>
+
+<p>
+					In this scenario, a consumer has a traditional receiver, for example a
+					television with an integrated receiver, or some kind of set-top device;
+					the receiver is not connected to the consumer's local network or the
+					Internet at all.
+				
+</p>
+<p>
+					However, the consumer does, have other devices which are Internet-connected:
+					perhaps a laptop or a smartphone. An application or website can, once
+					informed by the consumer as to which channel their receiver is tuned
+					to, provide related content (including secondary audio/visual streams,
+					timed events, or even a simulcast of the broadcast programme). Although the
+					secondary device will not automatically be notified if the user switches
+					channels, for example, there remains a broad set of functionality which
+					can be made available.
+				
+</p>
+<p>
+					If there are multiple devices operating on the local network, then they will
+					be able to communicate and co-ordinate with one another regarding the
+					programmes being received: for example, "household recommendations" could
+					be presented which are intended to be appropriate not just to the single
+					user but to the entire household based upon the presence of multiple devices.
+				
+</p>
+<a name="anchor2"></a><br /><hr />
+<a name="rfc.section.2.2"></a><h3>2.2.&nbsp;
+Hybrid receiver</h3>
+
+<p>
+					An alternate scenario is one where a receiver is itself Internet-connected
+					but does not communicate with any secondary devices. Many modern cable TV
+					set-top boxes fall in to this category today.
+				
+</p>
+<p>
+					As compared to the previous scenario, some aspects of the available
+					functionality are enhanced, while others are handicapped. For example, the
+					receiver holds the information regarding the current programme being
+					received, and can communicate with Internet-based services directly in
+					order to obtain secondary content, interactive applications, and some
+					social features.
+				
+</p>
+<p>
+					A hybrid receiver can be capable of whole range of applications, allowing
+					delivery of content from both Internet-based and broadcast sources. Service
+					discovery allows for applications and content related specifically to
+					services and programmes (whether they're delivered via linear broadcast or
+					via the Internet) to be automatically located and presented.
+				
+</p>
+<a name="anchor3"></a><br /><hr />
+<a name="rfc.section.2.3"></a><h3>2.3.&nbsp;
+Hybrid receiver with secondary devices</h3>
+
+<p>
+					A consumer who has both a hybrid receiver and secondary devices is afforded the
+					benefits of both of the preceding scenarios. This scenario offers a wealth of
+					opportunities: rather than simply being disjoint collections of devices which
+					happen to join the same network (and even then, only to access the Internet),
+					devices can work together and coordinate in order to provide services to the
+					consumer.
+				
+</p>
+<p>
+					When combined with secondary devices, a hybrid receiver can act as a
+					conduit, as well as a local -- private -- server for protocols such as
+					XMPP upon which a range of highly localised and targeted applications
+					could be developed (for example, programme recommendations with the benefit of
+					context in the form of presence information).
+				
+</p>
+<p>
+					Multiple devices working in tandem in this way leads to a vast range of
+					possible applications from the comparatively basic -- such as remote
+					control and inquiry over the network -- to the more complete, such as
+					delivery of personalised, interactive, context-dependent content to
+					secondary devices.
+				
+</p>
+<p>
+					Secondary devices which have the ability to communicate with the receiver
+					also allow applications to be implemented which, although theoretically
+					possible with a stand-alone hybrid receiver, would suffer from usability
+					issues when put into practice.
+				
+</p>
+<a name="rfc.authors"></a><br /><hr />
+<h3>Author's Address</h3>
+<table width="99%" border="0" cellpadding="0" cellspacing="0">
+<tr><td class="author-text">&nbsp;</td>
+<td class="author-text">Mo McRoberts</td></tr>
+<tr><td class="author-text">&nbsp;</td>
+<td class="author-text">Project Baird</td></tr>
+<tr><td class="author" align="right">Email:&nbsp;</td>
+<td class="author-text"><a href="mailto:mo.mcroberts@nexgenta.com">mo.mcroberts@nexgenta.com</a></td></tr>
+<tr><td class="author" align="right">URI:&nbsp;</td>
+<td class="author-text"><a href="http://projectbaird.com/">http://projectbaird.com/</a></td></tr>
+</table>
+</body></html>

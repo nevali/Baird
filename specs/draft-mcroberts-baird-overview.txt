@@ -1,0 +1,280 @@
+
+
+
+Network Working Group                                       M. McRoberts
+Internet-Draft                                             Project Baird
+Intended status: Informational                              July 4, 2010
+Expires: January 5, 2011
+
+
+                 Project Baird: General System Overview
+                   draft-mcroberts-baird-overview-00
+
+Abstract
+
+   Project Baird is a collection of specifications defining means by
+   which Internet-based services can be associated to television and
+   radio broadcasts in a variety of deployment scenarios.  This document
+   provides a general overview of the project and system architecture.
+
+Status of this Memo
+
+   This Internet-Draft is submitted in full conformance with the
+   provisions of BCP 78 and BCP 79.
+
+   Internet-Drafts are working documents of the Internet Engineering
+   Task Force (IETF).  Note that other groups may also distribute
+   working documents as Internet-Drafts.  The list of current Internet-
+   Drafts is at http://datatracker.ietf.org/drafts/current/.
+
+   Internet-Drafts are draft documents valid for a maximum of six months
+   and may be updated, replaced, or obsoleted by other documents at any
+   time.  It is inappropriate to use Internet-Drafts as reference
+   material or to cite them other than as "work in progress."
+
+   This Internet-Draft will expire on January 5, 2011.
+
+Copyright Notice
+
+   Copyright (c) 2010 IETF Trust and the persons identified as the
+   document authors.  All rights reserved.
+
+   This document is subject to BCP 78 and the IETF Trust's Legal
+   Provisions Relating to IETF Documents
+   (http://trustee.ietf.org/license-info) in effect on the date of
+   publication of this document.  Please review these documents
+   carefully, as they describe your rights and restrictions with respect
+   to this document.  Code Components extracted from this document must
+   include Simplified BSD License text as described in Section 4.e of
+   the Trust Legal Provisions and are provided without warranty as
+   described in the Simplified BSD License.
+
+
+
+
+McRoberts                Expires January 5, 2011                [Page 1]
+
+Internet-Draft          Project Baird - Overview               July 2010
+
+
+1.  Introduction
+
+   Project Baird is the name given to an effort intended to collate
+   specifications in order to define an architecture by which broadcast
+   television and radio programming can be augmented by Internet-based
+   services.
+
+   Where possible, Project Baird makes use of existing standards - the
+   intent is not to invent an entire ecosystem, but to bring together
+   specifications which already exist in order to create a coherent
+   environment.
+
+   Project Baird is deliberately agnostic in as many respects as
+   possible: for example, any broadcasting system can be used provided
+   services (stations) and events (programmes) can be uniquely
+   identified in the form of fully-qualified domain names and URIs
+   respectively.
+
+   The below sections outline expected deployment scenarios in general
+   terms, followed by an brief overview of each of the different aspects
+   of the Baird environment.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+McRoberts                Expires January 5, 2011                [Page 2]
+
+Internet-Draft          Project Baird - Overview               July 2010
+
+
+2.  Deployment scenarios
+
+   Project Baird is not a single specification to a particular
+   environment either conforms or does not in a simple binary fashion:
+   there are a range of different configurations with varying levels of
+   functionality all of which fall within the scope of the project.
+
+   Project Baird is structured in this manner to allow for gradual
+   adoption on the parts of both consumers and broadcasters: wholesale
+   upgrades, while feasible to an extent on the part of broadcasters
+   (cost permitting) is rarely a realistic proposition for consumers.
+   For this reason, the first scenario described here involves no new
+   reception hardware.
+
+   As Project Baird's aims are, first and foremost, to provide an open-
+   ended architecture -- frameworks upon which applications can be
+   developed -- the services which can be made available will only grow
+   over time.  Moreover, by specifying how existing systems can be
+   augmented in order to make this possible, rather than seeking to
+   define every aspect of a hybrid TV/Internet environment, it does not
+   restrict the applications which can be developed: there is no central
+   authority which must grant approval to content providers, independent
+   developers or hardware vendors before applications, products and
+   devices can be distributed -- each party only has to conform to the
+   specifications for the functionality they implement.
+
+2.1.  Traditional receiver with secondary devices
+
+   In this scenario, a consumer has a traditional receiver, for example
+   a television with an integrated receiver, or some kind of set-top
+   device; the receiver is not connected to the consumer's local network
+   or the Internet at all.
+
+   However, the consumer does, have other devices which are Internet-
+   connected: perhaps a laptop or a smartphone.  An application or
+   website can, once informed by the consumer as to which channel their
+   receiver is tuned to, provide related content (including secondary
+   audio/visual streams, timed events, or even a simulcast of the
+   broadcast programme).  Although the secondary device will not
+   automatically be notified if the user switches channels, for example,
+   there remains a broad set of functionality which can be made
+   available.
+
+   If there are multiple devices operating on the local network, then
+   they will be able to communicate and co-ordinate with one another
+   regarding the programmes being received: for example, "household
+   recommendations" could be presented which are intended to be
+   appropriate not just to the single user but to the entire household
+
+
+
+McRoberts                Expires January 5, 2011                [Page 3]
+
+Internet-Draft          Project Baird - Overview               July 2010
+
+
+   based upon the presence of multiple devices.
+
+2.2.  Hybrid receiver
+
+   An alternate scenario is one where a receiver is itself Internet-
+   connected but does not communicate with any secondary devices.  Many
+   modern cable TV set-top boxes fall in to this category today.
+
+   As compared to the previous scenario, some aspects of the available
+   functionality are enhanced, while others are handicapped.  For
+   example, the receiver holds the information regarding the current
+   programme being received, and can communicate with Internet-based
+   services directly in order to obtain secondary content, interactive
+   applications, and some social features.
+
+   A hybrid receiver can be capable of whole range of applications,
+   allowing delivery of content from both Internet-based and broadcast
+   sources.  Service discovery allows for applications and content
+   related specifically to services and programmes (whether they're
+   delivered via linear broadcast or via the Internet) to be
+   automatically located and presented.
+
+2.3.  Hybrid receiver with secondary devices
+
+   A consumer who has both a hybrid receiver and secondary devices is
+   afforded the benefits of both of the preceding scenarios.  This
+   scenario offers a wealth of opportunities: rather than simply being
+   disjoint collections of devices which happen to join the same network
+   (and even then, only to access the Internet), devices can work
+   together and coordinate in order to provide services to the consumer.
+
+   When combined with secondary devices, a hybrid receiver can act as a
+   conduit, as well as a local -- private -- server for protocols such
+   as XMPP upon which a range of highly localised and targeted
+   applications could be developed (for example, programme
+   recommendations with the benefit of context in the form of presence
+   information).
+
+   Multiple devices working in tandem in this way leads to a vast range
+   of possible applications from the comparatively basic -- such as
+   remote control and inquiry over the network -- to the more complete,
+   such as delivery of personalised, interactive, context-dependent
+   content to secondary devices.
+
+   Secondary devices which have the ability to communicate with the
+   receiver also allow applications to be implemented which, although
+   theoretically possible with a stand-alone hybrid receiver, would
+   suffer from usability issues when put into practice.
+
+
+
+McRoberts                Expires January 5, 2011                [Page 4]
+
+Internet-Draft          Project Baird - Overview               July 2010
+
+
+Author's Address
+
+   Mo McRoberts
+   Project Baird
+
+   Email: mo.mcroberts@nexgenta.com
+   URI:   http://projectbaird.com/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+McRoberts                Expires January 5, 2011                [Page 5]
+
