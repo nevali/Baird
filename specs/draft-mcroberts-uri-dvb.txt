@@ -3,12 +3,12 @@
 
 Network Working Group                                       M. McRoberts
 Internet-Draft                                             Project Baird
-Intended status: Informational                              July 4, 2010
-Expires: January 5, 2011
+Intended status: Informational                              July 7, 2010
+Expires: January 8, 2011
 
 
    Uniform Resource Identifiers for Digital Video Broadcasting (DVB)
-                       draft-mcroberts-uri-dvb-03
+                       draft-mcroberts-uri-dvb-04
 
 Abstract
 
@@ -31,7 +31,7 @@ Status of this Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on January 5, 2011.
+   This Internet-Draft will expire on January 8, 2011.
 
 Copyright Notice
 
@@ -52,7 +52,7 @@ Copyright Notice
 
 
 
-McRoberts                Expires January 5, 2011                [Page 1]
+McRoberts                Expires January 8, 2011                [Page 1]
 
 Internet-Draft                URIs for DVB                     July 2010
 
@@ -108,7 +108,7 @@ Internet-Draft                URIs for DVB                     July 2010
 
 
 
-McRoberts                Expires January 5, 2011                [Page 2]
+McRoberts                Expires January 8, 2011                [Page 2]
 
 Internet-Draft                URIs for DVB                     July 2010
 
@@ -164,7 +164,7 @@ Internet-Draft                URIs for DVB                     July 2010
 
 
 
-McRoberts                Expires January 5, 2011                [Page 3]
+McRoberts                Expires January 8, 2011                [Page 3]
 
 Internet-Draft                URIs for DVB                     July 2010
 
@@ -220,7 +220,7 @@ Internet-Draft                URIs for DVB                     July 2010
 
 
 
-McRoberts                Expires January 5, 2011                [Page 4]
+McRoberts                Expires January 8, 2011                [Page 4]
 
 Internet-Draft                URIs for DVB                     July 2010
 
@@ -276,7 +276,7 @@ Internet-Draft                URIs for DVB                     July 2010
 
 
 
-McRoberts                Expires January 5, 2011                [Page 5]
+McRoberts                Expires January 8, 2011                [Page 5]
 
 Internet-Draft                URIs for DVB                     July 2010
 
@@ -294,7 +294,53 @@ Internet-Draft                URIs for DVB                     July 2010
    uric                =  unreserved / pct-encoded / ";" / "?" / ":"
                           / "@" / "&" / "=" / "+" / "$" / "," / "/"
 
-2.2.  Historical Syntax
+2.1.1.  Encoding
+
+   Section 5 of [ETSI TS 102 851] specifies that:
+
+   "All characters not within the range of characters allowed in a URI
+   must be encoded into UTF-8 and included in the URI as a sequence of
+   escaped octets.  An escaped octet is encoded as a character triplet,
+   consisting of the percent character "%" followed by the two
+   hexadecimal digits representing the octet code."
+
+2.2.  Applications
+
+   dvb URIs are used most often within the context of DVB itself:
+   interactive television applications use them in order to locate
+   resources and to reference services and programmes which are
+   broadcast.
+
+   There are, however, wider applications: a dvb URI may be used by
+   anything wishing to identify a DVB service, event, or even specific
+   resource.  For example, a receiver connected to a local area network
+   might allow other devices to query it for information regarding the
+   current programme or service: in this context, a dvb URI would
+   typically be the most authoritative single identifier which could be
+   used to to refer to that programme.
+
+   Similarly, a web service could be implemented by a platform operator
+   or a broadcaster (or some party working on their behalf) which allows
+   resolution of dvb URIs - this would allow a device to retrieve web
+   pages or other content which relate to the current programme (or some
+   other entry in the device's Electronic Programme Guide).
+
+   Implementing such a system would naturally require some mechanism for
+   devices to discover an appropriate resolution service, and no
+   standard mechanism exists to date, however RadioDNS [RADIODNS] has
+   developed a generic service discovery system for use with broadcast
+
+
+
+McRoberts                Expires January 8, 2011                [Page 6]
+
+Internet-Draft                URIs for DVB                     July 2010
+
+
+   radio which could be applied to DVB (or indeed other broadcast
+   systems) with little in the way of modification.
+
+2.3.  Historical Syntax
 
    Prior to the standardisation of [ETSI TS 102 851], a syntax for dvb
    URIs was defined by [DAVIC9], Section 9.5.2.  The syntax defined in
@@ -332,7 +378,17 @@ Internet-Draft                URIs for DVB                     July 2010
 
 
 
-McRoberts                Expires January 5, 2011                [Page 6]
+
+
+
+
+
+
+
+
+
+
+McRoberts                Expires January 8, 2011                [Page 7]
 
 Internet-Draft                URIs for DVB                     July 2010
 
@@ -388,7 +444,7 @@ Internet-Draft                URIs for DVB                     July 2010
 
 
 
-McRoberts                Expires January 5, 2011                [Page 7]
+McRoberts                Expires January 8, 2011                [Page 8]
 
 Internet-Draft                URIs for DVB                     July 2010
 
@@ -396,7 +452,7 @@ Internet-Draft                URIs for DVB                     July 2010
    hex_string          =  1 * HEXDIG
 
 
-2.3.  Examples
+2.4.  Examples
 
    dvb://233a.1041
       DVB transport stream
@@ -444,7 +500,7 @@ Internet-Draft                URIs for DVB                     July 2010
 
 
 
-McRoberts                Expires January 5, 2011                [Page 8]
+McRoberts                Expires January 8, 2011                [Page 9]
 
 Internet-Draft                URIs for DVB                     July 2010
 
@@ -500,7 +556,7 @@ Internet-Draft                URIs for DVB                     July 2010
 
 
 
-McRoberts                Expires January 5, 2011                [Page 9]
+McRoberts                Expires January 8, 2011               [Page 10]
 
 Internet-Draft                URIs for DVB                     July 2010
 
@@ -556,7 +612,7 @@ Internet-Draft                URIs for DVB                     July 2010
 
 
 
-McRoberts                Expires January 5, 2011               [Page 10]
+McRoberts                Expires January 8, 2011               [Page 11]
 
 Internet-Draft                URIs for DVB                     July 2010
 
@@ -574,7 +630,9 @@ Internet-Draft                URIs for DVB                     July 2010
               European Broadcasting Union, DVB Project, and European
               Telecommunications Standards Institute, "Digital Video
               Broadcasting (DVB); Uniform Resource Identifiers (URI) for
-              DVB Systems", ETSI TS 102 851, January 2010.
+              DVB Systems", ETSI TS 102 851, January 2010, <http://
+              www.etsi.org/deliver/etsi_ts/102800_102899/102851/
+              01.01.01_60/ts_102851v010101p.pdf>.
 
 5.2.  Informative References
 
@@ -591,7 +649,9 @@ Internet-Draft                URIs for DVB                     July 2010
               European Broadcasting Union, DVB Project, and European
               Telecommunications Standards Institute, "Digital Video
               Broadcasting (DVB); Multimedia Home Platform (MHP)
-              Specification 1.1.1", ETSI TS 102 812, August 2008.
+              Specification 1.1.1", ETSI TS 102 812, August 2008, <http:
+              //www.etsi.org/deliver/etsi_ts/102800_102899/102812/
+              01.02.02_60/ts_102812v010202p.pdf>.
 
    [DAVIC9]   Digital Audio-Video Council, "DAVIC 1.4.1 Specification
               Part 9: Information Representation", 1999.
@@ -600,19 +660,15 @@ Internet-Draft                URIs for DVB                     July 2010
               Registration Procedures for New URI Schemes", RFC 4395,
               BCP 115, February 2006.
 
+   [RADIODNS]
+              "RadioDNS", <http://radiodns.org/>.
 
 
 
 
 
 
-
-
-
-
-
-
-McRoberts                Expires January 5, 2011               [Page 11]
+McRoberts                Expires January 8, 2011               [Page 12]
 
 Internet-Draft                URIs for DVB                     July 2010
 
@@ -668,5 +724,5 @@ Author's Address
 
 
 
-McRoberts                Expires January 5, 2011               [Page 12]
+McRoberts                Expires January 8, 2011               [Page 13]
 

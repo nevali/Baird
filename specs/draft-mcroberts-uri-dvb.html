@@ -143,10 +143,10 @@
 <table summary="layout" width="66%" border="0" cellpadding="0" cellspacing="0"><tr><td><table summary="layout" width="100%" border="0" cellpadding="2" cellspacing="1">
 <tr><td class="header">Network Working Group</td><td class="header">M. McRoberts</td></tr>
 <tr><td class="header">Internet-Draft</td><td class="header">Project Baird</td></tr>
-<tr><td class="header">Intended status: Informational</td><td class="header">July 4, 2010</td></tr>
-<tr><td class="header">Expires: January 5, 2011</td><td class="header">&nbsp;</td></tr>
+<tr><td class="header">Intended status: Informational</td><td class="header">July 7, 2010</td></tr>
+<tr><td class="header">Expires: January 8, 2011</td><td class="header">&nbsp;</td></tr>
 </table></td></tr></table>
-<h1><br />Uniform Resource Identifiers for Digital Video Broadcasting (DVB)<br />draft-mcroberts-uri-dvb-03</h1>
+<h1><br />Uniform Resource Identifiers for Digital Video Broadcasting (DVB)<br />draft-mcroberts-uri-dvb-04</h1>
 
 <h3>Abstract</h3>
 
@@ -171,7 +171,7 @@ and may be updated, replaced, or obsoleted by other documents at any time.
 It is inappropriate to use Internet-Drafts as reference material or to cite
 them other than as &ldquo;work in progress.&rdquo;</p>
 <p>
-This Internet-Draft will expire on January 5, 2011.</p>
+This Internet-Draft will expire on January 8, 2011.</p>
 
 <h3>Copyright Notice</h3>
 <p>
@@ -380,8 +380,59 @@ seconds             =  2 DIGIT
 uric                =  unreserved / pct-encoded / ";" / "?" / ":"
                        / "@" / "&amp;" / "=" / "+" / "$" / "," / "/"
 </pre></div>
-<a name="historical"></a><br /><hr />
+<a name="anchor4"></a><br /><hr />
+<a name="rfc.section.2.1.1"></a><h3>2.1.1.&nbsp;
+Encoding</h3>
+
+<p>
+						Section 5 of <a class='info' href='#ETSI TS 102 851'>[ETSI TS 102 851]<span> (</span><span class='info'>European Broadcasting Union, DVB Project, and European Telecommunications Standards Institute, &ldquo;Digital Video Broadcasting (DVB); Uniform Resource Identifiers (URI) for DVB Systems,&rdquo; January&nbsp;2010.</span><span>)</span></a> specifies that:
+					
+</p>
+<p>
+						"All characters not within the range of characters allowed in a
+						URI must be encoded into UTF-8 and included in the URI
+						as a sequence of escaped octets. An escaped octet is encoded
+						as a character triplet, consisting of the percent character
+						"%" followed by the two hexadecimal digits representing the octet
+						code."
+					
+</p>
+<a name="anchor5"></a><br /><hr />
 <a name="rfc.section.2.2"></a><h3>2.2.&nbsp;
+Applications</h3>
+
+<p>
+					dvb URIs are used most often within the context of DVB itself: interactive
+					television applications use them in order to locate resources and to reference
+					services and programmes which are broadcast.
+				
+</p>
+<p>
+					There are, however, wider applications: a dvb URI may be used by anything
+					wishing to identify a DVB service, event, or even specific resource. For example,
+					a receiver connected to a local area network might allow other devices
+					to query it for information regarding the current programme or service: in this
+					context, a dvb URI would typically be the most authoritative single identifier
+					which could be used to to refer to that programme.
+				
+</p>
+<p>
+					Similarly, a web service could be implemented by a platform operator or a broadcaster
+					(or some party working on their behalf) which allows resolution of dvb URIs - this
+					would allow a device to retrieve web pages or other content which relate to
+					the current programme (or some other entry in the device's Electronic Programme Guide).
+				
+</p>
+<p>
+					Implementing such a system would naturally require some mechanism for devices to
+					discover an appropriate resolution service, and no standard mechanism exists to
+					date, however RadioDNS <a class='info' href='#RADIODNS'>[RADIODNS]<span> (</span><span class='info'>, &ldquo;RadioDNS,&rdquo; .</span><span>)</span></a> has developed a generic service
+					discovery system for use with broadcast radio which could be applied to DVB (or
+					indeed other broadcast systems) with little in the way of modification.
+				
+</p>
+<a name="historical"></a><br /><hr />
+<a name="rfc.section.2.3"></a><h3>2.3.&nbsp;
 Historical Syntax</h3>
 
 <p>
@@ -446,7 +497,7 @@ hex_string          =  1 * HEXDIG
 
 </pre></div>
 <a name="examples"></a><br /><hr />
-<a name="rfc.section.2.3"></a><h3>2.3.&nbsp;
+<a name="rfc.section.2.4"></a><h3>2.4.&nbsp;
 Examples</h3>
 
 <p>
@@ -585,7 +636,7 @@ References</h3>
 <tr><td class="author-text" valign="top"><a name="RFC 3986">[RFC 3986]</a></td>
 <td class="author-text">Berners-Lee, T., Fielding, R., and L. Masinter, &ldquo;<a href="http://tools.ietf.org/html/rfc3986">Uniform Resource Identifier (URI): Generic Syntax</a>,&rdquo; RFC&nbsp;3986, January&nbsp;2005.</td></tr>
 <tr><td class="author-text" valign="top"><a name="ETSI TS 102 851">[ETSI TS 102 851]</a></td>
-<td class="author-text">European Broadcasting Union, DVB Project, and European Telecommunications Standards Institute, &ldquo;Digital Video Broadcasting (DVB); Uniform Resource Identifiers (URI) for DVB Systems,&rdquo; ETSI TS&nbsp;102 851, January&nbsp;2010.</td></tr>
+<td class="author-text">European Broadcasting Union, DVB Project, and European Telecommunications Standards Institute, &ldquo;<a href="http://www.etsi.org/deliver/etsi_ts/102800_102899/102851/01.01.01_60/ts_102851v010101p.pdf">Digital Video Broadcasting (DVB); Uniform Resource Identifiers (URI) for DVB Systems</a>,&rdquo; ETSI TS&nbsp;102 851, January&nbsp;2010.</td></tr>
 </table>
 
 <a name="rfc.references2"></a><br /><hr />
@@ -598,11 +649,13 @@ References</h3>
 <tr><td class="author-text" valign="top"><a name="RFC 5234">[RFC 5234]</a></td>
 <td class="author-text">Crocker, D., Ed. and P. Overell, &ldquo;<a href="http://tools.ietf.org/html/rfc5234">Augmented BNF for Syntax Specifications: ABNF</a>,&rdquo; RFC&nbsp;5234, STD&nbsp;68, January&nbsp;2008.</td></tr>
 <tr><td class="author-text" valign="top"><a name="ETSI TS 102 812">[ETSI TS 102 812]</a></td>
-<td class="author-text">European Broadcasting Union, DVB Project, and European Telecommunications Standards Institute, &ldquo;Digital Video Broadcasting (DVB); Multimedia Home Platform (MHP) Specification 1.1.1,&rdquo; ETSI TS&nbsp;102 812, August&nbsp;2008.</td></tr>
+<td class="author-text">European Broadcasting Union, DVB Project, and European Telecommunications Standards Institute, &ldquo;<a href="http://www.etsi.org/deliver/etsi_ts/102800_102899/102812/01.02.02_60/ts_102812v010202p.pdf">Digital Video Broadcasting (DVB); Multimedia Home Platform (MHP) Specification 1.1.1</a>,&rdquo; ETSI TS&nbsp;102 812, August&nbsp;2008.</td></tr>
 <tr><td class="author-text" valign="top"><a name="DAVIC9">[DAVIC9]</a></td>
 <td class="author-text">Digital Audio-Video Council, &ldquo;DAVIC 1.4.1 Specification Part 9: Information Representation,&rdquo; 1999.</td></tr>
 <tr><td class="author-text" valign="top"><a name="BCP 115">[BCP 115]</a></td>
 <td class="author-text">Hansen, T., Hardie, T., and L. Masinter, &ldquo;<a href="http://tools.ietf.org/html/rfc4395">Guidelines and Registration Procedures for New URI Schemes</a>,&rdquo; RFC&nbsp;4395, BCP&nbsp;115, February&nbsp;2006.</td></tr>
+<tr><td class="author-text" valign="top"><a name="RADIODNS">[RADIODNS]</a></td>
+<td class="author-text">&ldquo;<a href="http://radiodns.org/">RadioDNS</a>.&rdquo;</td></tr>
 </table>
 
 <a name="rfc.authors"></a><br /><hr />
