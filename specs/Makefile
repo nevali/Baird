@@ -9,7 +9,8 @@ TCLSH ?= tclsh
 OUT = \
 	draft-mcroberts-uri-dvb.txt draft-mcroberts-uri-dvb.html \
 	draft-mcroberts-uri-resolver.txt draft-mcroberts-uri-resolver.html \
-	draft-mcroberts-baird-overview.txt draft-mcroberts-baird-overview.html
+	draft-mcroberts-baird-overview.txt draft-mcroberts-baird-overview.html \
+	draft-mcroberts-nowp.txt draft-mcroberts-nowp.html	
 
 
 ## Rules

@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd" [
+<!ENTITY rfc2119 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.2119.xml">
+<!ENTITY rfc2616 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.2616.xml">
+<!ENTITY dnssd SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.cheshire-dnsext-dns-sd.xml">
+<!ENTITY mdns SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.cheshire-dnsext-multicastdns.xml">
+<!ENTITY linkhdr SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.nottingham-http-link-header.xml">
+]>
+<rfc ipr="trust200902" category="info" docName="draft-mcroberts-nowp-00">
+	<front>
+		<title abbrev="Now Playing (NOWP) protocol">Protocol for media devices to expose Now Playing information (NOWP) on local networks</title>
+		<author initials="M." surname="McRoberts" fullname="Mo McRoberts">
+			<organization>Project Baird</organization>
+			<address>
+				<email>mo.mcroberts@nexgenta.com</email>
+				<uri>http://projectbaird.com/</uri>
+			</address>
+		</author>
+		<date day="8" month="July" year="2010" />
+		<area>General</area>
+		<keyword>I-D</keyword>
+		<keyword>Internet-Draft</keyword>
+		<abstract>
+			<t>
+				This document describes a protocol which allows network-connected media devices,
+				such as televisions, set-top boxes and radios, to be queried for URIs relating
+				to the content they are currently playing.
+			</t>
+		</abstract>
+	</front>
+	<middle>
+		<section title="Introduction">
+			<t>
+				As media receivers (and other devices) such as televisions and radios gain the
+				ability to communicate on local networks, a class of applications has arisen
+				which depends, at least in part, on being able to query a media device for
+				information about the programme or service it is currently playing.
+			</t>
+			<t>
+				This document sets out a simple protocol which allows:
+				<list style="symbols">
+					<t>
+						media devices to advertise the availability of this service to other
+						devices on a local network; and
+					</t>
+					<t>
+						media devices to be easily queried for "Now playing" information
+					</t>
+				</list>				
+			</t>
+			<t>
+				Rather than be reliant upon the many different ways in which a piece of content
+				might be described, the NOWP protocol instead relies on content and services
+				having one or more identifiers -- in the form of URIs -- which can be relayed
+				between devices and dereferenced as required.
+			</t>
+			<t>
+				It is anticipated that implementation the NOWP protocol will often (although not
+				necessarily always) form part of broader functionality to allow remote control
+				and introspection of a device. For this reason, the NOWP protocol is based upon
+				HTTP <xref target="RFC2616" /> and can co-exist with most other HTTP-based
+				applications.
+			</t>
+		</section>	
+		<section title="Conventions and terminology used in this document">
+			<t>
+				The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+				"SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
+				document are to be interpreted as described in "Key words for use in
+				RFCs to Indicate Requirement Levels" <xref target="RFC2119" />
+			</t>
+		</section>
+		<section title="Advertisment">
+			<t>
+				The NOWP protocol is advertised to other devices on a local network using
+				Multicast DNS <xref target="I-D.cheshire-dnsext-multicastdns" /> in
+				combination with DNS-based Service Discovery <xref target="I-D.cheshire-dnsext-dns-sd" />.
+			</t>
+			<t>
+				This document defines a service type <xref target="DNSSD-SRV" /> of "nowp".
+				That is, registrations occur using the name "_nowp._tcp" and SHOULD by
+				default be restricted to the link-local scope. Devices SHOULD make the service
+				available via both IPv4 and IPv6 and advertise the service accordingly.
+				The NOWP protocol specification places no particular requirement upon port
+				numbering. Devices SHOULD allow the host name used in advertisements to be
+				customised by the device's owner where possible.
+			</t>
+			<t>
+				Service advertisements MUST include a TXT record whose data is in the following format:
+			</t>
+			<figure>
+				<artwork><![CDATA[
+txt-record  =  "txtvers=1 path=" path-absolute
+]]></artwork>
+			</figure>
+			<t>
+				Clients MUST disregard advertisements which do not include a TXT record.
+				Clients MUST disregard advertisements which do not match the above format,
+				including where the value of the txtvers parameter is not "1".
+			</t>
+		</section>
+		<section title="Now Playing inquiry request">
+			<t>
+				Once a client has discovered a device advertising the NOWP protocol, it may
+				connect to it in order to inquire as to the media currently playing on the
+				device.
+			</t>
+			<t>
+				The request takes the form of an ordinary HTTP request, where:
+				<list style="symbols">
+					<t>
+						The Host request header MUST be specified as the fully-qualified domain name
+						of the PTR record advertised by the device.
+					</t>
+					<t>
+						The HTTP method used MUST be "GET"
+					</t>
+					<t>
+						The request path is the value of the "path" parameter from the advertisement's TXT record.
+					</t>
+					<t>
+						Clients SHOULD request that the connection is kept alive (via the
+						"Connection: keep-alive" request header) where repeated periodic
+						queries are anticipated.
+					</t>
+				</list>
+			</t>
+		</section>
+		<section title="Now Playing inquiry response">
+			<t>
+				Devices respond to the Now Playing inquiry request with an HTTP 2xx status
+				code. Devices MAY include a response body, but SHOULD respond with a "204 No
+				Content" status if none is included. Clients MUST consider any 2xx or 3xx status
+				code as indicative of a successful response.
+			</t>
+			<t>
+				For the purposes of the NOWP protocol, clients MUST ignore any response body,
+				and MUST NOT follow URIs given in any "Location" response headers which might
+				be returned.
+			</t>
+			<t>
+				Devices relay URIs to clients by means of a "Link" response header
+				<xref target="I-D.nottingham-http-link-header" />. The NOWP protocol
+				specifies two Link Relation values which SHALL be used:
+				<list style="hanging">
+					<t hangText="http://projectbaird.com/ns/service"><vspace />
+						This relation indicates that the linked resource is a service URI --
+						that is, a URI which identifies a service which delivers content to
+						the device, such as a television station or a podcast.
+					</t>
+					<t hangText="http://projectbaird.com/ns/event"><vspace />
+						This relation indicates that the linked resource identifies a
+						particular event, such as a radio programme or a locally-stored
+						video file.
+					</t>
+				</list>
+			</t>
+			<t>
+				Devices MAY provide multiple URIs for a service or event but MUST
+				NOT provide URIs for more than one service or more than one event.
+				Devices MAY omit URIs for either current service, current event, or
+				both. Devices SHOULD NOT include URIs with link relations of either
+				http://projectbaird.com/ns/service or http://projectbaird.com/ns/event
+				where the URI is known not to be meaningful beyond the device itself
+				except where the device provides some other service which might make
+				use of that URI in order to provide further information about the
+				service or resource.
+			</t>
+			<t>
+				Links with a relation of http://projectbaird.com/ns/event MAY include
+				two additional parameters, described below. Devices SHOULD include
+				these parameters if the relevant information is available, but MAY
+				omit either or both of them.
+				<list style="hanging">
+					<t hangText="scheduledStart"><vspace />
+						Specifies that the event, which was (or is being) received
+						from a linear broadcast medium had a start time specified
+						in the device's Electronic Programme Guide (EPG) as
+						indicated by the value of the parameter. The parameter is
+						a Datetime value in the format described below.
+					</t>
+					<t hangText="scheduledDuration"><vspace />
+						Specifies that the event has a duration specified in the
+						device's Electronic Programme Guide as indicated by the
+						value of the parameter. The parameter is a Duration value
+						in the format described below.
+					</t>
+				</list>
+			</t>
+			<section title="Datetime value format">
+				<t>
+					The Datetime format is a compatible subset of the combined date
+					and time format described in Chapter 5 of ISO 8601 and has the
+					format:
+				</t>
+				<figure>
+					<artwork><![CDATA[
+datetime  =  date "T" time "Z"
+
+date      =  year "-" month "-" day
+
+time      =  hour ":" minute [ ":" "second" ]
+
+year      =  4 DIGIT
+
+month     =  2 DIGIT
+
+day       =  2 DIGIT
+
+hour      =  2 DIGIT
+
+minute    =  2 DIGIT
+
+second    =  2 DIGIT
+]]></artwork>
+				</figure>
+			</section>
+			<section title="Duration value format">
+			</section>
+			<section title="Service and event URIs">
+				<t>
+					The exact nature of a service or event URI is, in effect, an
+					implementation detail, but some guidelines are given here.
+				</t>
+				<t>
+					Service URIs are intended to allow the identification by
+					devices other than the receiver of the service, and in particular
+					by Internet-based applications which those devices might
+					communicate with. A service which is delivered by way of
+					DVB-T transmissions might use a URI which is made up of
+					identifying values embedded in the transmissions themselves;
+					a service delivered using RTP via multicast IP might instead
+					be identified by the advertised URL of the SDP document
+					describing the stream.
+				</t>
+			</section>
+			<section title="Examples">
+			</section>
+		</section>
+	</middle>
+	<back>
+		<references title="Normative References">
+			&rfc2616;
+			&rfc2119;
+			&dnssd;
+			&mdns;
+			&linkhdr;
+			<reference anchor="DNSSD-SRV" target="http://www.dns-sd.org/ServiceTypes.html">
+				<front>
+					<title>DNS SRV (RFC 2782) Service Types</title>
+				</front>
+			</reference>
+		</references>
+	</back>	
+</rfc>

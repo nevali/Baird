@@ -1,0 +1,504 @@
+
+
+
+Network Working Group                                       M. McRoberts
+Internet-Draft                                             Project Baird
+Intended status: Informational                              July 8, 2010
+Expires: January 9, 2011
+
+
+ Protocol for media devices to expose Now Playing information (NOWP) on
+                             local networks
+                        draft-mcroberts-nowp-00
+
+Abstract
+
+   This document describes a protocol which allows network-connected
+   media devices, such as televisions, set-top boxes and radios, to be
+   queried for URIs relating to the content they are currently playing.
+
+Status of this Memo
+
+   This Internet-Draft is submitted in full conformance with the
+   provisions of BCP 78 and BCP 79.
+
+   Internet-Drafts are working documents of the Internet Engineering
+   Task Force (IETF).  Note that other groups may also distribute
+   working documents as Internet-Drafts.  The list of current Internet-
+   Drafts is at http://datatracker.ietf.org/drafts/current/.
+
+   Internet-Drafts are draft documents valid for a maximum of six months
+   and may be updated, replaced, or obsoleted by other documents at any
+   time.  It is inappropriate to use Internet-Drafts as reference
+   material or to cite them other than as "work in progress."
+
+   This Internet-Draft will expire on January 9, 2011.
+
+Copyright Notice
+
+   Copyright (c) 2010 IETF Trust and the persons identified as the
+   document authors.  All rights reserved.
+
+   This document is subject to BCP 78 and the IETF Trust's Legal
+   Provisions Relating to IETF Documents
+   (http://trustee.ietf.org/license-info) in effect on the date of
+   publication of this document.  Please review these documents
+   carefully, as they describe your rights and restrictions with respect
+   to this document.  Code Components extracted from this document must
+   include Simplified BSD License text as described in Section 4.e of
+   the Trust Legal Provisions and are provided without warranty as
+   described in the Simplified BSD License.
+
+
+
+
+McRoberts                Expires January 9, 2011                [Page 1]
+
+Internet-Draft         Now Playing (NOWP) protocol             July 2010
+
+
+1.  Introduction
+
+   As media receivers (and other devices) such as televisions and radios
+   gain the ability to communicate on local networks, a class of
+   applications has arisen which depends, at least in part, on being
+   able to query a media device for information about the programme or
+   service it is currently playing.
+
+   This document sets out a simple protocol which allows:
+
+   o  media devices to advertise the availability of this service to
+      other devices on a local network; and
+
+   o  media devices to be easily queried for "Now playing" information
+
+   Rather than be reliant upon the many different ways in which a piece
+   of content might be described, the NOWP protocol instead relies on
+   content and services having one or more identifiers -- in the form of
+   URIs -- which can be relayed between devices and dereferenced as
+   required.
+
+   It is anticipated that implementation the NOWP protocol will often
+   (although not necessarily always) form part of broader functionality
+   to allow remote control and introspection of a device.  For this
+   reason, the NOWP protocol is based upon HTTP [RFC2616] and can co-
+   exist with most other HTTP-based applications.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+McRoberts                Expires January 9, 2011                [Page 2]
+
+Internet-Draft         Now Playing (NOWP) protocol             July 2010
+
+
+2.  Conventions and terminology used in this document
+
+   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+   "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
+   document are to be interpreted as described in "Key words for use in
+   RFCs to Indicate Requirement Levels" [RFC2119]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+McRoberts                Expires January 9, 2011                [Page 3]
+
+Internet-Draft         Now Playing (NOWP) protocol             July 2010
+
+
+3.  Advertisment
+
+   The NOWP protocol is advertised to other devices on a local network
+   using Multicast DNS [I-D.cheshire-dnsext-multicastdns] in combination
+   with DNS-based Service Discovery [I-D.cheshire-dnsext-dns-sd].
+
+   This document defines a service type [DNSSD-SRV] of "nowp".  That is,
+   registrations occur using the name "_nowp._tcp" and SHOULD by default
+   be restricted to the link-local scope.  Devices SHOULD make the
+   service available via both IPv4 and IPv6 and advertise the service
+   accordingly.  The NOWP protocol specification places no particular
+   requirement upon port numbering.  Devices SHOULD allow the host name
+   used in advertisements to be customised by the device's owner where
+   possible.
+
+   Service advertisements MUST include a TXT record whose data is in the
+   following format:
+
+   txt-record  =  "txtvers=1 path=" path-absolute
+
+   Clients MUST disregard advertisements which do not include a TXT
+   record.  Clients MUST disregard advertisements which do not match the
+   above format, including where the value of the txtvers parameter is
+   not "1".
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+McRoberts                Expires January 9, 2011                [Page 4]
+
+Internet-Draft         Now Playing (NOWP) protocol             July 2010
+
+
+4.  Now Playing inquiry request
+
+   Once a client has discovered a device advertising the NOWP protocol,
+   it may connect to it in order to inquire as to the media currently
+   playing on the device.
+
+   The request takes the form of an ordinary HTTP request, where:
+
+   o  The Host request header MUST be specified as the fully-qualified
+      domain name of the PTR record advertised by the device.
+
+   o  The HTTP method used MUST be "GET"
+
+   o  The request path is the value of the "path" parameter from the
+      advertisement's TXT record.
+
+   o  Clients SHOULD request that the connection is kept alive (via the
+      "Connection: keep-alive" request header) where repeated periodic
+      queries are anticipated.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+McRoberts                Expires January 9, 2011                [Page 5]
+
+Internet-Draft         Now Playing (NOWP) protocol             July 2010
+
+
+5.  Now Playing inquiry response
+
+   Devices respond to the Now Playing inquiry request with an HTTP 2xx
+   status code.  Devices MAY include a response body, but SHOULD respond
+   with a "204 No Content" status if none is included.  Clients MUST
+   consider any 2xx or 3xx status code as indicative of a successful
+   response.
+
+   For the purposes of the NOWP protocol, clients MUST ignore any
+   response body, and MUST NOT follow URIs given in any "Location"
+   response headers which might be returned.
+
+   Devices relay URIs to clients by means of a "Link" response header
+   [I-D.nottingham-http-link-header].  The NOWP protocol specifies two
+   Link Relation values which SHALL be used:
+
+   http://projectbaird.com/ns/service
+      This relation indicates that the linked resource is a service URI
+      -- that is, a URI which identifies a service which delivers
+      content to the device, such as a television station or a podcast.
+
+   http://projectbaird.com/ns/event
+      This relation indicates that the linked resource identifies a
+      particular event, such as a radio programme or a locally-stored
+      video file.
+
+   Devices MAY provide multiple URIs for a service or event but MUST NOT
+   provide URIs for more than one service or more than one event.
+   Devices MAY omit URIs for either current service, current event, or
+   both.  Devices SHOULD NOT include URIs with link relations of either
+   http://projectbaird.com/ns/service or
+   http://projectbaird.com/ns/event where the URI is known not to be
+   meaningful beyond the device itself except where the device provides
+   some other service which might make use of that URI in order to
+   provide further information about the service or resource.
+
+   Links with a relation of http://projectbaird.com/ns/event MAY include
+   two additional parameters, described below.  Devices SHOULD include
+   these parameters if the relevant information is available, but MAY
+   omit either or both of them.
+
+   scheduledStart
+      Specifies that the event, which was (or is being) received from a
+      linear broadcast medium had a start time specified in the device's
+      Electronic Programme Guide (EPG) as indicated by the value of the
+      parameter.  The parameter is a Datetime value in the format
+      described below.
+
+
+
+
+McRoberts                Expires January 9, 2011                [Page 6]
+
+Internet-Draft         Now Playing (NOWP) protocol             July 2010
+
+
+   scheduledDuration
+      Specifies that the event has a duration specified in the device's
+      Electronic Programme Guide as indicated by the value of the
+      parameter.  The parameter is a Duration value in the format
+      described below.
+
+5.1.  Datetime value format
+
+   The Datetime format is a compatible subset of the combined date and
+   time format described in Chapter 5 of ISO 8601 and has the format:
+
+   datetime  =  date "T" time "Z"
+
+   date      =  year "-" month "-" day
+
+   time      =  hour ":" minute [ ":" "second" ]
+
+   year      =  4 DIGIT
+
+   month     =  2 DIGIT
+
+   day       =  2 DIGIT
+
+   hour      =  2 DIGIT
+
+   minute    =  2 DIGIT
+
+   second    =  2 DIGIT
+
+5.2.  Duration value format
+
+5.3.  Service and event URIs
+
+   The exact nature of a service or event URI is, in effect, an
+   implementation detail, but some guidelines are given here.
+
+   Service URIs are intended to allow the identification by devices
+   other than the receiver of the service, and in particular by
+   Internet-based applications which those devices might communicate
+   with.  A service which is delivered by way of DVB-T transmissions
+   might use a URI which is made up of identifying values embedded in
+   the transmissions themselves; a service delivered using RTP via
+   multicast IP might instead be identified by the advertised URL of the
+   SDP document describing the stream.
+
+5.4.  Examples
+
+
+
+
+
+McRoberts                Expires January 9, 2011                [Page 7]
+
+Internet-Draft         Now Playing (NOWP) protocol             July 2010
+
+
+6.  Normative References
+
+   [RFC2616]  Fielding, R., Gettys, J., Mogul, J., Frystyk, H.,
+              Masinter, L., Leach, P., and T. Berners-Lee, "Hypertext
+              Transfer Protocol -- HTTP/1.1", RFC 2616, June 1999.
+
+   [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
+              Requirement Levels", BCP 14, RFC 2119, March 1997.
+
+   [I-D.cheshire-dnsext-dns-sd]
+              Cheshire, S. and M. Krochmal, "DNS-Based Service
+              Discovery", draft-cheshire-dnsext-dns-sd-06 (work in
+              progress), March 2010.
+
+   [I-D.cheshire-dnsext-multicastdns]
+              Cheshire, S. and M. Krochmal, "Multicast DNS",
+              draft-cheshire-dnsext-multicastdns-11 (work in progress),
+              March 2010.
+
+   [I-D.nottingham-http-link-header]
+              Nottingham, M., "Web Linking",
+              draft-nottingham-http-link-header-10 (work in progress),
+              May 2010.
+
+   [DNSSD-SRV]
+              "DNS SRV (RFC 2782) Service Types",
+              <http://www.dns-sd.org/ServiceTypes.html>.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+McRoberts                Expires January 9, 2011                [Page 8]
+
+Internet-Draft         Now Playing (NOWP) protocol             July 2010
+
+
+Author's Address
+
+   Mo McRoberts
+   Project Baird
+
+   Email: mo.mcroberts@nexgenta.com
+   URI:   http://projectbaird.com/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+McRoberts                Expires January 9, 2011                [Page 9]
+
