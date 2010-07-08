@@ -289,6 +289,10 @@ Internet-Draft         Now Playing (NOWP) protocol             July 2010
    consider any 2xx or 3xx status code as indicative of a successful
    response.
 
+   Devices SHOULD require clients to authenticate themselves before
+   information may be returned.  The details of appropriate
+   authentication mechanisms are outside of the scope of this document.
+
    For the purposes of the NOWP protocol, clients MUST ignore any
    response body, and MUST NOT follow URIs given in any "Location"
    response headers which might be returned.
@@ -322,12 +326,8 @@ Internet-Draft         Now Playing (NOWP) protocol             July 2010
    these parameters if the relevant information is available, but MAY
    omit either or both of them.
 
-   scheduledStart
-      Specifies that the event, which was (or is being) received from a
-      linear broadcast medium had a start time specified in the device's
-      Electronic Programme Guide (EPG) as indicated by the value of the
-      parameter.  The parameter is a Datetime value in the format
-      described below.
+
+
 
 
 
@@ -336,6 +336,13 @@ McRoberts                Expires January 9, 2011                [Page 6]
 
 Internet-Draft         Now Playing (NOWP) protocol             July 2010
 
+
+   scheduledStart
+      Specifies that the event, which was (or is being) received from a
+      linear broadcast medium had a start time specified in the device's
+      Electronic Programme Guide (EPG) as indicated by the value of the
+      parameter.  The parameter is a Datetime value in the format
+      described below.
 
    scheduledDuration
       Specifies that the event has a duration specified in the device's
@@ -378,6 +385,14 @@ Internet-Draft         Now Playing (NOWP) protocol             July 2010
    Internet-based applications which those devices might communicate
    with.  A service which is delivered by way of DVB-T transmissions
    might use a URI which is made up of identifying values embedded in
+
+
+
+McRoberts                Expires January 9, 2011                [Page 7]
+
+Internet-Draft         Now Playing (NOWP) protocol             July 2010
+
+
    the transmissions themselves; a service delivered using RTP via
    multicast IP might instead be identified by the advertised URL of the
    SDP document describing the stream.
@@ -388,7 +403,48 @@ Internet-Draft         Now Playing (NOWP) protocol             July 2010
 
 
 
-McRoberts                Expires January 9, 2011                [Page 7]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+McRoberts                Expires January 9, 2011                [Page 8]
 
 Internet-Draft         Now Playing (NOWP) protocol             July 2010
 
@@ -444,7 +500,7 @@ Internet-Draft         Now Playing (NOWP) protocol             July 2010
 
 
 
-McRoberts                Expires January 9, 2011                [Page 8]
+McRoberts                Expires January 9, 2011                [Page 9]
 
 Internet-Draft         Now Playing (NOWP) protocol             July 2010
 
@@ -500,5 +556,5 @@ Author's Address
 
 
 
-McRoberts                Expires January 9, 2011                [Page 9]
+McRoberts                Expires January 9, 2011               [Page 10]
 
