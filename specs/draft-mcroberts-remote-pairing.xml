@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd" [
+<!ENTITY rfc4122 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.4122.xml">
+<!ENTITY rfc4234 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.4234.xml">
+<!ENTITY rfc2617 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.2617.xml">
+<!ENTITY dnssd SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.cheshire-dnsext-dns-sd.xml">
+<!ENTITY mdns SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.cheshire-dnsext-multicastdns.xml">
+]>
+<rfc ipr="trust200902" category="info" docName="draft-mcroberts-remote-pairing-00">
+	<front>
+		<title abbrev="Remote pairing protocol">Protocol for pairing networked devices to one another</title>
+		<author initials="M." surname="McRoberts" fullname="Mo McRoberts">
+			<organization>Project Baird</organization>
+			<address>
+				<email>mo.mcroberts@nexgenta.com</email>
+				<uri>http://projectbaird.com/</uri>
+			</address>
+		</author>
+		<date day="12" month="July" year="2010" />
+		<area>General</area>
+		<keyword>I-D</keyword>
+		<keyword>Internet-Draft</keyword>
+		<abstract>
+			<t>
+				This document describes a protocol which allows two devices to
+				establish a "pairing" relationship with one another, establishing
+				a set of credentials which can be used to satisfy further
+				authentication requirements.
+			</t>
+		</abstract>
+	</front>
+	<middle>
+		<section title="Introduction">
+			<t>
+				As increasing numbers of devices are developed with network
+				connectivity, it becomes desirable for there to be a standard
+				mechanism for establishing trust relationships between
+				individual devices: that is, "pairing" them.
+			</t>
+			<t>
+				For example, consider a hand-held device, such as a mobile phone,
+				connecting to a media device, such as a television. Because it is
+				generally undesirable to grant unrestricted access to an unknown
+				device (even across an ostensibly "private" network), some kind
+				of authentication must be employed. Traditional username and password
+				authentication tends not to be practical in this circumstance:
+				rather, a process whereby a user can "pair" the devices with
+				one another and (thus generate persistent authentication tokens)
+				is more desirable.
+			</t>
+			<t>
+				This specification sets out a process by which this might be
+				implemented. It requires that the "client" device (that is, the
+				"remote" device) a display and some kind of input
+				mechanism, while the "server" device features at a bare minimum
+				a display.
+			</t>
+		</section>
+		<section title="Pairing mechanism">
+			<t>
+				The mechanism described here works on the basis of a shared secret:
+				in this case, a randomly-generated code number (typically between four
+				and eight digits in length) which is generated and displayed by the
+				server and must be entered on the client in order to complete the
+				pairing process. In subsequent authentication requests, supplied
+				code number is used as a password, while a per-client server-supplied
+				UUID <xref target="RFC4122" /> is used as a username.
+			</t>
+			<t>
+				Before this can occur, the client must discover that the server is
+				available for pairing: requiring users to enter hostnames or IP
+				addresses is not generally practical, and so it would be preferable
+				for client devices to perform automatic discovery of devices operating
+				on the local network which offer a pairing capability. For this purpose,
+				this document specifies the use of Multicast DNS
+				<xref target="I-D.cheshire-dnsext-multicastdns" /> in combination with
+				DNS-based Service Discovery <xref target="I-D.cheshire-dnsext-dns-sd" />.
+			</t>
+			<t>
+				The complete process is described below.
+			</t>
+			<section title="Advertisement">
+				<t>
+					Server devices should advertise the availability of the pairing
+					service using a DNS-SD service type <xref target="DNSSD-SRV" />
+					of "remote-pairing". That is, registrations occur using the name
+					"_nowp._tcp" and SHOULD by default be restricted to the link-local
+					scope. Devices SHOULD make the service vailable via both IPv4 and IPv6
+					and advertise the accordingly.
+				</t>
+				<t>
+					Servers SHOULD NOT make the service available (and by extension,
+					advertise) by default: they SHOULD instead require some kind of user
+					action, such as enabling an option within a menu or pressing a physical
+					"pairing" button. Servers MAY provide an option to users which allows
+					continual availability of the pairing service.
+				</t>
+				<t>
+					Servers SHOULD advertise a host name which is intended to be human-readable,
+					for example "John's TV". Servers SHOULD allow the user to customise
+					the host name, and SHOULD advertise the name consistently between
+					services.
+				</t>
+				<t>
+					Service advertisements MUST include a TXT record whose data is in the
+					following format, given as Augmented Backus-Naur Form (ABNF) as specified
+					by <xref target="RFC4234" />:
+				</t>
+				<figure>
+					<artwork><![CDATA[
+txt-record  =  "txtvers=1 uuid=" UUID " path=" path-absolute
+]]></artwork>
+				</figure>
+				<figure>
+					<preamble>A sample advertisement is shown below</preamble>
+					<artwork><![CDATA[
+_remote-pairing._tcp.local                IN PTR   John's\032TV._remote-pairing._tcp.local.
+
+John's\032TV._remote-pairing._tcp.local.  IN SRV   0 0 80 tv234759.local.
+John's\032TV._remote-pairing._tcp.local.  IN TXT   "txtvers=1 uuid=30146e8b-0d1a-47b9-825d-bebd7c23acaf path=/pairing/"
+
+tv234759.local.                           IN A     192.168.0.25
+tv234759.local.                           IN AAAA  fe80::223:dfff:feaa:4762
+]]></artwork>
+				</figure>
+			</section>
+			<section title="Client initiates the pairing process">
+				<t>
+					The client connects to the server and performs an HTTP GET request
+					on /pairing-request?device-name=&lt;name&gt;, where &lt;name&gt; is replaced
+					with the client device’s “display name” (e.g., “Dan’s iPhone”),
+					URL-encoded as required by HTTP.
+				</t>
+			</section>
+			<section title="Server returns a redirect response">
+				<t>
+					The server responds with 302 Moved temporarily and supplies a
+					Location: header of /pairing-request/&lt;uuid&gt;, where
+					&lt;uuid&gt; is a newly-generated UUID which shall be used to
+					identify the client device to the server.
+				</t>
+				<t>
+					The server shall store the UUID in some kind of local database.
+					It shall generate a numeric passcode of not less than four and not
+					more than eight digits, and store it in some way associated with
+					the UUID. There shall be a flag of some kind associated with the
+					UUID indicating whether the client device has successfully paired
+					or not, and it shall not be set. The server shall also store the
+					display name of the device associated with the UUID, as was
+					supplied in the HTTP request.
+				</t>
+			</section>
+			<section title="Client follows redirect">
+				<t>
+					The client shall make an HTTP GET request to the URL supplied
+					by the server (that is, /pairing-request/&lt;uuid&gt;).
+				</t>
+			</section>
+			<section title="Server prompts for authentication">
+				<t>
+					When the server receives the HTTP request, it shall return a 
+					"401 Unauthorized" response and include details about supported
+					authentication schemes as per RFC2617. The server MUST support
+					Digest authentication, but may support other schemes.
+				</t>
+				<t>
+					The realm included in the WWW-Authenticate response header must
+					be the server device’s own UUID. The client device may verify
+					that this UUID matches that which it expected to receive given
+					the Bonjour advertisement as a sanity-check.
+				</t>
+				<t>
+					If it has not already, it shall display a message on its display
+					indicating that a pairing request has been received from the client
+					device. It shall display the passcode which has been stored and
+					indicate to the user that they must enter it on the client device.
+				</t>
+			</section>
+			<section title="Client prompts user for passcode">
+				<t>
+					The client device shall indicate to the user that they should enter
+					the passcode displayed on the server device.
+				</t>
+			</section>
+			<section title="Client makes request to the server">
+				<t>
+					The client shall retry the GET request to the URL supplied by the
+					server, supplying authentication details as per RFC2617. The user
+					name shall be the UUID supplied by the server; the password is the
+					passcode entered by the user. The client stores the UUID and
+					passcode for future authentication requests.
+				</t>
+			</section>
+			<section title="Server responds to pairing request">
+				<t>
+					If the passcode supplied by the client device is correct, the
+					server must respond with a 2xx response code and marks the device
+					in its database as having been authenticated.
+				</t>
+				<t>
+					If the passcode supplied by the client device is incorrect,
+					continue at Step 4.
+				</t>
+				<t>
+					If the UUID specified in the URL is not present in the database,
+					the server responds with a 404 Not Found status. The client should
+					immediately abort the pairing process.
+				</t>
+			</section>
+			<section title="Indicate to the user that pairing was successful">
+				<t>
+					Both devices should add the other to a user-manageable list of
+					paired devices and indicate that pairing was successful. The server
+					will update its database entry for the client to indicate that
+					pairing has completed successfully. Subsequent requests to
+					protocols requiring authentication which properly supply the
+					client UUID and passcode should then succeed until the user opts
+					to un-pair the devices.
+				</t>
+			</section>
+		</section>
+	</middle>
+	<back>
+		<references title="Normative References">
+			&rfc4122;
+			&rfc4234;
+			&rfc2617;
+			&mdns;
+			&dnssd;
+			<reference anchor="DNSSD-SRV" target="http://www.dns-sd.org/ServiceTypes.html">
+				<front>
+					<title>DNS SRV (RFC 2782) Service Types</title>
+				</front>
+			</reference>
+		</references>
+	</back>		
+</rfc>
