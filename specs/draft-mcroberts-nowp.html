@@ -204,12 +204,12 @@ Introduction</h3>
 				</p>
 <ul class="text">
 <li>
-						media devices to advertise the availability of this service to other
-						devices on a local network; and
+						media devices to be easily queried for "Now playing" information; and
 					
 </li>
 <li>
-						media devices to be easily queried for "Now playing" information
+						media devices to advertise the availability of this service to other
+						devices on a local network.
 					
 </li>
 </ul><p>				
@@ -262,11 +262,17 @@ Advertisment</h3>
 			
 </p>
 <p>
-				Service advertisements MUST include a TXT record whose data is in the following format:
+				Service advertisements MUST include a TXT record whose data is in the
+				following format, given as Augmented Backus-Naur Form (ABNF) as specified
+				by <a class='info' href='#RFC4234'>[RFC4234]<span> (</span><span class='info'>Crocker, D., Ed. and P. Overell, &ldquo;Augmented BNF for Syntax Specifications: ABNF,&rdquo; October&nbsp;2005.</span><span>)</span></a>:
 			
 </p><div style='display: table; width: 0; margin-left: 3em; margin-right: auto'><pre>
 txt-record  =  "txtvers=1 path=" path-absolute
 </pre></div>
+<p>
+				"path-absolute" is defined as it is in .
+			
+</p>
 <p>
 				Clients MUST disregard advertisements which do not include a TXT record.
 				Clients MUST disregard advertisements which do not match the above format,
@@ -422,6 +428,16 @@ minute    =  2 DIGIT
 
 second    =  2 DIGIT
 </pre></div>
+<p>
+					Dates and times expressed in this format do not convey timezone
+					or offset information; all times must be given in UTC.
+				
+</p>
+<p>
+					NOTE: Per <a class='info' href='#RFC4234'>[RFC4234]<span> (</span><span class='info'>Crocker, D., Ed. and P. Overell, &ldquo;Augmented BNF for Syntax Specifications: ABNF,&rdquo; October&nbsp;2005.</span><span>)</span></a> and ISO 8601, the "T" and "Z" characters in this
+					syntax may alternatively be lower case "t" or "z" respectively.
+				
+</p>
 <a name="anchor7"></a><br /><hr />
 <a name="rfc.section.5.2"></a><h3>5.2.&nbsp;
 Duration value format</h3>
@@ -447,6 +463,13 @@ Service and event URIs</h3>
 					describing the stream.
 				
 </p>
+<p>
+					Where a scheme (such as <a class='info' href='#RADIODNS'>[RADIODNS]<span> (</span><span class='info'>, &ldquo;RadioDNS,&rdquo; .</span><span>)</span></a>)
+					exists which provides a means to generate DNS domain names
+					for a given broadcast service, devices SHOULD provide
+					"dns" URIs as per <a class='info' href='#RFC4501'>[RFC4501]<span> (</span><span class='info'>Josefsson, S., &ldquo;Domain Name System Uniform Resource Identifiers,&rdquo; May&nbsp;2006.</span><span>)</span></a>.
+				
+</p>
 <a name="anchor9"></a><br /><hr />
 <a name="rfc.section.5.4"></a><h3>5.4.&nbsp;
 Examples</h3>
@@ -458,6 +481,10 @@ Examples</h3>
 <td class="author-text"><a href="mailto:fielding@ics.uci.edu">Fielding, R.</a>, <a href="mailto:jg@w3.org">Gettys, J.</a>, <a href="mailto:mogul@wrl.dec.com">Mogul, J.</a>, <a href="mailto:frystyk@w3.org">Frystyk, H.</a>, <a href="mailto:masinter@parc.xerox.com">Masinter, L.</a>, <a href="mailto:paulle@microsoft.com">Leach, P.</a>, and <a href="mailto:timbl@w3.org">T. Berners-Lee</a>, &ldquo;<a href="http://tools.ietf.org/html/rfc2616">Hypertext Transfer Protocol -- HTTP/1.1</a>,&rdquo; RFC&nbsp;2616, June&nbsp;1999 (<a href="http://www.rfc-editor.org/rfc/rfc2616.txt">TXT</a>, <a href="http://www.rfc-editor.org/rfc/rfc2616.ps">PS</a>, <a href="http://www.rfc-editor.org/rfc/rfc2616.pdf">PDF</a>, <a href="http://xml.resource.org/public/rfc/html/rfc2616.html">HTML</a>, <a href="http://xml.resource.org/public/rfc/xml/rfc2616.xml">XML</a>).</td></tr>
 <tr><td class="author-text" valign="top"><a name="RFC2119">[RFC2119]</a></td>
 <td class="author-text"><a href="mailto:sob@harvard.edu">Bradner, S.</a>, &ldquo;<a href="http://tools.ietf.org/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a>,&rdquo; BCP&nbsp;14, RFC&nbsp;2119, March&nbsp;1997 (<a href="http://www.rfc-editor.org/rfc/rfc2119.txt">TXT</a>, <a href="http://xml.resource.org/public/rfc/html/rfc2119.html">HTML</a>, <a href="http://xml.resource.org/public/rfc/xml/rfc2119.xml">XML</a>).</td></tr>
+<tr><td class="author-text" valign="top"><a name="RFC4234">[RFC4234]</a></td>
+<td class="author-text"><a href="mailto:dcrocker@bbiw.net">Crocker, D., Ed.</a> and <a href="mailto:paul.overell@thus.net">P. Overell</a>, &ldquo;<a href="http://tools.ietf.org/html/rfc4234">Augmented BNF for Syntax Specifications: ABNF</a>,&rdquo; RFC&nbsp;4234, October&nbsp;2005 (<a href="http://www.rfc-editor.org/rfc/rfc4234.txt">TXT</a>, <a href="http://xml.resource.org/public/rfc/html/rfc4234.html">HTML</a>, <a href="http://xml.resource.org/public/rfc/xml/rfc4234.xml">XML</a>).</td></tr>
+<tr><td class="author-text" valign="top"><a name="RFC4501">[RFC4501]</a></td>
+<td class="author-text">Josefsson, S., &ldquo;<a href="http://tools.ietf.org/html/rfc4501">Domain Name System Uniform Resource Identifiers</a>,&rdquo; RFC&nbsp;4501, May&nbsp;2006 (<a href="http://www.rfc-editor.org/rfc/rfc4501.txt">TXT</a>).</td></tr>
 <tr><td class="author-text" valign="top"><a name="I-D.cheshire-dnsext-dns-sd">[I-D.cheshire-dnsext-dns-sd]</a></td>
 <td class="author-text">Cheshire, S. and M. Krochmal, &ldquo;<a href="http://www.ietf.org/internet-drafts/draft-cheshire-dnsext-dns-sd-06.txt">DNS-Based Service Discovery</a>,&rdquo; draft-cheshire-dnsext-dns-sd-06 (work in progress), March&nbsp;2010 (<a href="http://www.ietf.org/internet-drafts/draft-cheshire-dnsext-dns-sd-06.txt">TXT</a>).</td></tr>
 <tr><td class="author-text" valign="top"><a name="I-D.cheshire-dnsext-multicastdns">[I-D.cheshire-dnsext-multicastdns]</a></td>
@@ -466,6 +493,8 @@ Examples</h3>
 <td class="author-text">Nottingham, M., &ldquo;<a href="http://www.ietf.org/internet-drafts/draft-nottingham-http-link-header-10.txt">Web Linking</a>,&rdquo; draft-nottingham-http-link-header-10 (work in progress), May&nbsp;2010 (<a href="http://www.ietf.org/internet-drafts/draft-nottingham-http-link-header-10.txt">TXT</a>).</td></tr>
 <tr><td class="author-text" valign="top"><a name="DNSSD-SRV">[DNSSD-SRV]</a></td>
 <td class="author-text">&ldquo;<a href="http://www.dns-sd.org/ServiceTypes.html">DNS SRV (RFC 2782) Service Types</a>.&rdquo;</td></tr>
+<tr><td class="author-text" valign="top"><a name="RADIODNS">[RADIODNS]</a></td>
+<td class="author-text">&ldquo;<a href="http://radiodns.org/">RadioDNS</a>.&rdquo;</td></tr>
 </table>
 
 <a name="rfc.authors"></a><br /><hr />

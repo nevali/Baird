@@ -67,10 +67,11 @@ Internet-Draft         Now Playing (NOWP) protocol             July 2010
 
    This document sets out a simple protocol which allows:
 
-   o  media devices to advertise the availability of this service to
-      other devices on a local network; and
+   o  media devices to be easily queried for "Now playing" information;
+      and
 
-   o  media devices to be easily queried for "Now playing" information
+   o  media devices to advertise the availability of this service to
+      other devices on a local network.
 
    Rather than be reliant upon the many different ways in which a piece
    of content might be described, the NOWP protocol instead relies on
@@ -83,7 +84,6 @@ Internet-Draft         Now Playing (NOWP) protocol             July 2010
    to allow remote control and introspection of a device.  For this
    reason, the NOWP protocol is based upon HTTP [RFC2616] and can co-
    exist with most other HTTP-based applications.
-
 
 
 
@@ -185,17 +185,17 @@ Internet-Draft         Now Playing (NOWP) protocol             July 2010
    possible.
 
    Service advertisements MUST include a TXT record whose data is in the
-   following format:
+   following format, given as Augmented Backus-Naur Form (ABNF) as
+   specified by [RFC4234]:
 
    txt-record  =  "txtvers=1 path=" path-absolute
+
+   "path-absolute" is defined as it is in .
 
    Clients MUST disregard advertisements which do not include a TXT
    record.  Clients MUST disregard advertisements which do not match the
    above format, including where the value of the txtvers parameter is
    not "1".
-
-
-
 
 
 
@@ -373,18 +373,18 @@ Internet-Draft         Now Playing (NOWP) protocol             July 2010
 
    second    =  2 DIGIT
 
+   Dates and times expressed in this format do not convey timezone or
+   offset information; all times must be given in UTC.
+
+   NOTE: Per [RFC4234] and ISO 8601, the "T" and "Z" characters in this
+   syntax may alternatively be lower case "t" or "z" respectively.
+
 5.2.  Duration value format
 
 5.3.  Service and event URIs
 
    The exact nature of a service or event URI is, in effect, an
    implementation detail, but some guidelines are given here.
-
-   Service URIs are intended to allow the identification by devices
-   other than the receiver of the service, and in particular by
-   Internet-based applications which those devices might communicate
-   with.  A service which is delivered by way of DVB-T transmissions
-   might use a URI which is made up of identifying values embedded in
 
 
 
@@ -393,20 +393,20 @@ McRoberts                Expires January 9, 2011                [Page 7]
 Internet-Draft         Now Playing (NOWP) protocol             July 2010
 
 
+   Service URIs are intended to allow the identification by devices
+   other than the receiver of the service, and in particular by
+   Internet-based applications which those devices might communicate
+   with.  A service which is delivered by way of DVB-T transmissions
+   might use a URI which is made up of identifying values embedded in
    the transmissions themselves; a service delivered using RTP via
    multicast IP might instead be identified by the advertised URL of the
    SDP document describing the stream.
 
+   Where a scheme (such as [RADIODNS]) exists which provides a means to
+   generate DNS domain names for a given broadcast service, devices
+   SHOULD provide "dns" URIs as per [RFC4501].
+
 5.4.  Examples
-
-
-
-
-
-
-
-
-
 
 
 
@@ -458,6 +458,12 @@ Internet-Draft         Now Playing (NOWP) protocol             July 2010
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119, March 1997.
 
+   [RFC4234]  Crocker, D., Ed. and P. Overell, "Augmented BNF for Syntax
+              Specifications: ABNF", RFC 4234, October 2005.
+
+   [RFC4501]  Josefsson, S., "Domain Name System Uniform Resource
+              Identifiers", RFC 4501, May 2006.
+
    [I-D.cheshire-dnsext-dns-sd]
               Cheshire, S. and M. Krochmal, "DNS-Based Service
               Discovery", draft-cheshire-dnsext-dns-sd-06 (work in
@@ -477,14 +483,8 @@ Internet-Draft         Now Playing (NOWP) protocol             July 2010
               "DNS SRV (RFC 2782) Service Types",
               <http://www.dns-sd.org/ServiceTypes.html>.
 
-
-
-
-
-
-
-
-
+   [RADIODNS]
+              "RadioDNS", <http://radiodns.org/>.
 
 
 

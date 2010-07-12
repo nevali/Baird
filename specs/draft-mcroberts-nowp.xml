@@ -2,6 +2,8 @@
 <!DOCTYPE rfc SYSTEM "rfc2629.dtd" [
 <!ENTITY rfc2119 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.2119.xml">
 <!ENTITY rfc2616 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.2616.xml">
+<!ENTITY rfc4234 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.4234.xml">
+<!ENTITY rfc4501 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.4501.xml">
 <!ENTITY dnssd SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.cheshire-dnsext-dns-sd.xml">
 <!ENTITY mdns SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.cheshire-dnsext-multicastdns.xml">
 <!ENTITY linkhdr SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.nottingham-http-link-header.xml">
@@ -40,11 +42,11 @@
 				This document sets out a simple protocol which allows:
 				<list style="symbols">
 					<t>
-						media devices to advertise the availability of this service to other
-						devices on a local network; and
+						media devices to be easily queried for "Now playing" information; and
 					</t>
 					<t>
-						media devices to be easily queried for "Now playing" information
+						media devices to advertise the availability of this service to other
+						devices on a local network.
 					</t>
 				</list>				
 			</t>
@@ -86,13 +88,18 @@
 				customised by the device's owner where possible.
 			</t>
 			<t>
-				Service advertisements MUST include a TXT record whose data is in the following format:
+				Service advertisements MUST include a TXT record whose data is in the
+				following format, given as Augmented Backus-Naur Form (ABNF) as specified
+				by <xref target="RFC4234" />:
 			</t>
 			<figure>
 				<artwork><![CDATA[
 txt-record  =  "txtvers=1 path=" path-absolute
 ]]></artwork>
 			</figure>
+			<t>
+				"path-absolute" is defined as it is in <xreg target="RFC3986" />.
+			</t>
 			<t>
 				Clients MUST disregard advertisements which do not include a TXT record.
 				Clients MUST disregard advertisements which do not match the above format,
@@ -219,6 +226,14 @@ minute    =  2 DIGIT
 second    =  2 DIGIT
 ]]></artwork>
 				</figure>
+				<t>
+					Dates and times expressed in this format do not convey timezone
+					or offset information; all times must be given in UTC.
+				</t>
+				<t>
+					NOTE: Per <xref target="RFC4234" /> and ISO 8601, the "T" and "Z" characters in this
+					syntax may alternatively be lower case "t" or "z" respectively.
+				</t>				
 			</section>
 			<section title="Duration value format">
 			</section>
@@ -238,6 +253,12 @@ second    =  2 DIGIT
 					be identified by the advertised URL of the SDP document
 					describing the stream.
 				</t>
+				<t>
+					Where a scheme (such as <xref target="RADIODNS" />)
+					exists which provides a means to generate DNS domain names
+					for a given broadcast service, devices SHOULD provide
+					"dns" URIs as per <xref target="RFC4501" />.
+				</t>
 			</section>
 			<section title="Examples">
 			</section>
@@ -247,12 +268,19 @@ second    =  2 DIGIT
 		<references title="Normative References">
 			&rfc2616;
 			&rfc2119;
+			&rfc4234;
+			&rfc4501;
 			&dnssd;
 			&mdns;
 			&linkhdr;
 			<reference anchor="DNSSD-SRV" target="http://www.dns-sd.org/ServiceTypes.html">
 				<front>
 					<title>DNS SRV (RFC 2782) Service Types</title>
+				</front>
+			</reference>
+			<reference anchor="RADIODNS" target="http://radiodns.org/">
+				<front>
+					<title>RadioDNS</title>
 				</front>
 			</reference>
 		</references>
