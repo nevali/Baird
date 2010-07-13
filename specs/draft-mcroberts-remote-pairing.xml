@@ -160,8 +160,9 @@
 				<t>
 					Server devices should advertise the availability of the pairing
 					service using a DNS-SD service type <xref target="DNSSD-SRV" />
-					of "remote-pairing". That is, registrations occur using the name
-					"_nowp._tcp" and SHOULD by default be restricted to the link-local
+					of "<spanx style="verb">remote-pairing</spanx>". That is,
+					registrations occur using the name "<spanx style="verb">_remote-pairing._tcp</spanx>"
+					and SHOULD by default be restricted to the link-local
 					scope. Devices SHOULD make the service vailable via both IPv4 and IPv6
 					and advertise the accordingly.
 				</t>

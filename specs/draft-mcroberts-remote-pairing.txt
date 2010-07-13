@@ -284,11 +284,11 @@ Internet-Draft           Remote pairing protocol               July 2010
 3.1.  Advertisement
 
    Server devices should advertise the availability of the pairing
-   service using a DNS-SD service type [DNSSD-SRV] of "remote-pairing".
-   That is, registrations occur using the name "_nowp._tcp" and SHOULD
-   by default be restricted to the link-local scope.  Devices SHOULD
-   make the service vailable via both IPv4 and IPv6 and advertise the
-   accordingly.
+   service using a DNS-SD service type [DNSSD-SRV] of
+   ""remote-pairing"".  That is, registrations occur using the name
+   ""_remote-pairing._tcp"" and SHOULD by default be restricted to the
+   link-local scope.  Devices SHOULD make the service vailable via both
+   IPv4 and IPv6 and advertise the accordingly.
 
    Servers SHOULD NOT make the service available (and by extension,
    advertise) by default: they SHOULD instead require some kind of user
