@@ -160,7 +160,7 @@ Internet-Draft           Remote pairing protocol               July 2010
 
    txt-record  =  "txtvers=1 uuid=" UUID " path=" path-absolute
 
-
+   The UUID included in the advertisement MUST be unique to the server
 
 
 
@@ -169,54 +169,54 @@ McRoberts               Expires January 13, 2011                [Page 3]
 Internet-Draft           Remote pairing protocol               July 2010
 
 
+   and MUST NOT change during the course of normal operations of the
+   device.
+
+   The value of the "path" parameter is the "root" path which will be
+   used as the prefix for for all requests made to the service.  Servers
+   SHOULD NOT include a trailing forward-slash character in the path.
+   Clients MAY strip any trailing forward-slash characters which are
+   present.
+
    A sample advertisement is shown below
 
 _remote-pairing._tcp.local                IN PTR   John's\032TV._remote-pairing._tcp.local.
 
 John's\032TV._remote-pairing._tcp.local.  IN SRV   0 0 80 tv234759.local.
-John's\032TV._remote-pairing._tcp.local.  IN TXT   "txtvers=1 uuid=30146e8b-0d1a-47b9-825d-bebd7c23acaf path=/pairing/"
+John's\032TV._remote-pairing._tcp.local.  IN TXT   "txtvers=1 uuid=30146e8b-0d1a-47b9-825d-bebd7c23acaf path=/pairing"
 
 tv234759.local.                           IN A     192.168.0.25
 tv234759.local.                           IN AAAA  fe80::223:dfff:feaa:4762
 
-2.2.  Client initiates the pairing process
+2.2.  Discovery
 
-   The client connects to the server and performs an HTTP GET request on
-   /pairing-request?device-name=<name>, where <name> is replaced with
-   the client device's "display name" (e.g., "Dan's iPhone"), URL-
-   encoded as required by HTTP.
+   When requested to pair with a server, a client device should begin
+   discovery for devices on the local network advertising the "remote-
+   pairing" service.  The client should present a list of matching
+   devices to the user.  Clients SHOULD NOT present IP addresses or the
+   SRV record "target" host name to users unless specifically configured
+   to.  Clients SHOULD indicate devices for which a pairing already
+   exists, but SHOULD NOT omit them from the list of discovered devices.
 
-2.3.  Server returns a redirect response
+   Once a user has chosen a device to pair with, the client shall begin
+   the pairing process as described below.
+
+2.3.  Client initiates the pairing process
+
+   The client connects to the server and performs an HTTP "GET" request
+   on <root>/pair?device-name=<name>, where <name> is replaced with the
+   client device's "display name" (e.g., "Dan's iPhone"), URL-encoded as
+   required by HTTP.
+
+2.4.  Server returns a redirect response
 
    The server responds with 302 Moved temporarily and supplies a
-   Location: header of /pairing-request/<uuid>, where <uuid> is a newly-
+   "Location" response header of <root>/<uuid>, where <uuid> is a newly-
    generated UUID which shall be used to identify the client device to
    the server.
 
-   The server shall store the UUID in some kind of local database.  It
-   shall generate a numeric passcode of not less than four and not more
-   than eight digits, and store it in some way associated with the UUID.
-   There shall be a flag of some kind associated with the UUID
-   indicating whether the client device has successfully paired or not,
-   and it shall not be set.  The server shall also store the display
-   name of the device associated with the UUID, as was supplied in the
-   HTTP request.
-
-2.4.  Client follows redirect
-
-   The client shall make an HTTP GET request to the URL supplied by the
-   server (that is, /pairing-request/<uuid>).
-
-2.5.  Server prompts for authentication
-
-   When the server receives the HTTP request, it shall return a "401
-   Unauthorized" response and include details about supported
-   authentication schemes as per RFC2617.  The server MUST support
-   Digest authentication, but may support other schemes.
-
-   The realm included in the WWW-Authenticate response header must be
-   the server device's own UUID.  The client device may verify that this
-   UUID matches that which it expected to receive given the Bonjour
+   The server shall store the UUID and client device name.  It shall
+   generate a numeric passcode of not less than four and not more than
 
 
 
@@ -225,6 +225,29 @@ McRoberts               Expires January 13, 2011                [Page 4]
 Internet-Draft           Remote pairing protocol               July 2010
 
 
+   eight digits, and store it in some way associated with the UUID.
+   There shall be a flag of some kind associated with the UUID
+   indicating whether the client device has successfully paired or not,
+   and it shall not be set.  The server shall also store the display
+   name of the device associated with the UUID, as was supplied in the
+   HTTP request.
+
+2.5.  Client follows redirect
+
+   The client shall make an HTTP GET request to the URL supplied by the
+   server (that is, <root>/<uuid>).
+
+2.6.  Server prompts for authentication
+
+   When the server receives the HTTP request, it shall return a "401
+   Unauthorized" response and include details about supported
+   authentication schemes as per [RFC2617].  Both clients and servers
+   MUST support Digest authentication, but may support other schemes.
+   Basic authentication SHOULD NOT be used.
+
+   The realm included in the "WWW-Authenticate" response header must be
+   the server device's own UUID.  The client device may verify that this
+   UUID matches that which it expected to receive given the Bonjour
    advertisement as a sanity-check.
 
    If it has not already, it shall display a message on its display
@@ -232,12 +255,12 @@ Internet-Draft           Remote pairing protocol               July 2010
    device.  It shall display the passcode which has been stored and
    indicate to the user that they must enter it on the client device.
 
-2.6.  Client prompts user for passcode
+2.7.  Client prompts user for passcode
 
    The client device shall indicate to the user that they should enter
    the passcode displayed on the server device.
 
-2.7.  Client makes request to the server
+2.8.  Client makes request to the server
 
    The client shall retry the GET request to the URL supplied by the
    server, supplying authentication details as per RFC2617.  The user
@@ -245,11 +268,18 @@ Internet-Draft           Remote pairing protocol               July 2010
    passcode entered by the user.  The client stores the UUID and
    passcode for future authentication requests.
 
-2.8.  Server responds to pairing request
+2.9.  Server responds to pairing request
 
    If the passcode supplied by the client device is correct, the server
    must respond with a 2xx response code and marks the device in its
    database as having been authenticated.
+
+
+
+McRoberts               Expires January 13, 2011                [Page 5]
+
+Internet-Draft           Remote pairing protocol               July 2010
+
 
    If the passcode supplied by the client device is incorrect, continue
    at Step 4.
@@ -258,7 +288,7 @@ Internet-Draft           Remote pairing protocol               July 2010
    server responds with a 404 Not Found status.  The client should
    immediately abort the pairing process.
 
-2.9.  Indicate to the user that pairing was successful
+2.10.  Indicate to the user that pairing was successful
 
    Both devices should add the other to a user-manageable list of paired
    devices and indicate that pairing was successful.  The server will
@@ -276,7 +306,33 @@ Internet-Draft           Remote pairing protocol               July 2010
 
 
 
-McRoberts               Expires January 13, 2011                [Page 5]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+McRoberts               Expires January 13, 2011                [Page 6]
 
 Internet-Draft           Remote pairing protocol               July 2010
 
@@ -332,7 +388,7 @@ Internet-Draft           Remote pairing protocol               July 2010
 
 
 
-McRoberts               Expires January 13, 2011                [Page 6]
+McRoberts               Expires January 13, 2011                [Page 7]
 
 Internet-Draft           Remote pairing protocol               July 2010
 
@@ -388,5 +444,5 @@ Author's Address
 
 
 
-McRoberts               Expires January 13, 2011                [Page 7]
+McRoberts               Expires January 13, 2011                [Page 8]
 

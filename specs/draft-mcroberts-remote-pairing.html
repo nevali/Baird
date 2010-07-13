@@ -285,40 +285,74 @@ Advertisement</h3>
 </p><div style='display: table; width: 0; margin-left: 3em; margin-right: auto'><pre>
 txt-record  =  "txtvers=1 uuid=" UUID " path=" path-absolute
 </pre></div>
+<p>
+					The UUID included in the advertisement MUST be unique to the server
+					and MUST NOT change during the course of normal operations of the
+					device.
+				
+</p>
+<p>
+					The value of the "path" parameter is the "root" path which will
+					be used as the prefix for for all requests made to the service.
+					Servers SHOULD NOT include a trailing forward-slash character
+					in the path. Clients MAY strip any trailing forward-slash
+					characters which are present.
+				
+</p>
 <p>A sample advertisement is shown below
 </p><div style='display: table; width: 0; margin-left: 3em; margin-right: auto'><pre>
 _remote-pairing._tcp.local                IN PTR   John's\032TV._remote-pairing._tcp.local.
 
 John's\032TV._remote-pairing._tcp.local.  IN SRV   0 0 80 tv234759.local.
-John's\032TV._remote-pairing._tcp.local.  IN TXT   "txtvers=1 uuid=30146e8b-0d1a-47b9-825d-bebd7c23acaf path=/pairing/"
+John's\032TV._remote-pairing._tcp.local.  IN TXT   "txtvers=1 uuid=30146e8b-0d1a-47b9-825d-bebd7c23acaf path=/pairing"
 
 tv234759.local.                           IN A     192.168.0.25
 tv234759.local.                           IN AAAA  fe80::223:dfff:feaa:4762
 </pre></div>
 <a name="anchor4"></a><br /><hr />
 <a name="rfc.section.2.2"></a><h3>2.2.&nbsp;
-Client initiates the pairing process</h3>
+Discovery</h3>
 
 <p>
-					The client connects to the server and performs an HTTP GET request
-					on /pairing-request?device-name=&lt;name&gt;, where &lt;name&gt; is replaced
-					with the client device’s “display name” (e.g., “Dan’s iPhone”),
-					URL-encoded as required by HTTP.
+					When requested to pair with a server, a client device should
+					begin discovery for devices on the local network advertising
+					the "remote-pairing" service. The client should present a list
+					of matching devices to the user. Clients SHOULD NOT present
+					IP addresses or the SRV record "target" host name to users
+					unless specifically configured to. Clients SHOULD indicate
+					devices for which a pairing already exists, but SHOULD NOT omit
+					them from the list of discovered devices.
+				
+</p>
+<p>
+					Once a user has chosen a device to pair with, the client shall
+					begin the pairing process as described below.
 				
 </p>
 <a name="anchor5"></a><br /><hr />
 <a name="rfc.section.2.3"></a><h3>2.3.&nbsp;
+Client initiates the pairing process</h3>
+
+<p>
+					The client connects to the server and performs an HTTP "GET" request
+					on &lt;root&gt;/pair?device-name=&lt;name&gt;, where &lt;name&gt; is replaced
+					with the client device’s "display name" (e.g., "Dan’s iPhone"),
+					URL-encoded as required by HTTP.
+				
+</p>
+<a name="anchor6"></a><br /><hr />
+<a name="rfc.section.2.4"></a><h3>2.4.&nbsp;
 Server returns a redirect response</h3>
 
 <p>
 					The server responds with 302 Moved temporarily and supplies a
-					Location: header of /pairing-request/&lt;uuid&gt;, where
+					"Location" response header of &lt;root&gt;/&lt;uuid&gt;, where
 					&lt;uuid&gt; is a newly-generated UUID which shall be used to
 					identify the client device to the server.
 				
 </p>
 <p>
-					The server shall store the UUID in some kind of local database.
+					The server shall store the UUID and client device name.
 					It shall generate a numeric passcode of not less than four and not
 					more than eight digits, and store it in some way associated with
 					the UUID. There shall be a flag of some kind associated with the
@@ -328,28 +362,29 @@ Server returns a redirect response</h3>
 					supplied in the HTTP request.
 				
 </p>
-<a name="anchor6"></a><br /><hr />
-<a name="rfc.section.2.4"></a><h3>2.4.&nbsp;
+<a name="anchor7"></a><br /><hr />
+<a name="rfc.section.2.5"></a><h3>2.5.&nbsp;
 Client follows redirect</h3>
 
 <p>
 					The client shall make an HTTP GET request to the URL supplied
-					by the server (that is, /pairing-request/&lt;uuid&gt;).
+					by the server (that is, &lt;root&gt;/&lt;uuid&gt;).
 				
 </p>
-<a name="anchor7"></a><br /><hr />
-<a name="rfc.section.2.5"></a><h3>2.5.&nbsp;
+<a name="anchor8"></a><br /><hr />
+<a name="rfc.section.2.6"></a><h3>2.6.&nbsp;
 Server prompts for authentication</h3>
 
 <p>
 					When the server receives the HTTP request, it shall return a 
 					"401 Unauthorized" response and include details about supported
-					authentication schemes as per RFC2617. The server MUST support
-					Digest authentication, but may support other schemes.
+					authentication schemes as per <a class='info' href='#RFC2617'>[RFC2617]<span> (</span><span class='info'>Franks, J., Hallam-Baker, P., Hostetler, J., Lawrence, S., Leach, P., Luotonen, A., and L. Stewart, &ldquo;HTTP Authentication: Basic and Digest Access Authentication,&rdquo; June&nbsp;1999.</span><span>)</span></a>. Both clients
+					and servers MUST support Digest authentication, but may support other
+					schemes. Basic authentication SHOULD NOT be used.
 				
 </p>
 <p>
-					The realm included in the WWW-Authenticate response header must
+					The realm included in the "WWW-Authenticate" response header must
 					be the server device’s own UUID. The client device may verify
 					that this UUID matches that which it expected to receive given
 					the Bonjour advertisement as a sanity-check.
@@ -362,8 +397,8 @@ Server prompts for authentication</h3>
 					indicate to the user that they must enter it on the client device.
 				
 </p>
-<a name="anchor8"></a><br /><hr />
-<a name="rfc.section.2.6"></a><h3>2.6.&nbsp;
+<a name="anchor9"></a><br /><hr />
+<a name="rfc.section.2.7"></a><h3>2.7.&nbsp;
 Client prompts user for passcode</h3>
 
 <p>
@@ -371,8 +406,8 @@ Client prompts user for passcode</h3>
 					the passcode displayed on the server device.
 				
 </p>
-<a name="anchor9"></a><br /><hr />
-<a name="rfc.section.2.7"></a><h3>2.7.&nbsp;
+<a name="anchor10"></a><br /><hr />
+<a name="rfc.section.2.8"></a><h3>2.8.&nbsp;
 Client makes request to the server</h3>
 
 <p>
@@ -383,8 +418,8 @@ Client makes request to the server</h3>
 					passcode for future authentication requests.
 				
 </p>
-<a name="anchor10"></a><br /><hr />
-<a name="rfc.section.2.8"></a><h3>2.8.&nbsp;
+<a name="anchor11"></a><br /><hr />
+<a name="rfc.section.2.9"></a><h3>2.9.&nbsp;
 Server responds to pairing request</h3>
 
 <p>
@@ -404,8 +439,8 @@ Server responds to pairing request</h3>
 					immediately abort the pairing process.
 				
 </p>
-<a name="anchor11"></a><br /><hr />
-<a name="rfc.section.2.9"></a><h3>2.9.&nbsp;
+<a name="anchor12"></a><br /><hr />
+<a name="rfc.section.2.10"></a><h3>2.10.&nbsp;
 Indicate to the user that pairing was successful</h3>
 
 <p>

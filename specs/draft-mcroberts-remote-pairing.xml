@@ -111,36 +111,64 @@
 txt-record  =  "txtvers=1 uuid=" UUID " path=" path-absolute
 ]]></artwork>
 				</figure>
+				<t>
+					The UUID included in the advertisement MUST be unique to the server
+					and MUST NOT change during the course of normal operations of the
+					device.
+				</t>
+				<t>
+					The value of the "path" parameter is the "root" path which will
+					be used as the prefix for for all requests made to the service.
+					Servers SHOULD NOT include a trailing forward-slash character
+					in the path. Clients MAY strip any trailing forward-slash
+					characters which are present.
+				</t>
 				<figure>
 					<preamble>A sample advertisement is shown below</preamble>
 					<artwork><![CDATA[
 _remote-pairing._tcp.local                IN PTR   John's\032TV._remote-pairing._tcp.local.
 
 John's\032TV._remote-pairing._tcp.local.  IN SRV   0 0 80 tv234759.local.
-John's\032TV._remote-pairing._tcp.local.  IN TXT   "txtvers=1 uuid=30146e8b-0d1a-47b9-825d-bebd7c23acaf path=/pairing/"
+John's\032TV._remote-pairing._tcp.local.  IN TXT   "txtvers=1 uuid=30146e8b-0d1a-47b9-825d-bebd7c23acaf path=/pairing"
 
 tv234759.local.                           IN A     192.168.0.25
 tv234759.local.                           IN AAAA  fe80::223:dfff:feaa:4762
 ]]></artwork>
 				</figure>
 			</section>
+			<section title="Discovery">
+				<t>
+					When requested to pair with a server, a client device should
+					begin discovery for devices on the local network advertising
+					the "remote-pairing" service. The client should present a list
+					of matching devices to the user. Clients SHOULD NOT present
+					IP addresses or the SRV record "target" host name to users
+					unless specifically configured to. Clients SHOULD indicate
+					devices for which a pairing already exists, but SHOULD NOT omit
+					them from the list of discovered devices.
+				</t>
+				<t>
+					Once a user has chosen a device to pair with, the client shall
+					begin the pairing process as described below.
+				</t>
+			</section>
 			<section title="Client initiates the pairing process">
 				<t>
-					The client connects to the server and performs an HTTP GET request
-					on /pairing-request?device-name=&lt;name&gt;, where &lt;name&gt; is replaced
-					with the client device’s “display name” (e.g., “Dan’s iPhone”),
+					The client connects to the server and performs an HTTP "GET" request
+					on &lt;root&gt;/pair?device-name=&lt;name&gt;, where &lt;name&gt; is replaced
+					with the client device’s "display name" (e.g., "Dan’s iPhone"),
 					URL-encoded as required by HTTP.
 				</t>
 			</section>
 			<section title="Server returns a redirect response">
 				<t>
 					The server responds with 302 Moved temporarily and supplies a
-					Location: header of /pairing-request/&lt;uuid&gt;, where
+					"Location" response header of &lt;root&gt;/&lt;uuid&gt;, where
 					&lt;uuid&gt; is a newly-generated UUID which shall be used to
 					identify the client device to the server.
 				</t>
 				<t>
-					The server shall store the UUID in some kind of local database.
+					The server shall store the UUID and client device name.
 					It shall generate a numeric passcode of not less than four and not
 					more than eight digits, and store it in some way associated with
 					the UUID. There shall be a flag of some kind associated with the
@@ -153,18 +181,19 @@ tv234759.local.                           IN AAAA  fe80::223:dfff:feaa:4762
 			<section title="Client follows redirect">
 				<t>
 					The client shall make an HTTP GET request to the URL supplied
-					by the server (that is, /pairing-request/&lt;uuid&gt;).
+					by the server (that is, &lt;root&gt;/&lt;uuid&gt;).
 				</t>
 			</section>
 			<section title="Server prompts for authentication">
 				<t>
 					When the server receives the HTTP request, it shall return a 
 					"401 Unauthorized" response and include details about supported
-					authentication schemes as per RFC2617. The server MUST support
-					Digest authentication, but may support other schemes.
+					authentication schemes as per <xref target="RFC2617" />. Both clients
+					and servers MUST support Digest authentication, but may support other
+					schemes. Basic authentication SHOULD NOT be used.
 				</t>
 				<t>
-					The realm included in the WWW-Authenticate response header must
+					The realm included in the "WWW-Authenticate" response header must
 					be the server device’s own UUID. The client device may verify
 					that this UUID matches that which it expected to receive given
 					the Bonjour advertisement as a sanity-check.
