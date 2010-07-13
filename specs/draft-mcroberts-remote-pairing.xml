@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE rfc SYSTEM "rfc2629.dtd" [
+<!ENTITY rfc2616 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.2616.xml">
+<!ENTITY rfc2119 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.2119.xml">
 <!ENTITY rfc4122 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.4122.xml">
 <!ENTITY rfc4234 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.4234.xml">
 <!ENTITY rfc2617 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.2617.xml">
@@ -16,7 +18,7 @@
 				<uri>http://projectbaird.com/</uri>
 			</address>
 		</author>
-		<date day="12" month="July" year="2010" />
+		<date day="13" month="July" year="2010" />
 		<area>General</area>
 		<keyword>I-D</keyword>
 		<keyword>Internet-Draft</keyword>
@@ -55,16 +57,43 @@
 				mechanism, while the "server" device features at a bare minimum
 				a display.
 			</t>
+			<t>
+				The protocol defined in this document is based upon HTTP
+				<xref target="RFC2616" />, and all requests and responses are
+				well-formed and valid HTTP requests and responses. The protocol
+				is designed such that it may co-exist with other HTTP-based
+				services operating on the same TCP/IP port, including those which
+				are intended to be directly user-facing.
+			</t>
+		</section>
+		<section title="Conventions and terminology used in this document">
+			<t>
+				The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+				"SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
+				document are to be interpreted as described in "Key words for use in
+				RFCs to Indicate Requirement Levels" <xref target="RFC2119" />
+			</t>
+			<t>
+				The term "server" is used to refer to the device providing the
+				pairing protocol server, such as a television or a media centre.
+				The term "client" is used to refer to the device which the user
+				wishes to pair with the server, for example a mobile phone, or
+				dedicated remote device.
+			</t>
 		</section>
 		<section title="Pairing mechanism">
 			<t>
-				The mechanism described here works on the basis of a shared secret:
-				in this case, a randomly-generated code number (typically between four
-				and eight digits in length) which is generated and displayed by the
-				server and must be entered on the client in order to complete the
-				pairing process. In subsequent authentication requests, supplied
-				code number is used as a password, while a per-client server-supplied
-				UUID <xref target="RFC4122" /> is used as a username.
+				The mechanism described here works on the basis of a shared secret which
+				is transferred between devices by the user: specifically, it is a
+				randomly-generated code number (between four and eight digits in
+				length) which is generated and presented to the user by way of some
+				display device attached to the server, and must be entered on the
+				client in order to complete the pairing process.
+			</t>
+			<t>
+				In subsequent authentication requests, the supplied code number is
+				used as a password, while a per-client server-supplied UUID 
+				<xref target="RFC4122" /> is used as a username.
 			</t>
 			<t>
 				Before this can occur, the client must discover that the server is
@@ -76,9 +105,57 @@
 				<xref target="I-D.cheshire-dnsext-multicastdns" /> in combination with
 				DNS-based Service Discovery <xref target="I-D.cheshire-dnsext-dns-sd" />.
 			</t>
-			<t>
-				The complete process is described below.
-			</t>
+			<figure>
+				<preamble>
+					The diagram below illustrates the process, which is described in
+					detail in the following sections.
+				</preamble>
+				<artwork><![CDATA[
+         Client                                   Server
+
+ 1.                                        "Add remote device"
+                                           Service is enabled and
+                                           advertised on network.
+
+ 2.  "Connect to server"
+     Begin discovery.
+
+ 3.  Present list of discovered
+     servers to the user.
+ 
+ 4.  User picks a server to pair
+     with.
+
+ 5.  Make initial GET request
+     to the server.
+     
+ 6.                                        Generate a new UUID and
+                                           passcode to identify the
+                                           client.
+ 
+ 7.                                        Send a 301 redirect to
+                                           client, based on UUID.
+ 
+ 8.  Follow the redirect, making
+     a new GET request.
+ 
+ 9.                                        Respond with 401 status,
+                                           display passcode to user.
+
+10.  Prompt user to enter passcode
+     displayed on server.
+
+11.  Re-request previous URL,
+     specifying UUID as username
+     and passcode as password.
+
+12.                                        Send a 2xx response, mark
+                                           client as paired.
+
+13.  When 2xx response is received,
+     mark server as paired.
+]]></artwork>     
+			</figure>
 			<section title="Advertisement">
 				<t>
 					Server devices should advertise the availability of the pairing
@@ -251,6 +328,8 @@ tv234759.local.                           IN AAAA  fe80::223:dfff:feaa:4762
 	</middle>
 	<back>
 		<references title="Normative References">
+			&rfc2616;
+			&rfc2119;
 			&rfc4122;
 			&rfc4234;
 			&rfc2617;

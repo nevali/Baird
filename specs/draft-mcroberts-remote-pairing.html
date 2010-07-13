@@ -143,8 +143,8 @@
 <table summary="layout" width="66%" border="0" cellpadding="0" cellspacing="0"><tr><td><table summary="layout" width="100%" border="0" cellpadding="2" cellspacing="1">
 <tr><td class="header">Network Working Group</td><td class="header">M. McRoberts</td></tr>
 <tr><td class="header">Internet-Draft</td><td class="header">Project Baird</td></tr>
-<tr><td class="header">Intended status: Informational</td><td class="header">July 12, 2010</td></tr>
-<tr><td class="header">Expires: January 13, 2011</td><td class="header">&nbsp;</td></tr>
+<tr><td class="header">Intended status: Informational</td><td class="header">July 13, 2010</td></tr>
+<tr><td class="header">Expires: January 14, 2011</td><td class="header">&nbsp;</td></tr>
 </table></td></tr></table>
 <h1><br />Protocol for pairing networked devices to one another<br />draft-mcroberts-remote-pairing-00</h1>
 
@@ -172,7 +172,7 @@ and may be updated, replaced, or obsoleted by other documents at any time.
 It is inappropriate to use Internet-Drafts as reference material or to cite
 them other than as &ldquo;work in progress.&rdquo;</p>
 <p>
-This Internet-Draft will expire on January 13, 2011.</p>
+This Internet-Draft will expire on January 14, 2011.</p>
 
 <h3>Copyright Notice</h3>
 <p>
@@ -220,18 +220,51 @@ Introduction</h3>
 				a display.
 			
 </p>
+<p>
+				The protocol defined in this document is based upon HTTP
+				<a class='info' href='#RFC2616'>[RFC2616]<span> (</span><span class='info'>Fielding, R., Gettys, J., Mogul, J., Frystyk, H., Masinter, L., Leach, P., and T. Berners-Lee, &ldquo;Hypertext Transfer Protocol -- HTTP/1.1,&rdquo; June&nbsp;1999.</span><span>)</span></a>, and all requests and responses are
+				well-formed and valid HTTP requests and responses. The protocol
+				is designed such that it may co-exist with other HTTP-based
+				services operating on the same TCP/IP port, including those which
+				are intended to be directly user-facing.
+			
+</p>
 <a name="anchor2"></a><br /><hr />
 <a name="rfc.section.2"></a><h3>2.&nbsp;
+Conventions and terminology used in this document</h3>
+
+<p>
+				The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+				"SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
+				document are to be interpreted as described in "Key words for use in
+				RFCs to Indicate Requirement Levels" <a class='info' href='#RFC2119'>[RFC2119]<span> (</span><span class='info'>Bradner, S., &ldquo;Key words for use in RFCs to Indicate Requirement Levels,&rdquo; March&nbsp;1997.</span><span>)</span></a>
+			
+</p>
+<p>
+				The term "server" is used to refer to the device providing the
+				pairing protocol server, such as a television or a media centre.
+				The term "client" is used to refer to the device which the user
+				wishes to pair with the server, for example a mobile phone, or
+				dedicated remote device.
+			
+</p>
+<a name="anchor3"></a><br /><hr />
+<a name="rfc.section.3"></a><h3>3.&nbsp;
 Pairing mechanism</h3>
 
 <p>
-				The mechanism described here works on the basis of a shared secret:
-				in this case, a randomly-generated code number (typically between four
-				and eight digits in length) which is generated and displayed by the
-				server and must be entered on the client in order to complete the
-				pairing process. In subsequent authentication requests, supplied
-				code number is used as a password, while a per-client server-supplied
-				UUID <a class='info' href='#RFC4122'>[RFC4122]<span> (</span><span class='info'>Leach, P., Mealling, M., and R. Salz, &ldquo;A Universally Unique IDentifier (UUID) URN Namespace,&rdquo; July&nbsp;2005.</span><span>)</span></a> is used as a username.
+				The mechanism described here works on the basis of a shared secret which
+				is transferred between devices by the user: specifically, it is a
+				randomly-generated code number (between four and eight digits in
+				length) which is generated and presented to the user by way of some
+				display device attached to the server, and must be entered on the
+				client in order to complete the pairing process.
+			
+</p>
+<p>
+				In subsequent authentication requests, the supplied code number is
+				used as a password, while a per-client server-supplied UUID 
+				<a class='info' href='#RFC4122'>[RFC4122]<span> (</span><span class='info'>Leach, P., Mealling, M., and R. Salz, &ldquo;A Universally Unique IDentifier (UUID) URN Namespace,&rdquo; July&nbsp;2005.</span><span>)</span></a> is used as a username.
 			
 </p>
 <p>
@@ -246,11 +279,56 @@ Pairing mechanism</h3>
 			
 </p>
 <p>
-				The complete process is described below.
-			
-</p>
-<a name="anchor3"></a><br /><hr />
-<a name="rfc.section.2.1"></a><h3>2.1.&nbsp;
+					The diagram below illustrates the process, which is described in
+					detail in the following sections.
+				
+</p><div style='display: table; width: 0; margin-left: 3em; margin-right: auto'><pre>
+         Client                                   Server
+
+ 1.                                        "Add remote device"
+                                           Service is enabled and
+                                           advertised on network.
+
+ 2.  "Connect to server"
+     Begin discovery.
+
+ 3.  Present list of discovered
+     servers to the user.
+
+ 4.  User picks a server to pair
+     with.
+
+ 5.  Make initial GET request
+     to the server.
+
+ 6.                                        Generate a new UUID and
+                                           passcode to identify the
+                                           client.
+
+ 7.                                        Send a 301 redirect to
+                                           client, based on UUID.
+
+ 8.  Follow the redirect, making
+     a new GET request.
+
+ 9.                                        Respond with 401 status,
+                                           display passcode to user.
+
+10.  Prompt user to enter passcode
+     displayed on server.
+
+11.  Re-request previous URL,
+     specifying UUID as username
+     and passcode as password.
+
+12.                                        Send a 2xx response, mark
+                                           client as paired.
+
+13.  When 2xx response is received,
+     mark server as paired.
+</pre></div>
+<a name="anchor4"></a><br /><hr />
+<a name="rfc.section.3.1"></a><h3>3.1.&nbsp;
 Advertisement</h3>
 
 <p>
@@ -309,8 +387,8 @@ John's\032TV._remote-pairing._tcp.local.  IN TXT   "txtvers=1 uuid=30146e8b-0d1a
 tv234759.local.                           IN A     192.168.0.25
 tv234759.local.                           IN AAAA  fe80::223:dfff:feaa:4762
 </pre></div>
-<a name="anchor4"></a><br /><hr />
-<a name="rfc.section.2.2"></a><h3>2.2.&nbsp;
+<a name="anchor5"></a><br /><hr />
+<a name="rfc.section.3.2"></a><h3>3.2.&nbsp;
 Discovery</h3>
 
 <p>
@@ -329,8 +407,8 @@ Discovery</h3>
 					begin the pairing process as described below.
 				
 </p>
-<a name="anchor5"></a><br /><hr />
-<a name="rfc.section.2.3"></a><h3>2.3.&nbsp;
+<a name="anchor6"></a><br /><hr />
+<a name="rfc.section.3.3"></a><h3>3.3.&nbsp;
 Client initiates the pairing process</h3>
 
 <p>
@@ -340,8 +418,8 @@ Client initiates the pairing process</h3>
 					URL-encoded as required by HTTP.
 				
 </p>
-<a name="anchor6"></a><br /><hr />
-<a name="rfc.section.2.4"></a><h3>2.4.&nbsp;
+<a name="anchor7"></a><br /><hr />
+<a name="rfc.section.3.4"></a><h3>3.4.&nbsp;
 Server returns a redirect response</h3>
 
 <p>
@@ -362,8 +440,8 @@ Server returns a redirect response</h3>
 					supplied in the HTTP request.
 				
 </p>
-<a name="anchor7"></a><br /><hr />
-<a name="rfc.section.2.5"></a><h3>2.5.&nbsp;
+<a name="anchor8"></a><br /><hr />
+<a name="rfc.section.3.5"></a><h3>3.5.&nbsp;
 Client follows redirect</h3>
 
 <p>
@@ -371,8 +449,8 @@ Client follows redirect</h3>
 					by the server (that is, &lt;root&gt;/&lt;uuid&gt;).
 				
 </p>
-<a name="anchor8"></a><br /><hr />
-<a name="rfc.section.2.6"></a><h3>2.6.&nbsp;
+<a name="anchor9"></a><br /><hr />
+<a name="rfc.section.3.6"></a><h3>3.6.&nbsp;
 Server prompts for authentication</h3>
 
 <p>
@@ -397,8 +475,8 @@ Server prompts for authentication</h3>
 					indicate to the user that they must enter it on the client device.
 				
 </p>
-<a name="anchor9"></a><br /><hr />
-<a name="rfc.section.2.7"></a><h3>2.7.&nbsp;
+<a name="anchor10"></a><br /><hr />
+<a name="rfc.section.3.7"></a><h3>3.7.&nbsp;
 Client prompts user for passcode</h3>
 
 <p>
@@ -406,8 +484,8 @@ Client prompts user for passcode</h3>
 					the passcode displayed on the server device.
 				
 </p>
-<a name="anchor10"></a><br /><hr />
-<a name="rfc.section.2.8"></a><h3>2.8.&nbsp;
+<a name="anchor11"></a><br /><hr />
+<a name="rfc.section.3.8"></a><h3>3.8.&nbsp;
 Client makes request to the server</h3>
 
 <p>
@@ -418,8 +496,8 @@ Client makes request to the server</h3>
 					passcode for future authentication requests.
 				
 </p>
-<a name="anchor11"></a><br /><hr />
-<a name="rfc.section.2.9"></a><h3>2.9.&nbsp;
+<a name="anchor12"></a><br /><hr />
+<a name="rfc.section.3.9"></a><h3>3.9.&nbsp;
 Server responds to pairing request</h3>
 
 <p>
@@ -439,8 +517,8 @@ Server responds to pairing request</h3>
 					immediately abort the pairing process.
 				
 </p>
-<a name="anchor12"></a><br /><hr />
-<a name="rfc.section.2.10"></a><h3>2.10.&nbsp;
+<a name="anchor13"></a><br /><hr />
+<a name="rfc.section.3.10"></a><h3>3.10.&nbsp;
 Indicate to the user that pairing was successful</h3>
 
 <p>
@@ -454,8 +532,12 @@ Indicate to the user that pairing was successful</h3>
 				
 </p>
 <a name="rfc.references1"></a><br /><hr />
-<h3>3.&nbsp;Normative References</h3>
+<h3>4.&nbsp;Normative References</h3>
 <table width="99%" border="0">
+<tr><td class="author-text" valign="top"><a name="RFC2616">[RFC2616]</a></td>
+<td class="author-text"><a href="mailto:fielding@ics.uci.edu">Fielding, R.</a>, <a href="mailto:jg@w3.org">Gettys, J.</a>, <a href="mailto:mogul@wrl.dec.com">Mogul, J.</a>, <a href="mailto:frystyk@w3.org">Frystyk, H.</a>, <a href="mailto:masinter@parc.xerox.com">Masinter, L.</a>, <a href="mailto:paulle@microsoft.com">Leach, P.</a>, and <a href="mailto:timbl@w3.org">T. Berners-Lee</a>, &ldquo;<a href="http://tools.ietf.org/html/rfc2616">Hypertext Transfer Protocol -- HTTP/1.1</a>,&rdquo; RFC&nbsp;2616, June&nbsp;1999 (<a href="http://www.rfc-editor.org/rfc/rfc2616.txt">TXT</a>, <a href="http://www.rfc-editor.org/rfc/rfc2616.ps">PS</a>, <a href="http://www.rfc-editor.org/rfc/rfc2616.pdf">PDF</a>, <a href="http://xml.resource.org/public/rfc/html/rfc2616.html">HTML</a>, <a href="http://xml.resource.org/public/rfc/xml/rfc2616.xml">XML</a>).</td></tr>
+<tr><td class="author-text" valign="top"><a name="RFC2119">[RFC2119]</a></td>
+<td class="author-text"><a href="mailto:sob@harvard.edu">Bradner, S.</a>, &ldquo;<a href="http://tools.ietf.org/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a>,&rdquo; BCP&nbsp;14, RFC&nbsp;2119, March&nbsp;1997 (<a href="http://www.rfc-editor.org/rfc/rfc2119.txt">TXT</a>, <a href="http://xml.resource.org/public/rfc/html/rfc2119.html">HTML</a>, <a href="http://xml.resource.org/public/rfc/xml/rfc2119.xml">XML</a>).</td></tr>
 <tr><td class="author-text" valign="top"><a name="RFC4122">[RFC4122]</a></td>
 <td class="author-text"><a href="mailto:paulle@microsoft.com">Leach, P.</a>, <a href="mailto:michael@refactored-networks.com">Mealling, M.</a>, and <a href="mailto:rsalz@datapower.com">R. Salz</a>, &ldquo;<a href="http://tools.ietf.org/html/rfc4122">A Universally Unique IDentifier (UUID) URN Namespace</a>,&rdquo; RFC&nbsp;4122, July&nbsp;2005 (<a href="http://www.rfc-editor.org/rfc/rfc4122.txt">TXT</a>, <a href="http://xml.resource.org/public/rfc/html/rfc4122.html">HTML</a>, <a href="http://xml.resource.org/public/rfc/xml/rfc4122.xml">XML</a>).</td></tr>
 <tr><td class="author-text" valign="top"><a name="RFC4234">[RFC4234]</a></td>
