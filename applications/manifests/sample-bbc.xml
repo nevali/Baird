@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<XRDS xmlns="http://docs.oasis-open.org/ns/xri/xrd-1.0">
+	<XRD>
+		<!-- BBC One -->
+		<Subject>http://www.bbc.co.uk/services/bbcone#service</Subject>
+		<Link rel="alternate" type="text/html" href="http://www.bbc.co.uk/bbcone/" />
+		<Link rel="http://purl.org/ontology/po/broadcaster" href="http://www.bbc.co.uk/#broadcaster" />
+	</XRD>
+	<XRD>
+		<!-- BBC One (London) -->
+		<Subject>http://www.bbc.co.uk/services/bbcone/london#service</Subject>
+		<Link rel="http://purl.org/ontology/po/parent_service" href="http://www.bbc.co.uk/services/bbcone#service" />
+		<Link rel="http://purl.org/ontology/po/DVB" href="dvb://233a.1004.1044" />
+<!--	<Link rel="http://purl.org/ontology/po/IPStream" type="text/html" href="http://www.bbc.co.uk/iplayer/tv/bbc_one_london/watchlive" /> -->
+		<Link rel="http://purl.org/ontology/po/IPStream" type="text/html" href="http://www.bbc.co.uk/iplayer/playlive/bbc_one_london/" />
+		<Link rel="http://purl.org/ontology/po/IPStream" type="application/sdp" href="http://www.bbc.co.uk/mobile/live/sdp/bbc1_mpeg4.sdp" />
+		<Link rel="http://projectbaird.com/ns/epg" type="application/json" href="http://www.bbc.co.uk/bbcone/programmes/schedules/london.json" />
+	</XRD>
+</XRDS>
