@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>TVDNS/RadioDNS Lookup Tool</title>
+		<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.7.0/build/reset/reset-min.css"> 
+		<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.7.0/build/base/base-min.css"> 
+		<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.7.0/build/fonts/fonts-min.css"> 
+		<link rel="stylesheet" type="text/css" href="http://projectbaird.com/screen.css" media="screen"> 
+		<link rel="stylesheet" type="text/css" href="http://projectbaird.com/print.css" media="print"> 
+		<style type="text/css">
+hr { display: none; }
+p.code-block { background: #eee; margin: 0; padding: 8px; line-height: 1.5em; }
+p.code-block code { display: inline; white-space: pre; color: #700; }
+		</style>
+	</head>
+	<body class="toys lookup">
+		<div id="surround">
+			<h1>TVDNS/RadioDNS Lookup Tool</h1>
+			<?php Form::alerts();
+
+if(strlen($fqdn))
+{
+?>
+		<div class="section results">
+			<h2>Lookup results</h2>
+			<p>Fully-qualified domain name: <code><?php e($fqdn); ?></code></p>
+			
+			<?php
+			if(strlen($svc))
+			{
+			?>
+			<p>Service URI: <code><?php e($svc); ?></code></p>
+			<?php			
+			}
+			?>
+
+			<?php
+			if($discovery)
+			{
+			?>
+			<p>Service-discovery target: <code><?php e($discovery->target); ?></code></p>
+			<?php			
+			}
+			?>
+	<?php			
+	if(!$discovery || !count($discovery->discovered))
+	{
+		echo "\t\t\t" . '<p>No known services discovered.</p>' . "\n";
+	}
+	echo "\t\t" . '</div>' . "\n";
+
+	if($discovery && count($discovery->discovered))
+	{
+		require_once(dirname(__FILE__) . '/discovery.phtml');
+	}
+	echo "\t\t" . '<hr>' . "\n";
+}
+
+		?>
+		<div class="section">
+		<?php require_once(dirname(__FILE__) . '/dvb.phtml'); ?>
+		</div>
+		<hr>
+		<div class="section">
+		<?php require_once(dirname(__FILE__) . '/fm.phtml'); ?>
+		</div>
+		<div id="footer"> 
+			<p>Copyright © 2009-2010. Dèanta ann an Alba.</p> 
+		</div> 		
+	</body>
+</html>

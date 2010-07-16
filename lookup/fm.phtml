@@ -1,0 +1,12 @@
+		<form method="get" action="">
+			<h2>VHF/FM</h2>
+			<input type="hidden" name="kind" value="fm">
+			<input type="hidden" name="multiplier" value="100">
+			<p>The frequency value should be in units of 1Mhz (e.g., 97.5 = 97.50MHz)</p>
+			<?php	
+			Form::input('freq', 'Frequency:');
+			Form::input('pi', 'RDS Programme Identification code:');
+			Form::input('country', 'ISO 3166-1 alpha-2 country code, or RDS Extended Country Code:');
+			?>
+			<input type="submit" value="Go">
+		</form>

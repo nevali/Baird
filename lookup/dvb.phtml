@@ -1,0 +1,13 @@
+		<form method="get" action="">
+			<h2>DVB</h2>
+			<input type="hidden" name="kind" value="dvb">
+			<p>All identifiers should be entered in hexadecimal.</p>
+			<?php			
+			Form::input('original_network_id');
+			Form::input('transport_stream_id');
+			Form::input('service_id');
+			Form::input('network_id');
+			Form::input('suffix', 'Suffix:', 'text', 'field', 'tvdns.net');
+			?>
+			<input type="submit" value="Go">
+		</form>

@@ -1,0 +1,15 @@
+<?php
+		foreach($discovery->discovered as $srv => $info)
+		{
+			echo "\t\t" . '<div class="section">' . "\n";
+			echo "\t\t\t" . '<h3>' . htmlspecialchars($info['name']) . ' (<code>' . $srv . '.' . $discovery->target . '</code>)</h3>' . "\n";
+			dumprecs($info['records']);
+			if($srv == '_broadcast-meta._tcp')
+			{
+/*				$service = new BroadcastMeta($info);
+				$svcInfo = $service->processForm($fields); */
+				require_once(dirname(__FILE__) . '/broadcast-meta.phtml');
+			}
+			echo "\t\t" . '</div>' . "\n";			
+		}
+?>
