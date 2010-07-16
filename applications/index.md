@@ -13,7 +13,7 @@ broadcasts. Each application’s specification will indicate which discovery
 and delivery mechanisms are applicable.
 
 * [Metadata resolution](broadcast-meta/): Retrieval of programme metadata for over-the-air broadcasts
-* [Feed manifests](feed-manifests/): Describing sets of feeds (and their relationship to over-the-air services)
+* [Service manifests](manifests/): Describing sets of services (and their relationships to streams)
 * [Content feeds](feeds/): Describing both linear and on-demand content, and relationships between IP-delivered and over-the-air content
 * [Pairing protocol](pairing-protocol/): Generic mechanism for pairing devices across a local network
 * [Remote control](remote-control/): Allowing secondary devices on a local network to inspect and control a receiver or DVR

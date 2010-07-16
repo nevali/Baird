@@ -3,13 +3,15 @@ title: Collating a list of all services provided by an over-the-air broadcaster
 layout: default
 ---
 
+<strong>This information is out of date an incomplete</strong>
+
 1. Construct a [TVDNS](/discovery/tvdns) or RadioDNS domain name for the
 current service
 
-2. Query DNS for the [<code>content-manifest</code>](http://wiki.github.com/nexgenta/Baird/service-manifests)
+2. Query DNS for the [<code>xrd</code>](http://wiki.github.com/nexgenta/Baird/service-manifests)
 application
 
-3. Download the manifest Atom feed
+3. Download the manifest XRD
 
 4. Each linked feed relates to a service; those which are related to a known
 over-the-air service can be added immediately to a list of broadcaster’s services
