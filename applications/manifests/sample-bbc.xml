@@ -149,7 +149,7 @@
 		<Property type="http://www.w3.org/2000/01/rdf-schema#label">BBC Red Button</Property>
 		<Property type="http://projectbaird.com/ns/serviceClass">interactive</Property>
 		<Link rel="alternate" type="text/html" href="http://www.bbc.co.uk/digital/tv/tv_interactive.shtml">
-			<Property type="http://projectbaird.com/ns/preferred" xsi:nil="true">
+			<Property type="http://projectbaird.com/ns/preferred" xsi:nil="true" />
 		</Link>
 		<Link rel="http://purl.org/ontology/po/DVB" href="dvb://233a.1041.1140" />
 		<Link rel="http://xmlns.com/foaf/0.1/depiction" type="image/jpeg" href="http://upload.wikimedia.org/wikipedia/en/2/2b/BBCi_Page_100.jpg" />
