@@ -160,16 +160,35 @@
 		<Link rel="alternate" type="text/html" href="http://www.bbc.co.uk/radio1/" />
 		<Link rel="http://xmlns.com/foaf/0.1/depiction" type="image/gif" href="http://www.bbc.co.uk/iplayer/img/radio/bbc_radio_one.gif" />
 		<Link rel="http://purl.org/ontology/po/broadcaster" href="http://www.bbc.co.uk/#broadcaster" />
-		<Link rel="http://purl.org/ontology/po/IPStream" type="text/html" href="http://www.bbc.co.uk/iplayer/playlive/bbc_radio_one/">
-			<Property type="http://projectbaird.com/ns/media">screen</Property>
-		</Link>		
-		<Link rel="http://purl.org/ontology/po/IPStream" type="audio/x-ms-asx" href="http://bbc.co.uk/radio/listen/live/r1.asx">
-			<Property type="http://projectbaird.com/ns/media">all</Property>
-		</Link>		
 		<Link rel="urn:tva:metadata:2005:ServiceGenre" href="urn:tva:metadata:cs:MediaTypeCS:2005:7.1.1" />
 		<Link rel="urn:tva:metadata:2005:ServiceGenre" href="urn:tva:metadata:cs:ContentCS:2005:3.6.4" />
-		<Link rel="http://purl.org/ontology/po/DVB" href="dvb://233a.4000.3800" />		
-		<Link rel="http://purl.org/ontology/po/DVB" href="dvb://233a.1041.1a40" />		
+	</XRD>
+	<XRD>
+		<!-- Radio 1Xtra -->
+		<Subject>http://www.bbc.co.uk/services/1xtra#service</Subject>
+		<Property type="http://www.w3.org/2000/01/rdf-schema#label">BBC Radio 1Xtra</Property>
+		<Property type="http://projectbaird.com/ns/serviceClass">linear</Property>
+		<Link rel="alternate" type="text/html" href="http://www.bbc.co.uk/1xtra/" />
+		<Link rel="http://xmlns.com/foaf/0.1/depiction" type="image/gif" href="http://www.bbc.co.uk/iplayer/img/radio/bbc_1xtra.gif" />
+		<Link rel="http://purl.org/ontology/po/broadcaster" href="http://www.bbc.co.uk/#broadcaster" />
+		<Link rel="urn:tva:metadata:2005:ServiceGenre" href="urn:tva:metadata:cs:MediaTypeCS:2005:7.1.1" />
+		<Link rel="urn:tva:metadata:2005:ServiceGenre" href="urn:tva:metadata:cs:ContentCS:2005:3.6.4" />
+		<Link rel="http://purl.org/ontology/po/DVB" href="dvb://233a.4000.4700" />
+		<Link rel="http://purl.org/ontology/po/DVB" href="dvb://233a.1041.1700" />
+	</XRD>
+	<XRD>
+		<!-- Radio 2 -->
+		<Subject>http://www.bbc.co.uk/services/radio2#service</Subject>
+		<Property type="http://www.w3.org/2000/01/rdf-schema#label">BBC Radio 2</Property>
+		<Property type="http://projectbaird.com/ns/serviceClass">linear</Property>
+		<Link rel="alternate" type="text/html" href="http://www.bbc.co.uk/radio2/" />
+		<Link rel="http://xmlns.com/foaf/0.1/depiction" type="image/gif" href="http://www.bbc.co.uk/iplayer/img/radio/bbc_radio_two.gif" />
+		<Link rel="http://purl.org/ontology/po/broadcaster" href="http://www.bbc.co.uk/#broadcaster" />
+		<Property type="http://projectbaird.com/ns/serviceNumberPreference">702</Property>
+		<Link rel="urn:tva:metadata:2005:ServiceGenre" href="urn:tva:metadata:cs:MediaTypeCS:2005:7.1.1" />
+		<Link rel="urn:tva:metadata:2005:ServiceGenre" href="urn:tva:metadata:cs:ContentCS:2005:3.6.3.2" />
+		<Link rel="http://purl.org/ontology/po/DVB" href="dvb://233a.4000.3840" />
+		<Link rel="http://purl.org/ontology/po/DVB" href="dvb://233a.1041.1a80" />
 	</XRD>
 	
 	<XRD>
@@ -232,4 +251,45 @@
 		<Property type="http://projectbaird.com/ns/serviceNumberPreference">2</Property>
 	</XRD>
 
+	<!-- Variations for Radio 1 -->
+	<XRD>
+		<!-- Radio 1 (England) -->
+		<Subject>http://www.bbc.co.uk/services/radio1/england#service</Subject>
+		<Property type="http://www.w3.org/2000/01/rdf-schema#label">England</Property>
+		<Link rel="http://purl.org/ontology/po/parent_service" href="http://www.bbc.co.uk/services/radio1#service" />
+		<Link rel="http://purl.org/ontology/po/IPStream" type="text/html" href="http://www.bbc.co.uk/iplayer/playlive/bbc_radio_one/">
+			<Property type="http://projectbaird.com/ns/media">screen</Property>
+		</Link>		
+		<Link rel="http://purl.org/ontology/po/IPStream" type="audio/x-ms-asx" href="http://bbc.co.uk/radio/listen/live/r1.asx">
+			<Property type="http://projectbaird.com/ns/media">all</Property>
+		</Link>		
+		<Link rel="http://purl.org/ontology/po/DVB" href="dvb://233a.4000.3800" />		
+		<Link rel="http://purl.org/ontology/po/DVB" href="dvb://233a.1041.1a40" />		
+		<Link rel="http://projectbaird.com/ns/epg" type="application/json" href="http://www.bbc.co.uk/radio1/programmes/schedules/england.json" />
+		<Property type="http://projectbaird.com/ns/serviceNumberPreference">700</Property>
+	</XRD>
+	<XRD>
+		<!-- Radio 1 (Scotland) -->
+		<Subject>http://www.bbc.co.uk/services/radio1/scotland#service</Subject>
+		<Property type="http://www.w3.org/2000/01/rdf-schema#label">Scotland</Property>
+		<Link rel="http://purl.org/ontology/po/parent_service" href="http://www.bbc.co.uk/services/radio1#service" />
+		<Link rel="http://projectbaird.com/ns/epg" type="application/json" href="http://www.bbc.co.uk/radio1/programmes/schedules/scotland.json" />
+		<Property type="http://projectbaird.com/ns/serviceNumberPreference">700</Property>
+	</XRD>
+	<XRD>
+		<!-- Radio 1 (Northern Ireland) -->
+		<Subject>http://www.bbc.co.uk/services/radio1/northernireland#service</Subject>
+		<Property type="http://www.w3.org/2000/01/rdf-schema#label">N. Ireland</Property>
+		<Link rel="http://purl.org/ontology/po/parent_service" href="http://www.bbc.co.uk/services/radio1#service" />
+		<Link rel="http://projectbaird.com/ns/epg" type="application/json" href="http://www.bbc.co.uk/radio1/programmes/schedules/northernireland.json" />
+		<Property type="http://projectbaird.com/ns/serviceNumberPreference">700</Property>
+	</XRD>
+	<XRD>
+		<!-- Radio 1 (Wales) -->
+		<Subject>http://www.bbc.co.uk/services/radio1/wales#service</Subject>
+		<Property type="http://www.w3.org/2000/01/rdf-schema#label">Wales</Property>
+		<Link rel="http://purl.org/ontology/po/parent_service" href="http://www.bbc.co.uk/services/radio1#service" />
+		<Link rel="http://projectbaird.com/ns/epg" type="application/json" href="http://www.bbc.co.uk/radio1/programmes/schedules/wales.json" />
+		<Property type="http://projectbaird.com/ns/serviceNumberPreference">700</Property>
+	</XRD>
 </XRDS>
