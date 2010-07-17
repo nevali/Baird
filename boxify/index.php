@@ -17,7 +17,7 @@ $xrdServices = array();
 $resolver = array();
 $kind = $onid = $nid = null;
 $suffix = 'tvdns.net';
-$nextDynamicChannel = 901;
+$firstDynamicChannel = $nextDynamicChannel = 901;
 
 require_once(dirname(__FILE__) . '/common.php');
 require_once(dirname(__FILE__) . '/dvb/data.php');
@@ -377,9 +377,26 @@ foreach($xrdServices as $service)
 	}
 	if($channel)
 	{
-		$channel['lcn'] = $nextDynamicChannel;
-		$channels[sprintf('%04d', $nextDynamicChannel)] = $channel;
-		$nextDynamicChannel++;
+		$chanNumber = $nextDynamicChannel;
+		if(isset($service['props']['http://projectbaird.com/ns/serviceNumberPreference']))
+		{
+			foreach($service['props']['http://projectbaird.com/ns/serviceNumberPreference'] as $int)
+			{
+				$int = intval($int);
+				if(!$int) continue;
+				if($int >= $firstDynamicChannel) continue;
+				$k = sprintf('%04d', $int);
+				if(isset($channels[$k])) continue;
+				$chanNumber = $int;
+				break;
+			}
+		}			
+		$channel['lcn'] = $chanNumber;
+		$channels[sprintf('%04d', $chanNumber)] = $channel;
+		if($chanNumber == $nextDynamicChannel)
+		{
+			$nextDynamicChannel++;
+		}
 	}
 }
 
