@@ -198,6 +198,7 @@
 			<Property type="http://projectbaird.com/ns/media">mobile</Property>
 		</Link>
 		<Link rel="http://projectbaird.com/ns/epg" type="application/json" href="http://www.bbc.co.uk/radio1/programmes/schedules/england.json" />
+		<Property type="http://projectbaird.com/ns/serviceNumberPreference">1</Property>
 	</XRD>
 	<XRD>
 		<!-- BBC One (West) -->
@@ -210,6 +211,25 @@
 			<Property type="http://projectbaird.com/ns/media">screen</Property>
 		</Link>	
 		<Link rel="http://projectbaird.com/ns/epg" type="application/json" href="http://www.bbc.co.uk/bbcone/programmes/schedules/west.json" />
+		<Property type="http://projectbaird.com/ns/serviceNumberPreference">1</Property>
+	</XRD>
+
+	<!-- Variations for BBC Two -->
+	<XRD>
+		<!-- BBC Two (England) -->
+		<Subject>http://www.bbc.co.uk/services/bbctwo/england#service</Subject>
+		<Property type="http://www.w3.org/2000/01/rdf-schema#label">England</Property>
+		<Link rel="http://purl.org/ontology/po/parent_service" href="http://www.bbc.co.uk/services/bbcone#service" />
+		<Link rel="http://purl.org/ontology/po/DVB" href="dvb://233a.1041.10bf" />
+<!--	<Link rel="http://purl.org/ontology/po/IPStream" type="text/html" href="http://www.bbc.co.uk/iplayer/tv/bbc_two_england/watchlive" /> -->
+		<Link rel="http://purl.org/ontology/po/IPStream" type="text/html" href="http://www.bbc.co.uk/iplayer/playlive/bbc_two_england/">
+			<Property type="http://projectbaird.com/ns/media">screen</Property>
+		</Link>
+		<Link rel="http://purl.org/ontology/po/IPStream" type="application/sdp" href="http://www.bbc.co.uk/mobile/live/sdp/bbc2_mpeg4.sdp">
+			<Property type="http://projectbaird.com/ns/media">mobile</Property>
+		</Link>
+		<Link rel="http://projectbaird.com/ns/epg" type="application/json" href="http://www.bbc.co.uk/bbctwo/programmes/schedules/england.json" />
+		<Property type="http://projectbaird.com/ns/serviceNumberPreference">2</Property>
 	</XRD>
 
 </XRDS>
