@@ -19,7 +19,7 @@
 		<Property type="http://projectbaird.com/ns/serviceClass">linear</Property>
 		<Link rel="alternate" type="text/html" href="http://www.bbc.co.uk/bbctwo/" />
 		<Link rel="http://purl.org/ontology/po/broadcaster" href="http://www.bbc.co.uk/#broadcaster" />
-		<Link rel="http://xmlns.com/foaf/0.1/depiction" href="http://www.bbc.co.uk/iplayer/img/tv/bbc_two.jpg" />
+		<Link rel="http://xmlns.com/foaf/0.1/depiction" type="image/jpeg" href="http://www.bbc.co.uk/iplayer/img/tv/bbc_two.jpg" />
 		<Link rel="urn:tva:metadata:2005:ServiceGenre" href="urn:tva:metadata:cs:MediaTypeCS:2005:7.1.3" />
 	</XRD>
 	
@@ -31,8 +31,12 @@
 		<Link rel="alternate" type="text/html" href="http://www.bbc.co.uk/radio1/" />
 		<Link rel="http://xmlns.com/foaf/0.1/depiction" type="image/gif" href="http://www.bbc.co.uk/iplayer/img/radio/bbc_radio_one.gif" />
 		<Link rel="http://purl.org/ontology/po/broadcaster" href="http://www.bbc.co.uk/#broadcaster" />
-		<Link rel="http://purl.org/ontology/po/IPStream" type="text/html" href="http://www.bbc.co.uk/iplayer/playlive/bbc_radio_one/" />
-		<Link rel="http://purl.org/ontology/po/IPStream" type="audio/x-ms-asx" href="http://bbc.co.uk/radio/listen/live/r1.asx" />
+		<Link rel="http://purl.org/ontology/po/IPStream" type="text/html" href="http://www.bbc.co.uk/iplayer/playlive/bbc_radio_one/">
+			<Property type="http://projectbaird.com/ns/media">screen</Property>
+		</Link>		
+		<Link rel="http://purl.org/ontology/po/IPStream" type="audio/x-ms-asx" href="http://bbc.co.uk/radio/listen/live/r1.asx">
+			<Property type="http://projectbaird.com/ns/media">all</Property>
+		</Link>		
 		<Link rel="urn:tva:metadata:2005:ServiceGenre" href="urn:tva:metadata:cs:MediaTypeCS:2005:7.1.1" />
 		<Link rel="urn:tva:metadata:2005:ServiceGenre" href="urn:tva:metadata:cs:ContentCS:2005:3.6.4" />
 		<Link rel="http://purl.org/ontology/po/DVB" href="dvb://233a.4000.3800" />		
@@ -44,7 +48,9 @@
 		<Subject>http://www.bbc.co.uk/iplayer/#service</Subject>
 		<Property type="http://www.w3.org/2000/01/rdf-schema#label">BBC iPlayer</Property>
 		<Property type="http://projectbaird.com/ns/serviceClass">demand</Property>
-		<Link rel="self" type="text/html" href="http://www.bbc.co.uk/iplayer/" />
+		<Link rel="self" type="text/html" href="http://www.bbc.co.uk/iplayer/">
+			<Property type="http://projectbaird.com/ns/media">screen</Property>
+		</Link>		
 		<Link rel="http://xmlns.com/foaf/0.1/depiction" type="image/png" href="http://upload.wikimedia.org/wikipedia/en/thumb/0/05/BBC_iPlayer_logo.svg/200px-BBC_iPlayer_logo.svg.png" />
 	</XRD>
 	
@@ -56,8 +62,12 @@
 		<Link rel="http://purl.org/ontology/po/parent_service" href="http://www.bbc.co.uk/services/bbcone#service" />
 		<Link rel="http://purl.org/ontology/po/DVB" href="dvb://233a.1004.1044" />
 <!--	<Link rel="http://purl.org/ontology/po/IPStream" type="text/html" href="http://www.bbc.co.uk/iplayer/tv/bbc_one_london/watchlive" /> -->
-		<Link rel="http://purl.org/ontology/po/IPStream" type="text/html" href="http://www.bbc.co.uk/iplayer/playlive/bbc_one_london/" />
-		<Link rel="http://purl.org/ontology/po/IPStream" type="application/sdp" href="http://www.bbc.co.uk/mobile/live/sdp/bbc1_mpeg4.sdp" />
+		<Link rel="http://purl.org/ontology/po/IPStream" type="text/html" href="http://www.bbc.co.uk/iplayer/playlive/bbc_one_london/">
+			<Property type="http://projectbaird.com/ns/media">screen</Property>
+		</Link>
+		<Link rel="http://purl.org/ontology/po/IPStream" type="application/sdp" href="http://www.bbc.co.uk/mobile/live/sdp/bbc1_mpeg4.sdp">
+			<Property type="http://projectbaird.com/ns/media">mobile</Property>
+		</Link>
 		<Link rel="http://projectbaird.com/ns/epg" type="application/json" href="http://www.bbc.co.uk/radio1/programmes/schedules/england.json" />
 	</XRD>
 	<XRD>
@@ -67,7 +77,9 @@
 		<Link rel="http://purl.org/ontology/po/parent_service" href="http://www.bbc.co.uk/services/bbcone#service" />
 		<Link rel="http://purl.org/ontology/po/DVB" href="dvb://233a.1041.1041" />
 <!--	<Link rel="http://purl.org/ontology/po/IPStream" type="text/html" href="http://www.bbc.co.uk/iplayer/tv/bbc_one_west/watchlive" /> -->
-		<Link rel="http://purl.org/ontology/po/IPStream" type="text/html" href="http://www.bbc.co.uk/iplayer/playlive/bbc_one_west/" />
+		<Link rel="http://purl.org/ontology/po/IPStream" type="text/html" href="http://www.bbc.co.uk/iplayer/playlive/bbc_one_west/">
+			<Property type="http://projectbaird.com/ns/media">screen</Property>
+		</Link>	
 		<Link rel="http://projectbaird.com/ns/epg" type="application/json" href="http://www.bbc.co.uk/bbcone/programmes/schedules/west.json" />
 	</XRD>
 
