@@ -69,7 +69,7 @@
 	
 	<XRD>
 		<!-- CBBC -->
-		<Subject>http://www.bbc.co.uk/services/cbeebies#service</Subject>
+		<Subject>http://www.bbc.co.uk/services/cbbc#service</Subject>
 		<Property type="http://www.w3.org/2000/01/rdf-schema#label">CBBC</Property>
 		<Property type="http://projectbaird.com/ns/serviceClass">linear</Property>
 		<Link rel="alternate" type="text/html" href="http://www.bbc.co.uk/cbeebies/" />
