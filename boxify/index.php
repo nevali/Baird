@@ -252,6 +252,26 @@ foreach($xrdServices as $subject => $service)
 {
 	$svcClass = null;
 	$service['channels'] = array();
+	$service['website'] = $service['websiteHost'] = null;
+	if(isset($service['links']['alternate']))
+	{
+		foreach($service['links']['alternate'] as $link)
+		{
+			if($link['type'] == 'text/html')
+			{
+				$service['website'] = $link['href'];
+				try
+				{
+					if((@$info = parse_url($link['href'])))
+					{
+						$service['websiteHost'] = $info['host'];
+					}
+				}
+				catch(Exception $e) {}
+			}
+		}
+	}
+
 	if(isset($service['links']['http://purl.org/ontology/po/DVB']))
 	{
 		foreach($service['links']['http://purl.org/ontology/po/DVB'] as $dvb)
@@ -399,6 +419,11 @@ foreach($channels as $k => $chan)
 		{
 			$channels[$k]['streams'] = $service['links']['http://purl.org/ontology/po/IPStream'];
 		}
+		if(strlen($service['website']))
+		{
+			$channels[$k]['website'] = $service['website'];
+			$channels[$k]['websiteHost'] = $service['websiteHost'];
+		}		
 	}
 }
 

@@ -133,7 +133,7 @@ echo '<th scope="row">' . $info['lcn'] . '</th>';
 echo '<td class="name"><a href="' . _e($info['lookup']) . '">';
 if(isset($info['depiction']))
 {
-	echo '<img src="' . _e($info['depiction']) . '"><br>';
+	echo '<img src="' . _e($info['depiction']) . '" height="100"><br>';
 }
 echo  _e($info['name']) . '</a></td>';
 echo '<td class="kind">' . _e($platform[$info['kind']]['shortName']) . '</td>';
