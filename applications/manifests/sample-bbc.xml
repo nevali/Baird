@@ -30,7 +30,7 @@
 		<Property type="http://projectbaird.com/ns/serviceClass">linear</Property>
 		<Link rel="alternate" type="text/html" href="http://www.bbc.co.uk/bbcthree/" />
 		<Link rel="http://purl.org/ontology/po/broadcaster" href="http://www.bbc.co.uk/#broadcaster" />
-		<Link rel="http://xmlns.com/foaf/0.1/depiction" type="image/jpeg" href="http://www.bbc.co.uk/iplayer/img/tv/bbc_alba.jpg" />
+		<Link rel="http://xmlns.com/foaf/0.1/depiction" type="image/jpeg" href="http://www.bbc.co.uk/iplayer/img/tv/bbc_three.jpg" />
 		<Link rel="http://purl.org/ontology/po/DVB" href="dvb://233a.1041.10c0" />
 		<Link rel="http://purl.org/ontology/po/IPStream" type="text/html" href="http://www.bbc.co.uk/iplayer/playlive/bbc_three/">
 			<Property type="http://projectbaird.com/ns/media">screen</Property>
@@ -86,7 +86,7 @@
 		<Property type="http://projectbaird.com/ns/serviceClass">linear</Property>
 		<Link rel="alternate" type="text/html" href="http://www.bbc.co.uk/news/" />
 		<Link rel="http://purl.org/ontology/po/broadcaster" href="http://www.bbc.co.uk/#broadcaster" />
-		<Link rel="http://xmlns.com/foaf/0.1/depiction" type="image/jpeg" href="http://www.bbc.co.uk/iplayer/img/tv/bbc_news.jpg" />
+		<Link rel="http://xmlns.com/foaf/0.1/depiction" type="image/jpeg" href="http://www.bbc.co.uk/iplayer/img/tv/bbc_news24.jpg" />
 		<Link rel="http://purl.org/ontology/po/DVB" href="dvb://233a.1041.1100" />
 		<Link rel="http://purl.org/ontology/po/IPStream" type="text/html" href="http://www.bbc.co.uk/iplayer/playlive/bbc_news24/">
 			<Property type="http://projectbaird.com/ns/media">screen</Property>
@@ -101,7 +101,7 @@
 		<Property type="http://projectbaird.com/ns/serviceClass">linear</Property>
 		<Link rel="alternate" type="text/html" href="http://www.bbc.co.uk/parliament/" />
 		<Link rel="http://purl.org/ontology/po/broadcaster" href="http://www.bbc.co.uk/#broadcaster" />
-		<Link rel="http://xmlns.com/foaf/0.1/depiction" type="image/jpeg" href="http://www.bbc.co.uk/iplayer/img/tv/bbc_parliament.jpg" />
+		<Link rel="http://xmlns.com/foaf/0.1/depiction" type="image/jpeg" href="http://www.bbc.co.uk/iplayer/img/tv/bbc_parliament_1.jpg" />
 		<Link rel="http://purl.org/ontology/po/DVB" href="dvb://233a.1041.1280" />
 		<Link rel="http://purl.org/ontology/po/IPStream" type="text/html" href="http://www.bbc.co.uk/iplayer/playlive/bbc_parliament/">
 			<Property type="http://projectbaird.com/ns/media">screen</Property>
@@ -117,7 +117,7 @@
 		<Property type="http://projectbaird.com/ns/serviceNumberPreference">50</Property>		
 		<Link rel="alternate" type="text/html" href="http://www.bbc.co.uk/alba/" />
 		<Link rel="http://purl.org/ontology/po/broadcaster" href="http://www.bbc.co.uk/#broadcaster" />
-		<Link rel="http://xmlns.com/foaf/0.1/depiction" type="image/jpeg" href="http://www.bbc.co.uk/iplayer/img/tv/bbc_hd.jpg" />
+		<Link rel="http://xmlns.com/foaf/0.1/depiction" type="image/jpeg" href="http://www.bbc.co.uk/iplayer/img/tv/bbc_hd_1.jpg" />
 		<Link rel="http://purl.org/ontology/po/IPStream" type="text/html" href="http://www.bbc.co.uk/iplayer/playlive/bbc_hd/">
 			<Property type="http://projectbaird.com/ns/media">screen</Property>
 		</Link>
