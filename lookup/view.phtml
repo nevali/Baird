@@ -16,7 +16,7 @@ p.code-block code { display: inline; white-space: pre; color: #700; }
 	</head>
 	<body class="toys lookup">
 		<div id="surround">
-			<h1>TVDNS/RadioDNS Lookup Tool</h1>
+			<h1><a href="/lookup/">TVDNS/RadioDNS Lookup Tool</a></h1>
 			<?php Form::alerts();
 
 if(strlen($fqdn))
@@ -58,15 +58,64 @@ if(strlen($fqdn))
 }
 
 		?>
-		<div class="section">
+		<?php if(!strlen($fqdn) || $fields['kind'] == 'ip')
+		{
+		?><div class="section">
+		<?php require_once(dirname(__FILE__) . '/ipstream.phtml'); ?>
+		</div>
+		<hr>
+		<?php
+		}
+		
+		if(!strlen($fqdn) || $fields['kind'] == 'dvb')
+		{		
+		?><div class="section">
 		<?php require_once(dirname(__FILE__) . '/dvb.phtml'); ?>
 		</div>
 		<hr>
-		<div class="section">
+		<?php
+		}
+		
+		if(!strlen($fqdn) || $fields['kind'] == 'fm')
+		{		
+		?><div class="section">
 		<?php require_once(dirname(__FILE__) . '/fm.phtml'); ?>
 		</div>
+		<hr>
+		<?php
+		}
+		
+		
+		if(!strlen($fqdn) || $fields['kind'] == 'dab')
+		{		
+		?><div class="section">
+		<?php require_once(dirname(__FILE__) . '/dab.phtml'); ?>
+		</div>
+		<hr>
+		<?php
+		}
+		
+		if(!strlen($fqdn) || $fields['kind'] == 'drm' || $fields['kind'] == 'amss')
+		{		
+		?>
+		<div class="section">
+		<?php require_once(dirname(__FILE__) . '/drm-amss.phtml'); ?>
+		</div>
+		<hr>
+		<?php
+		}
+		?>
 		<div id="footer"> 
 			<p>Copyright © 2009-2010. Dèanta ann an Alba.</p> 
 		</div> 		
+		<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-9096696-3");
+pageTracker._trackPageview();
+} catch(err) {}</script>
 	</body>
 </html>

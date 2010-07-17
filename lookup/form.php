@@ -70,11 +70,42 @@ abstract class Form
 		}
 		else
 		{
-			$value = htmlspecialchars($value);
+			$value = _e($value);
 		}
 		echo "\t\t\t" . '<dl class="' . $class . '" id="f-' . $name . '">' . "\n";
 		echo "\t\t\t\t" . '<dt><label for="' . $name . '">' . $label . '</label></dt>' . "\n";
 		echo "\t\t\t\t" . '<dd><input type="' . $type . '" name="' . $name . '" id="' . $name . '" value="' . $value . '"></dd>' . "\n";
+		echo "\t\t\t" . '</dl>' . "\n";
+	}
+
+	public static function select($name, $label = null, $options, $class = 'field', $value = null)
+	{
+		global $fields, $invalid;
+		
+		if(!strlen($label))
+		{
+			$label = $name . ':';
+		}
+		if(in_array($name, $invalid))
+		{
+			$class .= ' error';
+		}
+		if(strlen($fields[$name]))
+		{
+			$value = $fields[$name];
+		}
+		else
+		{
+			$value = _e($value);
+		}
+		echo "\t\t\t" . '<dl class="' . $class . '" id="f-' . $name . '">' . "\n";
+		echo "\t\t\t\t" . '<dt><label for="' . $name . '">' . $label . '</label></dt>' . "\n";
+		echo "\t\t\t\t" . '<dd><select name="' . $name . '" id="' . $name . '">';
+		foreach($options as $v => $name)
+		{
+			echo '<option value="' . _e($v) . '"' . (strcmp($v, $value) ? null : ' selected="selected"') . '>' . _e($name) . '</option>';
+		}
+		echo '</select></dd>' . "\n";
 		echo "\t\t\t" . '</dl>' . "\n";
 	}
 

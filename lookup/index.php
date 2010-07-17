@@ -2,25 +2,13 @@
 
 $fqdn = array();
 $svc = null;
-$records = null;
-$target = null;
-$discovered = array();
+$info = null;
+$discovery = null;
 
 $fields = array(
 	'kind' => null,
 	'sid' => null,
 	'suffix' => null,
-	/* DAB */
-	'ecc' => null,
-	'eid' => null,
-	'sid' => null,
-	'scids' => null,
-	'appty-uatype' => null,
-	'pa' => null,
-	/* DRM */
-	'drm-sid' => null,
-	/* AMSS */
-	'amss-sid' => null,
 	/* HD Radio */
 	'tx' => null,
 	'cc' => null,
@@ -34,27 +22,39 @@ $fields = array(
 );
 
 require_once(dirname(__FILE__) . '/common.php');
+require_once(dirname(__FILE__) . '/ipstream.php');
 require_once(dirname(__FILE__) . '/dvb.php');
 require_once(dirname(__FILE__) . '/fm.php');
+require_once(dirname(__FILE__) . '/dab.php');
+require_once(dirname(__FILE__) . '/drm-amss.php');
 require_once(dirname(__FILE__) . '/form.php');
 require_once(dirname(__FILE__) . '/discovery.php');
 
-$info = null;
 
 switch($fields['kind'])
 {
+	case 'ip':
+		$info = IPStream::processForm($fields);
+		break;
 	case 'dvb':
 		$info = DVB::processForm($fields);
 		break;
 	case 'fm':
 		$info = FM::processForm($fields);
 		break;
+	case 'drm':
+	case 'amss':
+		$info = DRM_AMSS::processForm($fields);
+		break;
+	case 'dab':
+		$info = DAB::processForm($fields);
+		break;
 }
 
 if(is_array($info))
 {
-	$fqdn = $info['fqdn'];
-	$svc = $info['svc'];
+	if(isset($info['fqdn'])) $fqdn = $info['fqdn'];
+	if(isset($info['svc'])) $svc = $info['svc'];
 }
 
 if(is_array($fqdn))
@@ -73,10 +73,6 @@ if(strlen($fqdn))
 {
 	$discovery = new Discovery($fqdn);
 	$discovery->discover();
-}
-else
-{
-	$discovery = null;
 }
 
 Form::prepareOutput();

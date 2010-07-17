@@ -1,0 +1,9 @@
+		<form method="get" action="">
+			<h2>Digital Radio Mondiale (DRM) &amp; AM Signalling System (AMSS)</h2>
+			<?php
+			$options = array('drm' => 'Digital Radio Mondiale', 'amss' => 'AM Signalling System');
+			Form::select('kind', 'Kind:', $options);
+			Form::input('sid', 'Service Identifier:');
+			?>
+			<input type="submit" value="Go">
+		</form>
