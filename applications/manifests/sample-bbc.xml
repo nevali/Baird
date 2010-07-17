@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<XRDS xmlns="http://docs.oasis-open.org/ns/xri/xrd-1.0">
+<XRDS xmlns="http://docs.oasis-open.org/ns/xri/xrd-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<!-- Top-level services -->
 	<XRD>
 		<!-- BBC One -->
@@ -148,6 +148,9 @@
 		<Subject>http://www.bbc.co.uk/services/redbutton#service</Subject>
 		<Property type="http://www.w3.org/2000/01/rdf-schema#label">BBC Red Button</Property>
 		<Property type="http://projectbaird.com/ns/serviceClass">interactive</Property>
+		<Link rel="alternate" type="text/html" href="http://www.bbc.co.uk/digital/tv/tv_interactive.shtml">
+			<Property type="http://projectbaird.com/ns/preferred" xsi:nil="true">
+		</Link>
 		<Link rel="http://purl.org/ontology/po/DVB" href="dvb://233a.1041.1140" />
 		<Link rel="http://xmlns.com/foaf/0.1/depiction" type="image/jpeg" href="http://upload.wikimedia.org/wikipedia/en/2/2b/BBCi_Page_100.jpg" />
 	</XRD>
@@ -189,6 +192,10 @@
 		<Link rel="urn:tva:metadata:2005:ServiceGenre" href="urn:tva:metadata:cs:ContentCS:2005:3.6.3.2" />
 		<Link rel="http://purl.org/ontology/po/DVB" href="dvb://233a.4000.3840" />
 		<Link rel="http://purl.org/ontology/po/DVB" href="dvb://233a.1041.1a80" />
+		<Link rel="http://purl.org/ontology/po/IPStream" type="application/sdp" href="http://support.bbc.co.uk/multicast/sdp/bbcradio2-aac.sdp">
+			<Property type="http://projectbaird.com/ns/media">all</Property>
+			<Property type="http://projectbaird.com/ns/delivery">multicast</Property>
+		</Link>		
 	</XRD>
 	
 	<XRD>
@@ -198,6 +205,9 @@
 		<Property type="http://projectbaird.com/ns/serviceClass">demand</Property>
 		<Link rel="self" type="text/html" href="http://www.bbc.co.uk/iplayer/">
 			<Property type="http://projectbaird.com/ns/media">screen</Property>
+		</Link>
+		<Link rel="self" type="text/html" href="http://beta.bbc.co.uk/iplayer/bigscreen/">
+			<Property type="http://projectbaird.com/ns/media">tv</Property>
 		</Link>		
 		<Link rel="http://xmlns.com/foaf/0.1/depiction" type="image/png" href="http://upload.wikimedia.org/wikipedia/en/thumb/0/05/BBC_iPlayer_logo.svg/200px-BBC_iPlayer_logo.svg.png" />
 	</XRD>
@@ -262,6 +272,10 @@
 		</Link>		
 		<Link rel="http://purl.org/ontology/po/IPStream" type="audio/x-ms-asx" href="http://bbc.co.uk/radio/listen/live/r1.asx">
 			<Property type="http://projectbaird.com/ns/media">all</Property>
+		</Link>		
+		<Link rel="http://purl.org/ontology/po/IPStream" type="application/sdp" href="http://support.bbc.co.uk/multicast/sdp/bbcradio1-aac.sdp">
+			<Property type="http://projectbaird.com/ns/media">all</Property>
+			<Property type="http://projectbaird.com/ns/delivery">multicast</Property>
 		</Link>		
 		<Link rel="http://purl.org/ontology/po/DVB" href="dvb://233a.4000.3800" />		
 		<Link rel="http://purl.org/ontology/po/DVB" href="dvb://233a.1041.1a40" />		
