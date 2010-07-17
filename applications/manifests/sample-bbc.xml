@@ -24,6 +24,22 @@
 	</XRD>
 	
 	<XRD>
+		<!-- Radio 1 -->
+		<Subject>http://www.bbc.co.uk/services/radio1#service</Subject>
+		<Property type="http://www.w3.org/2000/01/rdf-schema#label">BBC Radio 1</Property>
+		<Property type="http://projectbaird.com/ns/serviceClass">linear</Property>
+		<Link rel="alternate" type="text/html" href="http://www.bbc.co.uk/radio1/" />
+		<Link rel="http://xmlns.com/foaf/0.1/depiction" type="image/gif" href="http://www.bbc.co.uk/iplayer/img/radio/bbc_radio_one.gif" />
+		<Link rel="http://purl.org/ontology/po/broadcaster" href="http://www.bbc.co.uk/#broadcaster" />
+		<Link rel="http://purl.org/ontology/po/IPStream" type="text/html" href="http://www.bbc.co.uk/iplayer/playlive/bbc_radio_one/" />
+		<Link rel="http://purl.org/ontology/po/IPStream" type="audio/x-ms-asx" href="http://bbc.co.uk/radio/listen/live/r1.asx" />
+		<Link rel="urn:tva:metadata:2005:ServiceGenre" href="urn:tva:metadata:cs:MediaTypeCS:2005:7.1.1" />
+		<Link rel="urn:tva:metadata:2005:ServiceGenre" href="urn:tva:metadata:cs:ContentCS:2005:3.6.4" />
+		<Link rel="http://purl.org/ontology/po/DVB" href="dvb://233a.4000.3800" />		
+		<Link rel="http://purl.org/ontology/po/DVB" href="dvb://233a.1041.1a40" />		
+	</XRD>
+	
+	<XRD>
 		<!-- BBC iPlayer -->
 		<Subject>http://www.bbc.co.uk/iplayer/#service</Subject>
 		<Property type="http://www.w3.org/2000/01/rdf-schema#label">BBC iPlayer</Property>
@@ -42,7 +58,7 @@
 <!--	<Link rel="http://purl.org/ontology/po/IPStream" type="text/html" href="http://www.bbc.co.uk/iplayer/tv/bbc_one_london/watchlive" /> -->
 		<Link rel="http://purl.org/ontology/po/IPStream" type="text/html" href="http://www.bbc.co.uk/iplayer/playlive/bbc_one_london/" />
 		<Link rel="http://purl.org/ontology/po/IPStream" type="application/sdp" href="http://www.bbc.co.uk/mobile/live/sdp/bbc1_mpeg4.sdp" />
-		<Link rel="http://projectbaird.com/ns/epg" type="application/json" href="http://www.bbc.co.uk/bbcone/programmes/schedules/london.json" />
+		<Link rel="http://projectbaird.com/ns/epg" type="application/json" href="http://www.bbc.co.uk/radio1/programmes/schedules/england.json" />
 	</XRD>
 	<XRD>
 		<!-- BBC One (West) -->
