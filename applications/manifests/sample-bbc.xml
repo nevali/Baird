@@ -70,12 +70,12 @@
 	<XRD>
 		<!-- CBBC -->
 		<Subject>http://www.bbc.co.uk/services/cbeebies#service</Subject>
-		<Property type="http://www.w3.org/2000/01/rdf-schema#label">CBeebies</Property>
+		<Property type="http://www.w3.org/2000/01/rdf-schema#label">CBBC</Property>
 		<Property type="http://projectbaird.com/ns/serviceClass">linear</Property>
 		<Link rel="alternate" type="text/html" href="http://www.bbc.co.uk/cbeebies/" />
 		<Link rel="http://purl.org/ontology/po/broadcaster" href="http://www.bbc.co.uk/#broadcaster" />
 		<Link rel="http://xmlns.com/foaf/0.1/depiction" type="image/jpeg" href="http://www.bbc.co.uk/iplayer/img/tv/cbbc.jpg" />
-		<Link rel="http://purl.org/ontology/po/DVB" href="dvb://233a.1041.1240" />
+		<Link rel="http://purl.org/ontology/po/DVB" href="dvb://233a.1041.1200" />
 		<Link rel="http://projectbaird.com/ns/epg" type="application/json" href="http://www.bbc.co.uk/cbbc/programmes/schedules.json" />		
 	</XRD>
 
