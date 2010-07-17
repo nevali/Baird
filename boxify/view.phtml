@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Boxify</title>
+		<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.7.0/build/reset/reset-min.css"> 
+		<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.7.0/build/base/base-min.css"> 
+		<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.7.0/build/fonts/fonts-min.css"> 
+		<link rel="stylesheet" type="text/css" href="http://projectbaird.com/screen.css" media="screen"> 
+		<link rel="stylesheet" type="text/css" href="http://projectbaird.com/print.css" media="print"> 
+	</head>
+	<body class="toys boxify">
+		<div id="surround">
+			<h1><a href="/boxify/">Boxify</a></h1>		
+<?php if($kind) { ?>
+			<div class="section">
+			<p>Selected network:
+			<strong><?php
+			echo _e($platform[$kind]['name']) . ' → ' . _e($platform[$kind]['onid'][$onid]['name']) . ' → ' . _e($platform[$kind]['onid'][$onid]['nid'][$nid]['name']);
+			?></strong>
+			</p>
+			<p>
+				This prototype uses static channel data intended to match that which would be
+				obtained by a receiver. It arranges a channel listing in the same way a
+				device would, and then performs service discovery on each of the available
+				broadcast services.
+			</p>
+			</div>
+			<div class="section">
+				<table class="lineup">
+					<thead>
+						<tr>
+							<th scope="col">#</th>
+							<th scope="col">Name</th>
+							<th scope="col">Kind</th>
+							<th scope="col">Service class</th>
+							<th scope="col">Encrypted</th>
+							<th scope="col">Audio-only</th>
+							<th scope="col">OTA EPG</th>
+							<th scope="col">Target</th>
+							<th scope="col">RadioEPG</th>
+							<th scope="col">RadioVIS</th>
+							<th scope="col">Website</th>
+							<th scope="col">Metadata resolver</th>
+						</tr>
+					</thead>
+					<tbody>
+<?php
+foreach($channels as $num => $info)
+{
+	$class = array('service');
+	$class[] = $info['kind'];
+	$class[] = $info['serviceClass'];
+	$class[] = empty($info['encrypted']) ? 'fta' : 'ca';
+	if(empty($info['data']))
+	{
+		$class[] = empty($info['audio']) ? 'video' : 'audio';
+	}
+	else
+	{
+		$class[] = 'data';
+	}
+	$class = implode(' ', $class);
+?>
+						<tr class="<?php e($class); ?>">
+<?php
+echo '<th scope="row">' . $info['lcn'] . '</th>';
+echo '<td class="name"><a href="' . _e($info['lookup']) . '">' . _e($info['name']) . '</a></td>';
+echo '<td class="kind">' . _e($platform[$info['kind']]['shortName']) . '</td>';
+echo '<td class="serviceClass">' . _e($info['serviceClass']) . '</td>';
+echo '<td class="encrypted">' . (!empty($info['encrypted']) ? 'Yes' : '&nbsp;') . '</td>';
+echo '<td class="audio">' . (!empty($info['audio']) ? 'Yes' : '&nbsp;') . '</td>';
+echo '<td class="ota-epg">' . (!empty($info['ota']) ? 'Yes' : '&nbsp;') . '</td>';
+if($info['target'])
+{
+	echo '<td class="target"><a href="#target-' . ($info['targetIndex'] + 1) . '">' . ($info['targetIndex'] + 1) . '</a></td>';
+}
+else
+{
+	echo '<td class="target">&nbsp;</td>';
+}
+echo '<td class="radioepg"></td>';
+echo '<td class="radiovis"></td>';
+echo '<td class="website"></td>';
+if(!empty($info['resolver']))
+{
+	echo '<td class="resolver"><a href="' . _e($info['lookup']) . '">Yes</a></td>';
+}
+else
+{
+	echo '<td class="resolver">&nbsp;</td>';
+}
+
+?>
+						</tr>
+<?php
+}
+?>
+					</tbody>
+				</table>
+			</div>
+<?php }
+
+$c = 0;
+foreach($targets as $fqdn => $target)
+{
+	$c++;
+?>
+			<div class="section">
+				<h2 id="target-<?php e($c); ?>">#<?php e($c); ?>: <code><?php e($fqdn); ?></code></h2>
+<?php print_r($target); ?>
+			</div>
+<?php
+}
+ ?>
+		</div>
+		<div id="footer"> 
+			<p>Copyright © 2009-2010. Dèanta ann an Alba.</p> 
+		</div> 		
+		<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-9096696-3");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+	</body>
+</html>
