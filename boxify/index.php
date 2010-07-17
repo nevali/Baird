@@ -17,9 +17,11 @@ $xrdServices = array();
 $resolver = array();
 $kind = $onid = $nid = null;
 $suffix = 'tvdns.net';
+$nextDynamicChannel = 901;
 
 require_once(dirname(__FILE__) . '/common.php');
 require_once(dirname(__FILE__) . '/dvb/data.php');
+require_once(dirname(__FILE__) . '/ip/data.php');
 
 $types = array();
 $onids = array();
@@ -248,6 +250,7 @@ if(!empty($_REQUEST['xrd']))
 
 foreach($xrdServices as $subject => $service)
 {
+	$svcClass = null;
 	$service['channels'] = array();
 	if(isset($service['links']['http://purl.org/ontology/po/DVB']))
 	{
@@ -255,17 +258,18 @@ foreach($xrdServices as $subject => $service)
 		{
 			foreach($channels as $k => $chan)
 			{
-				if(!strcmp($chan['uri'], $dvb))
+				if(!strcmp($chan['uri'], $dvb['href']))
 				{
 					$service['channels'][$k] = $k;
 					$channels[$k]['subject'] = $subject;
+					$svcClass = $chan['serviceClass'];
 				}
 			}
 		}
 	}
 	if(isset($service['links']['http://purl.org/ontology/po/parent_service'][0]))
 	{
-		$parentUri = $service['links']['http://purl.org/ontology/po/parent_service'][0];
+		$parentUri = $service['links']['http://purl.org/ontology/po/parent_service'][0]['href'];
 		if(isset($xrdServices[$parentUri]))
 		{
 			$service['parent'] = $parentUri;
@@ -275,8 +279,62 @@ foreach($xrdServices as $subject => $service)
 	{
 		$service['label'] = $service['props']['http://www.w3.org/2000/01/rdf-schema#label'][0];
 	}
+	if(isset($service['props']['http://projectbaird.com/ns/serviceClass'][0]))
+	{
+		$service['serviceClass'] = $service['props']['http://projectbaird.com/ns/serviceClass'][0];
+	}
+	if(!isset($service['serviceClass']))
+	{
+		$service['serviceClass'] = $svcClass;
+	}
 	$xrdServices[$subject] = $service;
 }
+
+foreach($xrdServices as $subject => $service)
+{
+	if(!isset($service['serviceClass']))
+	{
+		if(isset($service['parent']) && isset($xrdServices[$service['parent']]['serviceClass']))
+		{
+			$xrdServices[$subject]['serviceClass'] = $xrdServices[$service['parent']]['serviceClass'];
+		}
+	}
+}
+
+foreach($xrdServices as $service)
+{
+	/* Skip entries which already exist in the line-up */
+	if(count($service['channels'])) continue;
+	/* Skip entries which don't have a label */
+	if(!isset($service['label'])) continue;
+	/* Skip entries which don't have a service class */
+	if(!isset($service['serviceClass'])) continue;
+	
+	$channel = null;
+	/* On-demand services use a link relation of 'self' */
+	
+	if($service['serviceClass'] == 'demand' && isset($service['links']['self'][0]))
+	{
+		$channel = array(
+			'kind' => 'ip',
+			'serviceClass' => $service['serviceClass'],
+			'name' => $service['label'],
+			'subject' => $service['subject'],
+			'uri' => $service['links']['self'][0]['href'],
+			'fqdn' => null,
+			'target' => null,
+			'lookup' => '/lookup/?kind=ip&url=' . urlencode($service['links']['self'][0]['href']),
+			'streams' => $service['links']['self'][0],
+		);
+	}
+	if($channel)
+	{
+		$channel['lcn'] = $nextDynamicChannel;
+		$channels[sprintf('%04d', $nextDynamicChannel)] = $channel;
+		$nextDynamicChannel++;
+	}
+}
+
 
 /* Merge XRD data */
 foreach($channels as $k => $chan)
@@ -303,11 +361,15 @@ foreach($channels as $k => $chan)
 		}
 		if(isset($service['links']['http://xmlns.com/foaf/0.1/depiction'][0]))
 		{
-			$channels[$k]['depiction'] = $service['links']['http://xmlns.com/foaf/0.1/depiction'][0];
+			$channels[$k]['depiction'] = $service['links']['http://xmlns.com/foaf/0.1/depiction'][0]['href'];
 		}
 		else if(isset($parent['links']['http://xmlns.com/foaf/0.1/depiction'][0]))
 		{
-			$channels[$k]['depiction'] = $parent['links']['http://xmlns.com/foaf/0.1/depiction'][0];
+			$channels[$k]['depiction'] = $parent['links']['http://xmlns.com/foaf/0.1/depiction'][0]['href'];
+		}
+		if(isset($service['links']['http://purl.org/ontology/po/IPStream']))
+		{
+			$channels[$k]['streams'] = $service['links']['http://purl.org/ontology/po/IPStream'];
 		}
 	}
 }
@@ -325,7 +387,7 @@ function xrd_parse($node)
 		$a = $l->attributes();
 		$k = trim($a->rel);
 		if(!strlen($k)) continue;
-		$entry['links'][$k][] = trim($a->href);
+		$entry['links'][$k][] = array('href' => trim($a->href), 'type' => trim($a->type));
 	}
 	foreach($node->Property as $prop)
 	{

@@ -25,11 +25,33 @@
 				echo '<p><strong>One or more XRD sources were discovered.</strong> <a href="' . _e($query_string . '&xrd=1') . '">Retry request with XRD processing enabled</a>. This will update/augment the channel line-up.</p>';
 			}
 			?>
+			<h2>What is it?</h2>
 			<p>
 				This prototype uses static channel data intended to match that which would be
 				obtained by a receiver. It arranges a channel listing in the same way a
 				device would, and then performs service discovery on each of the available
 				broadcast services.
+			</p>
+			<h2>Why?</h2>
+			<p>
+				The idea is to demonstrate two things: first, how a hybrid receiver can provide
+				additional services through lightweight protocols for service discovery; second,
+				to show information capable of being utilised by a "second screen" device which
+				doesn't itself contain a receiver.
+			</p>
+			<h2>How does it work?</h2>
+			<p>
+				We start with a static list of services - this is a dump from a MythTV channel
+				database, and is the same information that any DVB-T receiver has access to. The
+				service immediately performs DNS lookups (using <a href="http://projectbaird.com/discovery/tvdns/">TVDNS</a>)
+				to find services relating to the channels in the line-up.
+			</p>
+			<p>
+				If one of the services advertised in DNS is <code>_xrd._tcp</code>, this tool will
+				optionally retrieve it and process it. XRD documents allow both existing
+				channel data to be updated with extra information (such as channel logos
+				and more descriptive names, and links to simulcast streams), as well
+				as additional channels, be they linear or or-demand.
 			</p>
 			</div>
 			<div class="section">
@@ -48,6 +70,7 @@
 							<th scope="col">RadioVIS</th>
 							<th scope="col">Website</th>
 							<th scope="col">Metadata resolver</th>
+							<th scope="col">Streams</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -107,6 +130,21 @@ if(!empty($info['resolver']))
 else
 {
 	echo '<td class="resolver">&nbsp;</td>';
+}
+if(isset($info['streams']))
+{
+	echo '<td class="streams">';
+	$list = array();
+	foreach($info['streams'] as $info)
+	{
+		$list[] = '<a href="' . _e($info['href']) . '">' . _e($info['type']) . '</a>';
+	}
+	echo implode(', ', $list);
+	echo '</td>';
+}
+else
+{
+	echo '<td class="streams">&nbsp;</td>';
 }
 
 ?>
