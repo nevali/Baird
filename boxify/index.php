@@ -311,9 +311,9 @@ foreach($xrdServices as $service)
 	if(!isset($service['serviceClass'])) continue;
 	
 	$channel = null;
-	/* On-demand services use a link relation of 'self' */
-	
-	if($service['serviceClass'] == 'demand' && isset($service['links']['self'][0]))
+
+	/* On-demand and interactive services use a link relation of 'self' */
+	if(($service['serviceClass'] == 'demand' || $service['serviceClass'] == 'interactive') && isset($service['links']['self'][0]))
 	{
 		$channel = array(
 			'kind' => 'ip',
@@ -326,6 +326,21 @@ foreach($xrdServices as $service)
 			'lookup' => '/lookup/?kind=ip&url=' . urlencode($service['links']['self'][0]['href']),
 			'streams' => $service['links']['self'],
 		);
+	}
+	/* Linear services use a link relation of http://purl.org/ontology/po/IPStream */
+	if($service['serviceClass'] == 'linear' && isset($service['links']['http://purl.org/ontology/po/IPStream'][0]))
+	{
+		$channel = array(
+			'kind' => 'ip',
+			'serviceClass' => $service['serviceClass'],
+			'name' => $service['label'],
+			'subject' => $service['subject'],
+			'uri' => $service['links']['http://purl.org/ontology/po/IPStream'][0]['href'],
+			'fqdn' => null,
+			'target' => null,
+			'lookup' => '/lookup/?kind=ip&url=' . urlencode($service['links']['http://purl.org/ontology/po/IPStream'][0]['href']),
+			'streams' => $service['links']['http://purl.org/ontology/po/IPStream'],
+		);		
 	}
 	if($channel)
 	{
