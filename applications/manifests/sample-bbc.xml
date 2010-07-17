@@ -5,6 +5,7 @@
 		<!-- BBC One -->
 		<Subject>http://www.bbc.co.uk/services/bbcone#service</Subject>
 		<Property type="http://www.w3.org/2000/01/rdf-schema#label">BBC One</Property>
+		<Property type="http://projectbaird.com/ns/serviceClass">linear</Property>
 		<Link rel="alternate" type="text/html" href="http://www.bbc.co.uk/bbcone/" />
 		<Link rel="http://purl.org/ontology/po/broadcaster" href="http://www.bbc.co.uk/#broadcaster" />
 		<Link rel="http://xmlns.com/foaf/0.1/depiction" href="http://www.bbc.co.uk/iplayer/img/tv/bbc_one.jpg" />
@@ -15,6 +16,7 @@
 		<!-- BBC Two -->
 		<Subject>http://www.bbc.co.uk/services/bbctwo#service</Subject>
 		<Property type="http://www.w3.org/2000/01/rdf-schema#label">BBC Two</Property>
+		<Property type="http://projectbaird.com/ns/serviceClass">linear</Property>
 		<Link rel="alternate" type="text/html" href="http://www.bbc.co.uk/bbctwo/" />
 		<Link rel="http://purl.org/ontology/po/broadcaster" href="http://www.bbc.co.uk/#broadcaster" />
 		<Link rel="http://xmlns.com/foaf/0.1/depiction" href="http://www.bbc.co.uk/iplayer/img/tv/bbc_two.jpg" />
@@ -25,6 +27,7 @@
 		<!-- BBC iPlayer -->
 		<Subject>http://www.bbc.co.uk/iplayer/#service</Subject>
 		<Property type="http://www.w3.org/2000/01/rdf-schema#label">BBC iPlayer</Property>
+		<Property type="http://projectbaird.com/ns/serviceClass">demand</Property>
 		<Link rel="self" type="text/html" href="http://www.bbc.co.uk/iplayer/" />
 	</XRD>
 	
