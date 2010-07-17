@@ -59,7 +59,7 @@
 		<Property type="http://projectbaird.com/ns/serviceClass">linear</Property>
 		<Link rel="alternate" type="text/html" href="http://www.bbc.co.uk/cbeebies/" />
 		<Link rel="http://purl.org/ontology/po/broadcaster" href="http://www.bbc.co.uk/#broadcaster" />
-		<Link rel="http://xmlns.com/foaf/0.1/depiction" type="image/jpeg" href="http://www.bbc.co.uk/iplayer/img/tv/cbeebies.jpg" />
+		<Link rel="http://xmlns.com/foaf/0.1/depiction" type="image/jpeg" href="http://www.bbc.co.uk/iplayer/img/tv/cbeebies_1.jpg" />
 		<Link rel="http://purl.org/ontology/po/DVB" href="dvb://233a.1041.1240" />
 		<Link rel="http://purl.org/ontology/po/IPStream" type="text/html" href="http://www.bbc.co.uk/iplayer/playlive/cbeebies/">
 			<Property type="http://projectbaird.com/ns/media">screen</Property>
