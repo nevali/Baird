@@ -219,7 +219,7 @@
 		<!-- BBC Two (England) -->
 		<Subject>http://www.bbc.co.uk/services/bbctwo/england#service</Subject>
 		<Property type="http://www.w3.org/2000/01/rdf-schema#label">England</Property>
-		<Link rel="http://purl.org/ontology/po/parent_service" href="http://www.bbc.co.uk/services/bbcone#service" />
+		<Link rel="http://purl.org/ontology/po/parent_service" href="http://www.bbc.co.uk/services/bbctwo#service" />
 		<Link rel="http://purl.org/ontology/po/DVB" href="dvb://233a.1041.10bf" />
 <!--	<Link rel="http://purl.org/ontology/po/IPStream" type="text/html" href="http://www.bbc.co.uk/iplayer/tv/bbc_two_england/watchlive" /> -->
 		<Link rel="http://purl.org/ontology/po/IPStream" type="text/html" href="http://www.bbc.co.uk/iplayer/playlive/bbc_two_england/">
