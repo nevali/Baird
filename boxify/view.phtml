@@ -173,7 +173,7 @@ if(isset($info['streams']))
 	$list = array();
 	foreach($info['streams'] as $info)
 	{
-		$list[] = '<a href="' . _e($info['href']) . '">' . _e($info['type']) . '</a>';
+		$list[] = '<a href="' . _e($info['href']) . '">' . _e($info['type']) . '</a> (' . $info['media'] . ')';
 	}
 	echo implode(', ', $list);
 	echo '</td>';

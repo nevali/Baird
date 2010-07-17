@@ -340,7 +340,20 @@ foreach($xrdServices as $service)
 			'target' => null,
 			'lookup' => '/lookup/?kind=ip&url=' . urlencode($service['links']['http://purl.org/ontology/po/IPStream'][0]['href']),
 			'streams' => $service['links']['http://purl.org/ontology/po/IPStream'],
-		);		
+		);
+	}	
+	if($channel)
+	{
+		if(isset($service['links']['urn:tva:metadata:2005:ServiceGenre']))
+		{
+			foreach($service['links']['urn:tva:metadata:2005:ServiceGenre'] as $link)
+			{
+				if(!strcmp($link['href'], 'urn:tva:metadata:cs:MediaTypeCS:2005:7.1.1'))
+				{
+					$channel['audio'] = true;
+				}
+			}
+		}
 	}
 	if($channel)
 	{
@@ -402,7 +415,23 @@ function xrd_parse($node)
 		$a = $l->attributes();
 		$k = trim($a->rel);
 		if(!strlen($k)) continue;
-		$entry['links'][$k][] = array('href' => trim($a->href), 'type' => trim($a->type));
+		$link = array('href' => trim($a->href), 'type' => trim($a->type));
+		foreach($l->Property as $prop)
+		{
+			$a = $prop->attributes();
+			$pk = trim($a->type);
+			if(!strlen($pk)) continue;
+			$link[$pk] = trim($prop);
+		}
+		if(isset($link['http://projectbaird.com/ns/media']))
+		{
+			$link['media'] = $link['http://projectbaird.com/ns/media'];
+		}
+		else
+		{
+			$link['media'] = 'all';
+		}
+		$entry['links'][$k][] = $link;
 	}
 	foreach($node->Property as $prop)
 	{
