@@ -67,6 +67,28 @@
 				what a real live DTT tuner sees in any case) and the <code>tvdns.net</code> root
 				domain for TVDNS lookups. Everything else is service discovery-driven.
 			</p>
+			<h2>What's the deal with the website column?</h2>
+			<p>
+				There are three different websites advertised, depending on the service. A couple of
+				services are advertising based upon location, and so link straight to the "BBC Bristol"
+				page — these ones are shown as "news.bbc.co.uk". Others are known to be BBC services
+				(based on the multiplex ID) and so fall back to the default of "www.bbc.co.uk". Finally,
+				there's a default advertisement in DNS for "www.freeview.co.uk" for anything else.
+			</p>
+			<h2>Why is there only rich data for a handful of services?</h2>
+			<p>
+				At the moment, only a sample XRD for some BBC services is being advertised. You can
+				view the file itself <a href="http://github.com/nexgenta/Baird/blob/gh-pages/applications/manifests/sample-bbc.xml">here</a>.
+				In a production scenario, each broadcaster and network would advertise their
+				own XRDs.
+			</p>
+			<h2>It seems slow</h2>
+			<p>
+				Few of the protocols in use here are designed to be modal - the intention is that
+				a receiver will slowly load the extra data in the background while the user gets
+				on with receiving the services, and then caches it for a very long time (updating
+				in the background periodically).
+			</p>
 			</div>
 			<div class="section">
 				<table class="lineup">
