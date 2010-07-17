@@ -43,8 +43,8 @@
 			<p>
 				We start with a static list of services - this is a dump from a MythTV channel
 				database, and is the same information that any DVB-T receiver has access to. The
-				service immediately performs DNS lookups (using <a href="http://projectbaird.com/discovery/tvdns/">TVDNS</a>)
-				to find services relating to the channels in the line-up.
+				tool immediately performs DNS lookups (using <a href="http://projectbaird.com/discovery/tvdns/">TVDNS</a>)
+				to find advertised IP-delivered services relating to the channels in the line-up.
 			</p>
 			<p>
 				If one of the services advertised in DNS is <code>_xrd._tcp</code>, this tool will
@@ -52,6 +52,20 @@
 				channel data to be updated with extra information (such as channel logos
 				and more descriptive names, and links to simulcast streams), as well
 				as additional channels, be they linear or or-demand.
+			</p>
+			<p>
+				Each channel name is a link to the <a href="/lookup/">lookup tool</a> page for that
+				specific channel.
+			</p>
+			<p>
+				Channels which are solely IP-delivered (i.e., described by the XRD, have some kind
+				of available stream, and aren't already in the line-up) are given channel numbers
+				in the range 900-999.
+			</p>
+			<p>
+				The <em>only</em> pieces of static data here is the MythTV dump (which should match
+				what a real live DTT tuner sees in any case) and the <code>tvdns.net</code> root
+				domain for TVDNS lookups. Everything else is service discovery-driven.
 			</p>
 			</div>
 			<div class="section">
