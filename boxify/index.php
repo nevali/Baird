@@ -63,6 +63,7 @@ if($kind)
 			{
 				$channel['serviceClass'] = 'linear';
 			}
+			$channel['available'] = true;
 			$channel['tsname'] = $ts['name'];
 			$channel['fqdn'] = $nid . '.' . $sid . '.' . $tsid . '.' . $onid . '.' . $kind . '.' . $suffix;
 			$channel['uri'] = 'dvb://' . $onid . '. ' . $tsid . '.' . $sid;
@@ -124,13 +125,34 @@ foreach($targets as $fqdn => $info)
 	foreach($services as $srv => $name)
 	{
 		$recs = dns_get_record($srv . '.' . $fqdn);
+		$service = array('name' => $name, 'records' => array(), 'params' => array(), 'targets' => array());
 		foreach($recs as $r)
 		{
 			if(isset($r['type']) && $r['type'] != 'CNAME' && $r['type'] != 'SOA')
 			{
-				$info['services'][$srv]['name'] = $name;
-				$info['services'][$srv]['records'][] = $r;
+				$service['records'][] = $r;
+				if($r['type'] == 'TXT')
+				{
+					$plist = explode(' ', $r['txt']);
+					foreach($plist as $p)
+					{
+						$p = trim($p);
+						if(!strlen($p)) continue;
+						$kv = explode('=', $p, 2);
+						if(count($kv) != 2) continue;
+						$service['params'][$kv[0]] = $kv[1];
+					}
+				}
+				else if($r['type'] == 'SRV')
+				{
+					$k = sprintf('%04d-%04d', $r['pri'], $r['weight']);
+					$service['targets'][$k] = array('host' => $r['target'], 'port' => $r['port']);
+				}
 			}
+		}
+		if(count($service['targets']))
+		{
+			$info['services'][$srv] = $service;
 		}
 	}
 	if(isset($info['services']['_broadcast-meta._tcp']))
@@ -140,6 +162,51 @@ foreach($targets as $fqdn => $info)
 			if($chan['targetIndex'] == $info['index'])
 			{
 				$channels[$k]['resolver'] = true;
+			}
+		}
+	}
+	if(isset($info['services']['_xrd._tcp']))
+	{
+		$uri = null;
+		if(isset($info['services']['_xrd._tcp']['params']['path']))
+		{
+			$p = $info['services']['_xrd._tcp']['params']['path'];
+			if(substr($p, 0, 1) != '/') $p = '/' . $p;
+			foreach($info['services']['_xrd._tcp']['targets'] as $targ)
+			{
+				$uri = 'http://' . $targ['host'] . ':' . $targ['port'] . $p;
+				break;
+			}
+		}
+		if(strlen($uri))
+		{
+			$xrd[$uri] = array();
+		}
+	}
+	if(isset($info['services']['_http._tcp']))
+	{
+		$uri = null;
+		$host = null;
+		if(isset($info['services']['_http._tcp']['params']['path']))
+		{
+			$p = $info['services']['_http._tcp']['params']['path'];
+			if(substr($p, 0, 1) != '/') $p = '/' . $p;
+			foreach($info['services']['_http._tcp']['targets'] as $targ)
+			{
+				$uri = 'http://' . $targ['host'] . ':' . $targ['port'] . $p;
+				$host = $targ['host'];
+				break;
+			}
+		}
+		if(strlen($uri))
+		{
+			foreach($channels as $k => $chan)
+			{
+				if($chan['targetIndex'] == $info['index'])
+				{
+					$channels[$k]['website'] = $uri;
+					$channels[$k]['websiteHost'] = $host;
+				}
 			}
 		}
 	}

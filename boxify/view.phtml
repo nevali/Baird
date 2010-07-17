@@ -81,7 +81,14 @@ else
 }
 echo '<td class="radioepg"></td>';
 echo '<td class="radiovis"></td>';
-echo '<td class="website"></td>';
+if(isset($info['website']))
+{
+	echo '<td class="website"><a href="' . _e($info['website']) . '">' . _e($info['websiteHost']) . '</a></td>';
+}
+else
+{
+	echo '<td class="website"></td>';
+}
 if(!empty($info['resolver']))
 {
 	echo '<td class="resolver"><a href="' . _e($info['lookup']) . '">Yes</a></td>';
