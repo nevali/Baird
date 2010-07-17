@@ -31,15 +31,35 @@ body {
 body.default h1 {
 	display: block;
 	height: 160px;
-	background: #000 url('logo.png') 32px 50% no-repeat;
-	text-indent: -11000em;
 	margin: 0;
+	background: #000 url('repeat.png') 0 8px repeat-x;
 	-moz-border-radius-topleft: 6px;
 	-webkit-border-top-left-radius: 6px;
 	-moz-border-radius-topright: 6px;
 	-webkit-border-top-right-radius: 6px;
+	position: relative;
+	text-indent: -11000em;
 }
-
+body.default #logo {
+	position: absolute;
+	display: block;
+	top: 8px;
+	left: 0px;
+	width: 142px;
+	height: 142px;
+	background: url('logo.png') 0 0 no-repeat;
+	z-index: 5;
+}
+body.default #caption {
+	position: absolute;
+	display: block;
+	top: 8px;
+	right: 24px;
+	width: 300px;
+	height: 142px;
+	background: url('caption.png') 100% 0 no-repeat;
+	z-index: 10;
+}
 body.draft h1, body.ns h1 {
 	background: #000;
 	color: #fff;
