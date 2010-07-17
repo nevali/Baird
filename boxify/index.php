@@ -13,9 +13,11 @@ $platform = array();
 $channels = array();
 $targets = array();
 $xrd = array();
+$xrdServices = array();
 $resolver = array();
 $kind = $onid = $nid = null;
 $suffix = 'tvdns.net';
+
 require_once(dirname(__FILE__) . '/common.php');
 require_once(dirname(__FILE__) . '/dvb/data.php');
 
@@ -66,10 +68,11 @@ if($kind)
 			$channel['available'] = true;
 			$channel['tsname'] = $ts['name'];
 			$channel['fqdn'] = $nid . '.' . $sid . '.' . $tsid . '.' . $onid . '.' . $kind . '.' . $suffix;
-			$channel['uri'] = 'dvb://' . $onid . '. ' . $tsid . '.' . $sid;
+			$channel['uri'] = 'dvb://' . $onid . '.' . $tsid . '.' . $sid;
 			$channel['lookup'] = '/lookup/?kind=dvb&original_network_id=' . $onid . '&network_id=' . $nid . '&transport_stream_id=' . $tsid . '&service_id=' . $sid;
 			$channel['ota'] = true;
 			$channel['target'] = null;
+			$channel['subject'] = null;
 			$domain = $channel['fqdn'];
 			do
 			{
@@ -117,8 +120,6 @@ if($kind)
 		}
 	}
 }
-
-ksort($channels);
 
 foreach($targets as $fqdn => $info)
 {
@@ -180,7 +181,7 @@ foreach($targets as $fqdn => $info)
 		}
 		if(strlen($uri))
 		{
-			$xrd[$uri] = array();
+			$xrd[$uri] = $uri;
 		}
 	}
 	if(isset($info['services']['_http._tcp']))
@@ -212,5 +213,131 @@ foreach($targets as $fqdn => $info)
 	}
 	$targets[$fqdn] = $info;
 }
+
+if(!empty($_REQUEST['xrd']))
+{
+	foreach($xrd as $uri)
+	{
+		$xml =  simplexml_load_file($uri);
+		if(is_object($xml))
+		{
+			if($xml->getName() == 'XRD')
+			{
+				$entries = array(xrd_parse($xml));
+			}
+			else
+			{
+				$entries = array();
+				foreach($xml->XRD as $x)
+				{
+					$entries[] = xrd_parse($x);
+				}
+			}
+			foreach($entries as $entry)
+			{
+				if(strlen($entry['subject']))
+				{
+					$xrdServices[$entry['subject']] = $entry;
+				}
+			}
+//			print_r($xrdServices);
+//			die();
+		}
+	}
+}
+
+foreach($xrdServices as $subject => $service)
+{
+	$service['channels'] = array();
+	if(isset($service['links']['http://purl.org/ontology/po/DVB']))
+	{
+		foreach($service['links']['http://purl.org/ontology/po/DVB'] as $dvb)
+		{
+			foreach($channels as $k => $chan)
+			{
+				if(!strcmp($chan['uri'], $dvb))
+				{
+					$service['channels'][$k] = $k;
+					$channels[$k]['subject'] = $subject;
+				}
+			}
+		}
+	}
+	if(isset($service['links']['http://purl.org/ontology/po/parent_service'][0]))
+	{
+		$parentUri = $service['links']['http://purl.org/ontology/po/parent_service'][0];
+		if(isset($xrdServices[$parentUri]))
+		{
+			$service['parent'] = $parentUri;
+		}
+	}
+	if(isset($service['props']['http://www.w3.org/2000/01/rdf-schema#label'][0]))
+	{
+		$service['label'] = $service['props']['http://www.w3.org/2000/01/rdf-schema#label'][0];
+	}
+	$xrdServices[$subject] = $service;
+}
+
+/* Merge XRD data */
+foreach($channels as $k => $chan)
+{
+	if(isset($chan['subject']))
+	{
+		$service = $xrdServices[$chan['subject']];
+		$parent = null;
+		if(isset($service['parent']))
+		{
+			$parent = $xrdServices[$service['parent']];
+		}
+		if(isset($parent['label']) && isset($service['label']))
+		{
+			$channels[$k]['name'] = $parent['label'] . ' (' . $service['label'] . ')';
+		}
+		else if(isset($parent['label']))
+		{
+			$channels[$k]['name'] = $parent['label'];
+		}
+		else if(isset($service['label']))
+		{
+			$channels[$k]['name'] = $service['label'];
+		}
+		if(isset($service['links']['http://xmlns.com/foaf/0.1/depiction'][0]))
+		{
+			$channels[$k]['depiction'] = $service['links']['http://xmlns.com/foaf/0.1/depiction'][0];
+		}
+		else if(isset($parent['links']['http://xmlns.com/foaf/0.1/depiction'][0]))
+		{
+			$channels[$k]['depiction'] = $parent['links']['http://xmlns.com/foaf/0.1/depiction'][0];
+		}
+	}
+}
+
+function xrd_parse($node)
+{
+	$entry = array(
+		'subject' => null,
+		'props' => array(),
+		'links' => array(),
+	);
+	$entry['subject'] = trim($node->Subject);
+	foreach($node->Link as $l)
+	{
+		$a = $l->attributes();
+		$k = trim($a->rel);
+		if(!strlen($k)) continue;
+		$entry['links'][$k][] = trim($a->href);
+	}
+	foreach($node->Property as $prop)
+	{
+		$a = $prop->attributes();
+		$k = trim($a->type);
+		if(!strlen($k)) continue;
+		$entry['props'][$k][] = trim($prop);
+	}
+	return $entry;
+}
+
+ksort($channels);
+
 
 require_once(dirname(__FILE__) . '/view.phtml');

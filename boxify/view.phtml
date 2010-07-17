@@ -19,6 +19,12 @@
 			echo _e($platform[$kind]['name']) . ' → ' . _e($platform[$kind]['onid'][$onid]['name']) . ' → ' . _e($platform[$kind]['onid'][$onid]['nid'][$nid]['name']);
 			?></strong>
 			</p>
+			<?php
+			if(empty($_REQUEST['xrd']) && count($xrd))
+			{
+				echo '<p><strong>One or more XRD sources were discovered.</strong> <a href="' . _e($query_string . '&xrd=1') . '">Retry request with XRD processing enabled</a>. This will update/augment the channel line-up.</p>';
+			}
+			?>
 			<p>
 				This prototype uses static channel data intended to match that which would be
 				obtained by a receiver. It arranges a channel listing in the same way a
@@ -65,7 +71,12 @@ foreach($channels as $num => $info)
 						<tr class="<?php e($class); ?>">
 <?php
 echo '<th scope="row">' . $info['lcn'] . '</th>';
-echo '<td class="name"><a href="' . _e($info['lookup']) . '">' . _e($info['name']) . '</a></td>';
+echo '<td class="name"><a href="' . _e($info['lookup']) . '">';
+if(isset($info['depiction']))
+{
+	echo '<img src="' . _e($info['depiction']) . '"><br>';
+}
+echo  _e($info['name']) . '</a></td>';
 echo '<td class="kind">' . _e($platform[$info['kind']]['shortName']) . '</td>';
 echo '<td class="serviceClass">' . _e($info['serviceClass']) . '</td>';
 echo '<td class="encrypted">' . (!empty($info['encrypted']) ? 'Yes' : '&nbsp;') . '</td>';
