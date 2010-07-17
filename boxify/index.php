@@ -324,7 +324,7 @@ foreach($xrdServices as $service)
 			'fqdn' => null,
 			'target' => null,
 			'lookup' => '/lookup/?kind=ip&url=' . urlencode($service['links']['self'][0]['href']),
-			'streams' => $service['links']['self'][0],
+			'streams' => $service['links']['self'],
 		);
 	}
 	if($channel)
