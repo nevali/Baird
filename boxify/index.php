@@ -325,10 +325,10 @@ foreach($xrdServices as $subject => $service)
 					$service['channels'][$k] = $k;
 					$channels[$k]['subject'] = $subject;
 					$channels[$k]['parent'] = $service['parent'];
-					if($channels[$k]['parent'])
-					{
-						die('set ' . $channels[$k]['name'] . ' to be ' . $channels[$k]['parent']);
-					}
+//					if($channels[$k]['parent'])
+//					{
+//						die('set ' . $channels[$k]['name'] . ' to be ' . $channels[$k]['parent']);
+//					}
 					$svcClass = $chan['serviceClass'];
 				}
 			}
