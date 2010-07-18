@@ -1,0 +1,21 @@
+/* Overrides for Boxify */
+
+div.channel-grid {
+	background: #444;
+}
+div.channel-grid:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+.channel-grid .service {
+	width: 320px;
+	height: 160px;
+	background: #000 no-repeat 50% 50%;
+	margin: 8px;
+	float: left;
+	-webkit-box-shadow: 0 0 8px #fff;
+}

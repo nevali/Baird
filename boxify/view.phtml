@@ -8,6 +8,7 @@
 		<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.7.0/build/fonts/fonts-min.css"> 
 		<link rel="stylesheet" type="text/css" href="http://projectbaird.com/screen.css" media="screen"> 
 		<link rel="stylesheet" type="text/css" href="http://projectbaird.com/print.css" media="print"> 
+		<link rel="stylesheet" type="text/css" href="boxify.css" media="screen">
 	</head>
 	<body class="toys boxify">
 		<div id="surround">
@@ -107,108 +108,18 @@
 				in the background periodically).
 			</p>
 			</div>
-			<div class="section">
-				<table class="lineup">
-					<thead>
-						<tr>
-							<th scope="col">#</th>
-							<th scope="col">Name</th>
-							<th scope="col">Kind</th>
-							<th scope="col">Service class</th>
-							<th scope="col">Encrypted</th>
-							<th scope="col">Audio-only</th>
-							<th scope="col">OTA EPG</th>
-							<th scope="col">Target</th>
-							<th scope="col">RadioEPG</th>
-							<th scope="col">RadioVIS</th>
-							<th scope="col">Website</th>
-							<th scope="col">Metadata resolver</th>
-							<th scope="col">Streams</th>
-						</tr>
-					</thead>
-					<tbody>
-<?php
-foreach($channels as $num => $info)
-{
-	$class = array('service');
-	$class[] = $info['kind'];
-	$class[] = $info['serviceClass'];
-	$class[] = empty($info['encrypted']) ? 'fta' : 'ca';
-	if(empty($info['data']))
-	{
-		$class[] = empty($info['audio']) ? 'video' : 'audio';
-	}
-	else
-	{
-		$class[] = 'data';
-	}
-	$class = implode(' ', $class);
-?>
-						<tr class="<?php e($class); ?>">
-<?php
-echo '<th scope="row">' . $info['lcn'] . '</th>';
-echo '<td class="name"><a href="' . _e($info['lookup']) . '">';
-if(isset($info['depiction']))
-{
-	echo '<img src="' . _e($info['depiction']) . '" style="max-height: 100px;"><br>';
-}
-echo  _e($info['name']) . '</a></td>';
-echo '<td class="kind">' . _e($platform[$info['kind']]['shortName']). '</td>';
-echo '<td class="serviceClass">' . _e($info['serviceClass']) . (!strlen($info['lcn']) ? ' [Alternative variant]': null) . '</td>';
-echo '<td class="encrypted">' . (!empty($info['encrypted']) ? 'Yes' : '&nbsp;') . '</td>';
-echo '<td class="audio">' . (!empty($info['audio']) ? 'Yes' : '&nbsp;') . '</td>';
-echo '<td class="ota-epg">' . (!empty($info['ota']) ? 'Yes' : '&nbsp;') . '</td>';
-if($info['target'])
-{
-	echo '<td class="target"><a href="#target-' . ($info['targetIndex'] + 1) . '">' . ($info['targetIndex'] + 1) . '</a></td>';
-}
-else
-{
-	echo '<td class="target">&nbsp;</td>';
-}
-echo '<td class="radioepg"></td>';
-echo '<td class="radiovis"></td>';
-if(isset($info['website']))
-{
-	echo '<td class="website"><a href="' . _e($info['website']) . '">' . _e($info['websiteHost']) . '</a></td>';
-}
-else
-{
-	echo '<td class="website"></td>';
-}
-if(!empty($info['resolver']))
-{
-	echo '<td class="resolver"><a href="' . _e($info['lookup']) . '">Yes</a></td>';
-}
-else
-{
-	echo '<td class="resolver">&nbsp;</td>';
-}
-if(isset($info['streams']))
-{
-	echo '<td class="streams">';
-	$list = array();
-	foreach($info['streams'] as $info)
-	{
-		$list[] = '<a href="' . _e($info['href']) . '">' . _e($info['type']) . '</a> (' . $info['media'] . (strlen($info['delivery']) ? '; ' . $info['delivery'] : null) .  ')';
-	}
-	echo implode(', ', $list);
-	echo '</td>';
-}
-else
-{
-	echo '<td class="streams">&nbsp;</td>';
-}
-
-?>
-						</tr>
+			<?php
+			if(empty($_REQUEST['grid']))
+			{
+				require_once(dirname(__FILE__) . '/list.phtml');
+			}
+			else
+			{
+				require_once(dirname(__FILE__) . '/grid.phtml');			
+			}
+			?>
 <?php
 }
-?>
-					</tbody>
-				</table>
-			</div>
-<?php }
 
 $c = 0;
 foreach($targets as $fqdn => $target)

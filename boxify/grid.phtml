@@ -1,0 +1,28 @@
+<div class="section channel-grid">
+<?php
+foreach($channels as $num => $info)
+{
+	$class = array('service');
+	$class[] = $info['kind'];
+	$class[] = $info['serviceClass'];
+	$class[] = empty($info['encrypted']) ? 'fta' : 'ca';
+	if(empty($info['data']))
+	{
+		$class[] = empty($info['audio']) ? 'video' : 'audio';
+	}
+	else
+	{
+		$class[] = 'data';
+	}
+	$class = implode(' ', $class);
+	$style = '';
+	if(isset($info['depiction']))
+	{
+		$style .= " background-image: url('" . _e($info['depiction']) . "');";
+	}
+	echo '<div class="' . _e($class) . '" style="' . trim($style) . '">';
+	echo '<p><a href="' . _e($info['lookup']) . '">' . _e($info['name']) . '</a></p>';		
+	echo '</div>';
+}
+?>
+</div>
