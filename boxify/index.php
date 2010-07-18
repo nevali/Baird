@@ -9,15 +9,23 @@ $services = array(
 	'_http._tcp' => 'Web page',
 );
 
+$xrdUrls = array(
+	'bbc-sample' => 'http://projectbaird.com/applications/manifests/sample-bbc.xml',
+	'bbc-sample-dev' => 'http://baird.nx/applications/manifests/sample-bbc.xml',
+	'seesaw-sample' => 'http://projectbaird.com/applications/manifests/sample-seesaw.xml',
+	'seesaw-sample-dev' => 'http://baird.nx/applications/manifests/sample-seesaw.xml',
+);
+
 $platform = array();
 $channels = array();
+$extraChannels = array();
 $targets = array();
 $xrd = array();
 $xrdServices = array();
 $resolver = array();
-$kind = $onid = $nid = null;
 $suffix = 'tvdns.net';
 $firstDynamicChannel = $nextDynamicChannel = 901;
+$alerts = array();
 
 require_once(dirname(__FILE__) . '/common.php');
 require_once(dirname(__FILE__) . '/dvb/data.php');
@@ -39,6 +47,7 @@ foreach($platform as $k => $v)
 	}
 }
 
+$kind = $onid = $nid = null;
 
 if(!empty($_REQUEST['kind']) && !empty($_REQUEST['onid']) && !empty($_REQUEST['nid']))
 {
@@ -47,12 +56,30 @@ if(!empty($_REQUEST['kind']) && !empty($_REQUEST['onid']) && !empty($_REQUEST['n
 	$nid = trim($_REQUEST['nid']);
 	if(!isset($platform[$kind]['onid'][$onid]['nid'][$nid]))
 	{
-		die('The specified network does not exist');
+		$alerts[] = 'The specified network does not exist';
 		$kind = $onid = $nid = null;
 	}
 }
+if(isset($_REQUEST['xrdurl']))
+{
+	$urls = $_REQUEST['xrdurl'];
+	if(!is_array($urls))
+	{
+		$urls = array($urls);
+	}
+	foreach($urls as $url)
+	{
+		if(isset($xrdUrls[$url]))
+		{
+			$u = $xrdUrls[$url];
+			$xrd[$u] = $u;
+			$_REQUEST['xrd'] = true;
+			if(!$kind) $kind = 'ip';
+		}
+	}
+}
 
-if($kind)
+if($kind && $onid)
 {
 	foreach($platform[$kind]['onid'][$onid]['nid'][$nid]['tsid'] as $tsid => $ts)
 	{
@@ -75,6 +102,7 @@ if($kind)
 			$channel['ota'] = true;
 			$channel['target'] = null;
 			$channel['subject'] = null;
+			$channel['parent'] = null;
 			$domain = $channel['fqdn'];
 			do
 			{
@@ -245,6 +273,10 @@ if(!empty($_REQUEST['xrd']))
 //			print_r($xrdServices);
 //			die();
 		}
+		else
+		{
+			$alerts[] = 'Failed to load ' . _e($uri);
+		}
 	}
 }
 
@@ -253,6 +285,7 @@ foreach($xrdServices as $subject => $service)
 	$svcClass = null;
 	$service['channels'] = array();
 	$service['website'] = $service['websiteHost'] = null;
+	$service['parent'] = null;
 	if(isset($service['links']['alternate']))
 	{
 		foreach($service['links']['alternate'] as $link)
@@ -271,7 +304,16 @@ foreach($xrdServices as $subject => $service)
 			}
 		}
 	}
-
+	if(isset($service['links']['http://purl.org/ontology/po/parent_service'][0]))
+	{
+		$parentUri = $service['links']['http://purl.org/ontology/po/parent_service'][0]['href'];
+		if(isset($xrdServices[$parentUri]))
+		{
+			$service['parent'] = $parentUri;
+		}
+	}
+		
+	/* Match channels to DVB services */
 	if(isset($service['links']['http://purl.org/ontology/po/DVB']))
 	{
 		foreach($service['links']['http://purl.org/ontology/po/DVB'] as $dvb)
@@ -282,17 +324,14 @@ foreach($xrdServices as $subject => $service)
 				{
 					$service['channels'][$k] = $k;
 					$channels[$k]['subject'] = $subject;
+					$channels[$k]['parent'] = $service['parent'];
+					if($channels[$k]['parent'])
+					{
+						die('set ' . $channels[$k]['name'] . ' to be ' . $channels[$k]['parent']);
+					}
 					$svcClass = $chan['serviceClass'];
 				}
 			}
-		}
-	}
-	if(isset($service['links']['http://purl.org/ontology/po/parent_service'][0]))
-	{
-		$parentUri = $service['links']['http://purl.org/ontology/po/parent_service'][0]['href'];
-		if(isset($xrdServices[$parentUri]))
-		{
-			$service['parent'] = $parentUri;
 		}
 	}
 	if(isset($service['props']['http://www.w3.org/2000/01/rdf-schema#label'][0]))
@@ -331,7 +370,16 @@ foreach($xrdServices as $service)
 	if(!isset($service['serviceClass'])) continue;
 	
 	$channel = null;
-
+	$parent = null;
+	if(isset($service['parent']))
+	{
+		$parent = $xrdServices[$service['parent']];
+		if(!isset($service['links']['urn:tva:metadata:2005:ServiceGenre']) && isset($parent['links']['urn:tva:metadata:2005:ServiceGenre']))
+		{
+			$service['links']['urn:tva:metadata:2005:ServiceGenre'] = $parent['links']['urn:tva:metadata:2005:ServiceGenre'];
+		}
+		
+	}
 	/* On-demand and interactive services use a link relation of 'self' */
 	if(($service['serviceClass'] == 'demand' || $service['serviceClass'] == 'interactive') && isset($service['links']['self'][0]))
 	{
@@ -340,6 +388,7 @@ foreach($xrdServices as $service)
 			'serviceClass' => $service['serviceClass'],
 			'name' => $service['label'],
 			'subject' => $service['subject'],
+			'parent' => $service['parent'],
 			'uri' => $service['links']['self'][0]['href'],
 			'fqdn' => null,
 			'target' => null,
@@ -355,6 +404,7 @@ foreach($xrdServices as $service)
 			'serviceClass' => $service['serviceClass'],
 			'name' => $service['label'],
 			'subject' => $service['subject'],
+			'parent' => $service['parent'],
 			'uri' => $service['links']['http://purl.org/ontology/po/IPStream'][0]['href'],
 			'fqdn' => null,
 			'target' => null,
@@ -378,6 +428,21 @@ foreach($xrdServices as $service)
 	if($channel)
 	{
 		$chanNumber = $nextDynamicChannel;
+		if(isset($service['parent']))
+		{
+			foreach($channels as $chan)
+			{
+				if($chan['parent'] == $service['parent'])
+				{
+					$extraChannels[] = $channel;
+					$channel = null;
+					break;
+				}
+			}
+		}
+	}
+	if($channel)
+	{
 		if(isset($service['props']['http://projectbaird.com/ns/serviceNumberPreference']))
 		{
 			foreach($service['props']['http://projectbaird.com/ns/serviceNumberPreference'] as $int)
@@ -400,6 +465,13 @@ foreach($xrdServices as $service)
 	}
 }
 
+$x = 9001;
+foreach($extraChannels as $chan)
+{
+	$chan['lcn'] = null;
+	$channels[$x] = $chan;
+	$x++;
+}
 
 /* Merge XRD data */
 foreach($channels as $k => $chan)
@@ -472,6 +544,14 @@ function xrd_parse($node)
 		else
 		{
 			$link['media'] = 'all';
+		}
+		if(isset($link['http://projectbaird.com/ns/delivery']))
+		{
+			$link['delivery'] = $link['http://projectbaird.com/ns/delivery'];
+		}
+		else
+		{
+			$link['delivery'] = null;
 		}
 		$entry['links'][$k][] = $link;
 	}

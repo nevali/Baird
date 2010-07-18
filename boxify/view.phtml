@@ -16,10 +16,27 @@
 			<div class="section">
 			<p>Selected network:
 			<strong><?php
-			echo _e($platform[$kind]['name']) . ' → ' . _e($platform[$kind]['onid'][$onid]['name']) . ' → ' . _e($platform[$kind]['onid'][$onid]['nid'][$nid]['name']);
+			if($kind == 'dvb' || $kind == 'atsc')
+			{
+				echo _e($platform[$kind]['name']) . ' → ' . _e($platform[$kind]['onid'][$onid]['name']) . ' → ' . _e($platform[$kind]['onid'][$onid]['nid'][$nid]['name']);
+			}
+			else
+			{
+				echo _e($platform[$kind]['name']);
+			}
 			?></strong>
 			</p>
 			<?php
+			if(count($alerts))
+			{
+				echo '<ul>';
+				foreach($alerts as $msg)
+				{
+					echo '<li>' . $msg . '</li>';					
+				}
+				echo '</ul>';
+			}
+			
 			if(empty($_REQUEST['xrd']) && count($xrd))
 			{
 				echo '<p><strong>One or more XRD sources were discovered.</strong> <a href="' . _e($query_string . '&xrd=1') . '">Retry request with XRD processing enabled</a>. This will update/augment the channel line-up.</p>';
@@ -136,8 +153,8 @@ if(isset($info['depiction']))
 	echo '<img src="' . _e($info['depiction']) . '" style="max-height: 100px;"><br>';
 }
 echo  _e($info['name']) . '</a></td>';
-echo '<td class="kind">' . _e($platform[$info['kind']]['shortName']) . '</td>';
-echo '<td class="serviceClass">' . _e($info['serviceClass']) . '</td>';
+echo '<td class="kind">' . _e($platform[$info['kind']]['shortName']). '</td>';
+echo '<td class="serviceClass">' . _e($info['serviceClass']) . (!strlen($info['lcn']) ? ' [Alternative variant]': null) . '</td>';
 echo '<td class="encrypted">' . (!empty($info['encrypted']) ? 'Yes' : '&nbsp;') . '</td>';
 echo '<td class="audio">' . (!empty($info['audio']) ? 'Yes' : '&nbsp;') . '</td>';
 echo '<td class="ota-epg">' . (!empty($info['ota']) ? 'Yes' : '&nbsp;') . '</td>';
@@ -173,7 +190,7 @@ if(isset($info['streams']))
 	$list = array();
 	foreach($info['streams'] as $info)
 	{
-		$list[] = '<a href="' . _e($info['href']) . '">' . _e($info['type']) . '</a> (' . $info['media'] . ')';
+		$list[] = '<a href="' . _e($info['href']) . '">' . _e($info['type']) . '</a> (' . $info['media'] . (strlen($info['delivery']) ? '; ' . $info['delivery'] : null) .  ')';
 	}
 	echo implode(', ', $list);
 	echo '</td>';
