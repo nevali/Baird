@@ -28,6 +28,7 @@
 		<Subject>http://www.bbc.co.uk/services/bbcthree#service</Subject>
 		<Property type="http://www.w3.org/2000/01/rdf-schema#label">BBC Three</Property>
 		<Property type="http://projectbaird.com/ns/serviceClass">linear</Property>
+		<Property type="http://projectbaird.com/ns/serviceNumberPreference">7</Property>
 		<Link rel="alternate" type="text/html" href="http://www.bbc.co.uk/bbcthree/" />
 		<Link rel="http://purl.org/ontology/po/broadcaster" href="http://www.bbc.co.uk/#broadcaster" />
 		<Link rel="http://xmlns.com/foaf/0.1/depiction" type="image/jpeg" href="http://www.bbc.co.uk/iplayer/img/tv/bbc_three.jpg" />
@@ -42,6 +43,7 @@
 		<Subject>http://www.bbc.co.uk/services/bbcfour#service</Subject>
 		<Property type="http://www.w3.org/2000/01/rdf-schema#label">BBC Four</Property>
 		<Property type="http://projectbaird.com/ns/serviceClass">linear</Property>
+		<Property type="http://projectbaird.com/ns/serviceNumberPreference">9</Property>
 		<Link rel="alternate" type="text/html" href="http://www.bbc.co.uk/bbcfour/" />
 		<Link rel="http://purl.org/ontology/po/broadcaster" href="http://www.bbc.co.uk/#broadcaster" />
 		<Link rel="http://xmlns.com/foaf/0.1/depiction" type="image/jpeg" href="http://www.bbc.co.uk/iplayer/img/tv/bbc_four.jpg" />
@@ -57,6 +59,7 @@
 		<Subject>http://www.bbc.co.uk/services/cbeebies#service</Subject>
 		<Property type="http://www.w3.org/2000/01/rdf-schema#label">CBeebies</Property>
 		<Property type="http://projectbaird.com/ns/serviceClass">linear</Property>
+		<Property type="http://projectbaird.com/ns/serviceNumberPreference">71</Property>
 		<Link rel="alternate" type="text/html" href="http://www.bbc.co.uk/cbeebies/" />
 		<Link rel="http://purl.org/ontology/po/broadcaster" href="http://www.bbc.co.uk/#broadcaster" />
 		<Link rel="http://xmlns.com/foaf/0.1/depiction" type="image/jpeg" href="http://www.bbc.co.uk/iplayer/img/tv/cbeebies_1.jpg" />
@@ -72,6 +75,7 @@
 		<Subject>http://www.bbc.co.uk/services/cbbc#service</Subject>
 		<Property type="http://www.w3.org/2000/01/rdf-schema#label">CBBC</Property>
 		<Property type="http://projectbaird.com/ns/serviceClass">linear</Property>
+		<Property type="http://projectbaird.com/ns/serviceNumberPreference">70</Property>
 		<Link rel="alternate" type="text/html" href="http://www.bbc.co.uk/cbbc/" />
 		<Link rel="http://purl.org/ontology/po/broadcaster" href="http://www.bbc.co.uk/#broadcaster" />
 		<Link rel="http://xmlns.com/foaf/0.1/depiction" type="image/jpeg" href="http://www.bbc.co.uk/iplayer/img/tv/cbbc.jpg" />
@@ -87,6 +91,7 @@
 		<Subject>http://www.bbc.co.uk/services/bbcnews#service</Subject>
 		<Property type="http://www.w3.org/2000/01/rdf-schema#label">BBC News Channel</Property>
 		<Property type="http://projectbaird.com/ns/serviceClass">linear</Property>
+		<Property type="http://projectbaird.com/ns/serviceNumberPreference">80</Property>
 		<Link rel="alternate" type="text/html" href="http://www.bbc.co.uk/news/" />
 		<Link rel="http://purl.org/ontology/po/broadcaster" href="http://www.bbc.co.uk/#broadcaster" />
 		<Link rel="http://xmlns.com/foaf/0.1/depiction" type="image/jpeg" href="http://www.bbc.co.uk/iplayer/img/tv/bbc_news24.jpg" />
@@ -102,6 +107,7 @@
 		<Subject>http://www.bbc.co.uk/services/parliament#service</Subject>
 		<Property type="http://www.w3.org/2000/01/rdf-schema#label">BBC Parliament</Property>
 		<Property type="http://projectbaird.com/ns/serviceClass">linear</Property>
+		<Property type="http://projectbaird.com/ns/serviceNumberPreference">81</Property>
 		<Link rel="alternate" type="text/html" href="http://www.bbc.co.uk/parliament/" />
 		<Link rel="http://purl.org/ontology/po/broadcaster" href="http://www.bbc.co.uk/#broadcaster" />
 		<Link rel="http://xmlns.com/foaf/0.1/depiction" type="image/jpeg" href="http://www.bbc.co.uk/iplayer/img/tv/bbc_parliament_1.jpg" />
@@ -173,6 +179,7 @@
 		<Property type="http://projectbaird.com/ns/serviceClass">linear</Property>
 		<Link rel="alternate" type="text/html" href="http://www.bbc.co.uk/1xtra/" />
 		<Link rel="http://xmlns.com/foaf/0.1/depiction" type="image/gif" href="http://www.bbc.co.uk/iplayer/img/radio/bbc_1xtra.gif" />
+		<Property type="http://projectbaird.com/ns/serviceNumberPreference">701</Property>
 		<Link rel="http://purl.org/ontology/po/broadcaster" href="http://www.bbc.co.uk/#broadcaster" />
 		<Link rel="urn:tva:metadata:2005:ServiceGenre" href="urn:tva:metadata:cs:MediaTypeCS:2005:7.1.1" />
 		<Link rel="urn:tva:metadata:2005:ServiceGenre" href="urn:tva:metadata:cs:ContentCS:2005:3.6.4" />
@@ -194,7 +201,7 @@
 		<Link rel="http://purl.org/ontology/po/DVB" href="dvb://233a.1041.1a80" />
 		<Link rel="http://purl.org/ontology/po/IPStream" type="application/sdp" href="http://support.bbc.co.uk/multicast/sdp/bbcradio2-aac.sdp">
 			<Property type="http://projectbaird.com/ns/media">all</Property>
-			<Property type="http://projectbaird.com/ns/delivery">multicast</Property>
+			<Property type="http://projectbaird.com/ns/delivery">multicast-v4</Property>
 		</Link>		
 	</XRD>
 	
@@ -225,6 +232,7 @@
 		</Link>
 		<Link rel="http://purl.org/ontology/po/IPStream" type="application/sdp" href="http://www.bbc.co.uk/mobile/live/sdp/bbc1_mpeg4.sdp">
 			<Property type="http://projectbaird.com/ns/media">mobile</Property>
+			<Property type="http://projectbaird.com/ns/delivery">unicast-v4</Property>			
 		</Link>
 		<Link rel="http://projectbaird.com/ns/epg" type="application/json" href="http://www.bbc.co.uk/radio1/programmes/schedules/england.json" />
 		<Property type="http://projectbaird.com/ns/serviceNumberPreference">1</Property>
@@ -256,6 +264,7 @@
 		</Link>
 		<Link rel="http://purl.org/ontology/po/IPStream" type="application/sdp" href="http://www.bbc.co.uk/mobile/live/sdp/bbc2_mpeg4.sdp">
 			<Property type="http://projectbaird.com/ns/media">mobile</Property>
+			<Property type="http://projectbaird.com/ns/delivery">unicast-v4</Property>			
 		</Link>
 		<Link rel="http://projectbaird.com/ns/epg" type="application/json" href="http://www.bbc.co.uk/bbctwo/programmes/schedules/england.json" />
 		<Property type="http://projectbaird.com/ns/serviceNumberPreference">2</Property>
@@ -275,7 +284,7 @@
 		</Link>		
 		<Link rel="http://purl.org/ontology/po/IPStream" type="application/sdp" href="http://support.bbc.co.uk/multicast/sdp/bbcradio1-aac.sdp">
 			<Property type="http://projectbaird.com/ns/media">all</Property>
-			<Property type="http://projectbaird.com/ns/delivery">multicast</Property>
+			<Property type="http://projectbaird.com/ns/delivery">multicast-v4</Property>
 		</Link>		
 		<Link rel="http://purl.org/ontology/po/DVB" href="dvb://233a.4000.3800" />		
 		<Link rel="http://purl.org/ontology/po/DVB" href="dvb://233a.1041.1a40" />		

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<XRD xmlns="http://docs.oasis-open.org/ns/xri/xrd-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">>
+	<Subject>http://www.seesaw.com/#service</Subject>
+	<Property type="http://www.w3.org/2000/01/rdf-schema#label">SeeSaw</Property>
+	<Property type="http://projectbaird.com/ns/serviceClass">demand</Property>
+	<Link rel="self" type="text/html" href="http://www.seesaw.com/">
+		<Property type="http://projectbaird.com/ns/media">screen</Property>
+	</Link>
+	<Link rel="http://xmlns.com/foaf/0.1/depiction" type="image/png" href="http://upload.wikimedia.org/wikipedia/en/3/3c/SeeSaw_logo.png" />
+</XRD>
