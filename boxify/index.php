@@ -10,10 +10,14 @@ $services = array(
 );
 
 $xrdUrls = array(
+	'freeview-sample' => 'http://projectbaird.com/applications/manifests/sample-freeview.xml',
+	'freeview-sample-dev' => 'http://baird.nx/applications/manifests/sample-freeview.xml',
 	'bbc-sample' => 'http://projectbaird.com/applications/manifests/sample-bbc.xml',
 	'bbc-sample-dev' => 'http://baird.nx/applications/manifests/sample-bbc.xml',
 	'seesaw-sample' => 'http://projectbaird.com/applications/manifests/sample-seesaw.xml',
 	'seesaw-sample-dev' => 'http://baird.nx/applications/manifests/sample-seesaw.xml',
+	'itv-sample' => 'http://projectbaird.com/applications/manifests/sample-itv.xml',
+	'itv-sample-dev' => 'http://baird.nx/applications/manifests/sample-itv.xml',
 );
 
 $platform = array();
@@ -21,6 +25,7 @@ $channels = array();
 $extraChannels = array();
 $targets = array();
 $xrd = array();
+$xrdFetched = array();
 $xrdServices = array();
 $resolver = array();
 $suffix = 'tvdns.net';
@@ -246,36 +251,42 @@ foreach($targets as $fqdn => $info)
 
 if(!empty($_REQUEST['xrd']))
 {
-	foreach($xrd as $uri)
+	while(count($xrdFetched) < count($xrd))
 	{
-		$xml =  simplexml_load_file($uri);
-		if(is_object($xml))
+		foreach($xrd as $uri)
 		{
-			if($xml->getName() == 'XRD')
+			if(isset($xrdFetched[$uri])) continue;
+			$xrdFetched[$uri] = true;
+			$xml =  simplexml_load_file($uri);
+			if(is_object($xml))
 			{
-				$entries = array(xrd_parse($xml));
+				if($xml->getName() == 'XRD')
+				{
+					$entries = array(xrd_parse($xml));
+				}
+				else
+				{
+					$entries = array();
+					foreach($xml->XRD as $x)
+					{
+						$entries[] = xrd_parse($x);
+					}
+				}
+				foreach($entries as $entry)
+				{
+					if(!is_array($entry)) continue;
+					if(strlen($entry['subject']))
+					{
+						$xrdServices[$entry['subject']] = $entry;
+					}
+				}
+	//			print_r($xrdServices);
+	//			die();
 			}
 			else
 			{
-				$entries = array();
-				foreach($xml->XRD as $x)
-				{
-					$entries[] = xrd_parse($x);
-				}
+				$alerts[] = 'Failed to load ' . _e($uri);
 			}
-			foreach($entries as $entry)
-			{
-				if(strlen($entry['subject']))
-				{
-					$xrdServices[$entry['subject']] = $entry;
-				}
-			}
-//			print_r($xrdServices);
-//			die();
-		}
-		else
-		{
-			$alerts[] = 'Failed to load ' . _e($uri);
 		}
 	}
 }
@@ -518,6 +529,8 @@ foreach($channels as $k => $chan)
 
 function xrd_parse($node)
 {
+	global $xrd;
+	
 	$entry = array(
 		'subject' => null,
 		'props' => array(),
@@ -561,6 +574,16 @@ function xrd_parse($node)
 		$k = trim($a->type);
 		if(!strlen($k)) continue;
 		$entry['props'][$k][] = trim($prop);
+	}
+	if(isset($entry['links']['self']))
+	{
+		foreach($entry['links']['self'] as $link)
+		{
+			if($link['type'] == 'application/xrd+xml')
+			{
+				$xrd[$link['href']] = $link['href'];
+			}
+		}
 	}
 	return $entry;
 }
