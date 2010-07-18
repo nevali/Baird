@@ -37,13 +37,14 @@ There are a number of key standards and projects upon which Project Baird is
 built.
 
 * [Atom Syndication Format](http://atompub.org/)
-* [RadioDNS](http://www.radiodns.org/)
 * [HTML5](http://dev.w3.org/html5/spec/Overview.html)
-* [TV-Anytime](http://www.tv-anytime.org/)
-* [Programmes Ontology](http://www.bbc.co.uk/ontologies/programmes/) and [Music Ontology](http://musicontology.com/)
 * [NoTube](http://notube.org/)
-* [URIplay](http://uriplay.org/)
 * [P2P-Next](http://www.p2p-next.org/)
+* [Programmes Ontology](http://www.bbc.co.uk/ontologies/programmes/) and [Music Ontology](http://musicontology.com/)
+* [RadioDNS](http://www.radiodns.org/)
+* [TV-Anytime](http://www.tv-anytime.org/)
+* [URIplay](http://uriplay.org/)
+* [XRD](http://hueniverse.com/xrd/)
 
 (Please note that there is no formal affiliation between Project Baird
 and the above; they are simply those projects which are particularly important

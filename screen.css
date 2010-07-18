@@ -32,7 +32,7 @@ body.default h1 {
 	display: block;
 	height: 160px;
 	margin: 0;
-	background: #000 url('repeat.png') 0 8px repeat-x;
+	background: #000;
 	-moz-border-radius-topleft: 6px;
 	-webkit-border-top-left-radius: 6px;
 	-moz-border-radius-topright: 6px;
@@ -43,18 +43,18 @@ body.default h1 {
 body.default #logo {
 	position: absolute;
 	display: block;
-	top: 8px;
-	left: 0px;
-	width: 142px;
-	height: 142px;
-	background: url('logo.png') 0 0 no-repeat;
+	top: 16px;
+	left: 16px;
+	width: 128px;
+	height: 128px;
+	background: url('logo128.png') 0 0 no-repeat;
 	z-index: 5;
 }
 body.default #caption {
 	position: absolute;
 	display: block;
 	top: 8px;
-	right: 24px;
+	right: 8px;
 	width: 300px;
 	height: 142px;
 	background: url('caption.png') 100% 0 no-repeat;
