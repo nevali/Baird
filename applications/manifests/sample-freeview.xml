@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<XRDS xmlns="http://docs.oasis-open.org/ns/xri/xrd-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<XRD>
+		<Link rel="self" type="application/xrd+xml" href="http://projectbaird.com/applications/manifests/sample-bbc.xml" />
+	</XRD>
+	<XRD>
+		<Link rel="self" type="application/xrd+xml" href="http://projectbaird.com/applications/manifests/sample-itv.xml" />
+	</XRD>
+</XRDS>

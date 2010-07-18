@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <XRDS xmlns="http://docs.oasis-open.org/ns/xri/xrd-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<XRD>
+		<Subject>http://www.bbc.co.uk/#broadcaster</Subject>
+		<Property type="http://www.w3.org/2000/01/rdf-schema#label">BBC</Property>
+		<Link rel="alternate" type="text/html" href="http://www.bbc.co.uk/" />
+		<Link rel="http://xmlns.com/foaf/0.1/depiction" type="image/png" href="http://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/BBC.svg/200px-BBC.svg.png" />
+	</XRD>
+
 	<!-- Top-level services -->
 	<XRD>
 		<!-- BBC One -->
