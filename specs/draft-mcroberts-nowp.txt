@@ -301,12 +301,12 @@ Internet-Draft         Now Playing (NOWP) protocol             July 2010
    [I-D.nottingham-http-link-header].  The NOWP protocol specifies two
    Link Relation values which SHALL be used:
 
-   http://projectbaird.com/ns/service
+   http://purl.org/ontology/po/Channel
       This relation indicates that the linked resource is a service URI
       -- that is, a URI which identifies a service which delivers
       content to the device, such as a television station or a podcast.
 
-   http://projectbaird.com/ns/event
+   http://purl.org/ontology/po/Broadcast
       This relation indicates that the linked resource identifies a
       particular event, such as a radio programme or a locally-stored
       video file.
