@@ -287,7 +287,7 @@ Internet-Draft           Remote pairing protocol               July 2010
    service using a DNS-SD service type [DNSSD-SRV] of
    ""remote-pairing"".  That is, registrations occur using the name
    ""_remote-pairing._tcp"" and SHOULD by default be restricted to the
-   link-local scope.  Devices SHOULD make the service vailable via both
+   link-local scope.  Devices SHOULD make the service available via both
    IPv4 and IPv6 and advertise the accordingly.
 
    Servers SHOULD NOT make the service available (and by extension,
