@@ -143,6 +143,11 @@ class ChannelListing
 		return $this->channels;
 	}
 	
+	public function replaceChannels($list)
+	{
+		$this->channels = $list;
+	}
+	
 	public function addPlatform(XRD $xrd)
 	{
 		/* In the real world, we'd maintain a list per XRD source to avoid

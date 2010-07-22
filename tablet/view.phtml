@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title><?php e($selectedChannel->displayName); ?></title>
+		<link rel="stylesheet" href="ipad.css" media="screen">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+		<link rel="apple-touch-icon" href="http://projectbaird.com/logo512.png" type="image/png">
+	</head>
+	<body>
+		<div id="content">
+			<h1><span class="c">On now</span></h1>
+<?php
+
+$depict = null;
+
+foreach($selectedChannel->depiction as $d)
+{
+	if($d->height && $d->height < 35)
+	{
+		$depict = $d;
+		break;
+	}
+}
+
+if($depict)
+{
+	$style = "text-indent: -11000em; background-image: url('" . addslashes($depict->href) . "');";
+	if($depict->preferredBackground)
+	{
+		$style .= ' background-color: ' . $depict->preferredBackground;
+	}
+	$style = ' style="' . $style . '"';
+}
+else
+{
+	$style = null;
+}
+
+?>
+			
+			<h2<?php echo $style; ?>><?php e($selectedChannel->displayName); ?></h2>
+			<?php if($event) { ?>
+			<div class="now-playing">
+				<h3><?php
+				if(isset($event['programme']['display_title']))
+				{
+					if(isset($event['programme']['display_title']['title']) && isset($event['programme']['display_title']['subtitle']))
+					{
+						e($event['programme']['display_title']['title'] . ': ' . $event['programme']['display_title']['subtitle']);
+					}
+					else
+					{
+						e($event['programme']['display_title']['title']);
+					}
+				}
+				else
+				{
+					e($event['programme']['title']);
+				}
+				?></h3>
+				<p>
+					<?php e($event['programme']['medium_synopsis']); ?>
+				</p>
+				<p class="depiction"><img src="http://www.bbc.co.uk/iplayer/images/episode/<?php e($event['programme']['pid']); ?>_640_360.jpg" height="200" /></p>
+				<ul class="links">
+					<li><a href="http://www.bbc.co.uk/programmes/<?php e($event['programme']['pid']); ?>">Find out more</a></li>
+				</ul>
+				<?php } ?>
+			</div>
+			<div class="block">
+				<h3>More like this</h3>
+				<p>
+					Some recommendations
+				</p>
+			</div>
+			<div class="block">
+				<h3>Coming up</h3>
+				<p>
+					I live for the future. Tell me what's on next.
+				</p>
+			</div>
+		</div>
+		<div id="sidebar">
+			<h2><span class="c">Living room TV</span></h2>
+			<ul class="nav">
+				<li class="active icon-tv"><a href="#">On now</a></li>
+				<li class="icon-guide"><a href="#">Programme guide</a></li>
+				<li class="icon-favourites"><a href="#">Favourites</a></li>
+				<li class="icon-recommended"><a href="#">Recommendations</a></li>
+			</ul>
+		</div>
+		<span id="strip"></span>
+	</body>
+</html>

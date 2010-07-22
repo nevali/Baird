@@ -7,7 +7,7 @@ define('RADIODNS_SUFFIX_DVB', 'tvdns.net');
 
 class RadioDNS
 {
-	public static $serviceKeys = array('radiovis', 'radioepg', 'radiotag', 'xrd', 'http', 'broadcast-meta', 'xmpp-server', 'xmpp-client');
+	public static $serviceKeys = array('radiovis', 'radioepg', 'radiotag', 'xrd', 'http', 'broadcast-meta', 'xmpp-server', 'xmpp-client', 'lres');
 	protected static $serviceCache = array();
 	
 	protected $fqdn = null;

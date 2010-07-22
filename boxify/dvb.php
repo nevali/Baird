@@ -29,15 +29,33 @@ class DVBChannel extends Channel
 
 abstract class DVB
 {
-	public static function addChannelsFromSource(&$listing, $onid, $nid, $kind = 'dvb')
+	public static function addChannelsFromSource(&$listing, $onid, $nid, $tsid = null, $sid = null, $kind = 'dvb')
 	{
 		global $platform;
 		
-		foreach($platform[$kind]['onid'][$onid]['nid'][$nid]['tsid'] as $tsid => $ts)
+		$tslist = $platform[$kind]['onid'][$onid]['nid'][$nid]['tsid'];
+		if(strlen($tsid))
 		{
-			foreach($ts['sid'] as $sid => $channel)
+			if(!isset($tslist[$tsid]))
 			{
-				$chan = new DVBChannel(intval(strval($onid), 16), intval(strval($tsid), 16), intval(strval($sid), 16), intval(strval($nid), 16));
+				return;
+			}
+			$tslist = array($tsid => $tslist[$tsid]);
+		}
+		foreach($tslist as $tsid => $ts)
+		{
+			$channels = $ts['sid'];
+			if(strlen($sid))
+			{
+				if(!isset($channels[$sid]))
+				{
+					continue;
+				}
+				$channels = array($sid => $channels[$sid]);
+			}
+			foreach($channels as $xsid => $channel)
+			{
+				$chan = new DVBChannel(intval(strval($onid), 16), intval(strval($tsid), 16), intval(strval($xsid), 16), intval(strval($nid), 16));
 				$chan->available = true;
 				$chan->callsign = $chan->displayName = $channel['name'];
 				$chan->lcn = $channel['lcn'];
