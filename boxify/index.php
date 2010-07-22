@@ -1,14 +1,5 @@
 <?php
 
-$services = array(
-	'_radioepg._tcp' => 'RadioEPG', 
-	'_radiovis._tcp' => 'RadioVIS',
-	'_radiotag._tcp' => 'RadioTAG',
-	'_broadcast-meta._tcp' => 'URI Resolver',
-	'_xrd._tcp' => 'Service manifest',
-	'_http._tcp' => 'Web page',
-);
-
 $xrdUrls = array(
 	'freeview-sample' => 'http://projectbaird.com/applications/manifests/sample-freeview.xml',
 	'freeview-sample-dev' => 'http://baird.nx/applications/manifests/sample-freeview.xml',
@@ -20,51 +11,62 @@ $xrdUrls = array(
 	'itv-sample-dev' => 'http://baird.nx/applications/manifests/sample-itv.xml',
 );
 
+$sources = array();
 $platform = array();
-$channels = array();
-$extraChannels = array();
-$targets = array();
 $xrd = array();
 $xrdFetched = array();
-$xrdServices = array();
-$resolver = array();
-$suffix = 'tvdns.net';
-$firstDynamicChannel = $nextDynamicChannel = 901;
 $alerts = array();
+$haveXRD = false;
+$processXRD = false;
 
-require_once(dirname(__FILE__) . '/common.php');
-require_once(dirname(__FILE__) . '/dvb/data.php');
-require_once(dirname(__FILE__) . '/ip/data.php');
+$kind = $onid = $nid = $ecc = $region = null;
 
-$types = array();
-$onids = array();
-$nids = array();
-foreach($platform as $k => $v)
+define('MODULES_ROOT', dirname(__FILE__) . '/../app/');
+require_once(dirname(__FILE__) . '/../platform/lib/common.php');
+require_once(MODULES_ROOT . 'radiodns/radiodns.php');
+require_once(MODULES_ROOT . 'xrd/xrd.php');
+require_once(dirname(__FILE__) . '/channel.php');
+require_once(dirname(__FILE__) . '/dvb.php');
+require_once(dirname(__FILE__) . '/fm.php');
+require_once(dirname(__FILE__) . '/ip.php');
+
+$listing = new ChannelListing();
+$xrds = new ChannelXRDS();
+
+if(!empty($_REQUEST['kind']) && $_REQUEST['kind'] == 'dvb' && !empty($_REQUEST['onid']) && !empty($_REQUEST['nid']))
 {
-	$types[$k] = $v['name'];
-	foreach($v['onid'] as $onid => $info)
-	{
-		$onids[] = array('p' => $k, 'o' => $onid, 'name' => $info['name']);
-		foreach($info['nid'] as $nid => $ninfo)
-		{
-			$nids[] = array('p' => $k, 'o' => $onid, 'n' => $nid, 'name' => $ninfo['name']);
-		}
-	}
-}
-
-$kind = $onid = $nid = null;
-
-if(!empty($_REQUEST['kind']) && !empty($_REQUEST['onid']) && !empty($_REQUEST['nid']))
-{
-	$kind = trim($_REQUEST['kind']);
+	$kind = 'dvb';
 	$onid = trim($_REQUEST['onid']);
 	$nid = trim($_REQUEST['nid']);
-	if(!isset($platform[$kind]['onid'][$onid]['nid'][$nid]))
+	if(isset($platform[$kind]['onid'][$onid]['nid'][$nid]))
 	{
-		$alerts[] = 'The specified network does not exist';
+		$sources[] = array('kind' => 'dvb', 'onid' => $onid, 'nid' => $nid);
+		$platform['dvb://'. $onid] = array('kind' => 'dvb', 'onid' => $onid);
+	}
+	else
+	{
+		$alerts[] = 'The specified DVB network does not exist';
 		$kind = $onid = $nid = null;
 	}
+	
 }
+if(!empty($_REQUEST['kind']) && $_REQUEST['kind'] == 'fm' && !empty($_REQUEST['ecc']) && !empty($_REQUEST['region']))
+{
+	$kind = 'fm';
+	$ecc = trim($_REQUEST['ecc']);
+	$region = strtolower(trim($_REQUEST['region']));
+	if(isset($platform[$kind]['ecc'][$ecc]['region'][$region]))
+	{
+		$platform['fm://' . $ecc] = array('kind' => 'fm', 'ecc' => $ecc);
+		$sources[] = array('kind' => 'fm', 'ecc' => $ecc, 'region' => $region);
+	}
+	else
+	{
+		$alerts[] = 'The specified FM network does not exist';
+		$kind = $ecc = $region = null;
+	}
+}
+
 if(isset($_REQUEST['xrdurl']))
 {
 	$urls = $_REQUEST['xrdurl'];
@@ -76,308 +78,80 @@ if(isset($_REQUEST['xrdurl']))
 	{
 		if(isset($xrdUrls[$url]))
 		{
-			$u = $xrdUrls[$url];
-			$xrd[$u] = $u;
-			$_REQUEST['xrd'] = true;
-			if(!$kind) $kind = 'ip';
+			$sources[] = array('kind' => 'xrd', 'url' => $xrdUrls[$url]);
 		}
 	}
-}
-
-if($kind && $onid)
-{
-	foreach($platform[$kind]['onid'][$onid]['nid'][$nid]['tsid'] as $tsid => $ts)
-	{
-		foreach($ts['sid'] as $sid => $channel)
-		{
-			$channel['kind'] = $kind;
-			if($channel['data'])
-			{
-				$channel['serviceClass'] = 'interactive';
-			}
-			else
-			{
-				$channel['serviceClass'] = 'linear';
-			}
-			$channel['available'] = true;
-			$channel['tsname'] = $ts['name'];
-			$channel['fqdn'] = $nid . '.' . $sid . '.' . $tsid . '.' . $onid . '.' . $kind . '.' . $suffix;
-			$channel['uri'] = 'dvb://' . $onid . '.' . $tsid . '.' . $sid;
-			$channel['lookup'] = '/lookup/?kind=dvb&original_network_id=' . $onid . '&network_id=' . $nid . '&transport_stream_id=' . $tsid . '&service_id=' . $sid;
-			$channel['ota'] = true;
-			$channel['target'] = null;
-			$channel['subject'] = null;
-			$channel['parent'] = null;
-			$domain = $channel['fqdn'];
-			do
-			{
-//				echo "<p>Looking for records for " . $domain  . "</p>";
-				if(($records = dns_get_record($domain)))
-				{
-/*					echo '<pre>';
-					echo $domain . "\n";
-					print_r($records);
-					echo '</pre>'; */
-					foreach($records as $rec)
-					{
-						if(isset($rec['type']) && $rec['type'] == 'CNAME')
-						{
-							$channel['target'] = $rec['target'];
-//							echo '<p>Found CNAME: ' . $rec['target'] . '</p>';
-							/* Don't break - we want the last record */
-						}
-					}
-				}
-				if(strlen($channel['target']) && strcmp($domain, $channel['target']))
-				{
-					$domain = $channel['target'];
-//					echo '<p>Will loop for ' . $domain . '</p>';
-					continue;
-				}
-				break;
-			}
-			while(true);
-//			echo '<p>Target is ' . $channel['target'] . '</p>';
-			if(isset($channel['target']))
-			{
-				$targ = $channel['target'];
-				if(isset($targets[$targ]))
-				{
-					$channel['targetIndex'] = $targets[$targ]['index'];
-				}
-				else
-				{
-					$channel['targetIndex'] = count($targets);
-					$targets[$channel['target']] = array('index' => $channel['targetIndex']);
-				}
-			}
-			$channels[sprintf('%04d', $channel['lcn'])] = $channel;
-		}
-	}
-}
-
-foreach($targets as $fqdn => $info)
-{
-	foreach($services as $srv => $name)
-	{
-		$recs = dns_get_record($srv . '.' . $fqdn);
-		$service = array('name' => $name, 'records' => array(), 'params' => array(), 'targets' => array());
-		foreach($recs as $r)
-		{
-			if(isset($r['type']) && $r['type'] != 'CNAME' && $r['type'] != 'SOA')
-			{
-				$service['records'][] = $r;
-				if($r['type'] == 'TXT')
-				{
-					$plist = explode(' ', $r['txt']);
-					foreach($plist as $p)
-					{
-						$p = trim($p);
-						if(!strlen($p)) continue;
-						$kv = explode('=', $p, 2);
-						if(count($kv) != 2) continue;
-						$service['params'][$kv[0]] = $kv[1];
-					}
-				}
-				else if($r['type'] == 'SRV')
-				{
-					$k = sprintf('%04d-%04d', $r['pri'], $r['weight']);
-					$service['targets'][$k] = array('host' => $r['target'], 'port' => $r['port']);
-				}
-			}
-		}
-		if(count($service['targets']))
-		{
-			$info['services'][$srv] = $service;
-		}
-	}
-	if(isset($info['services']['_broadcast-meta._tcp']))
-	{
-		foreach($channels as $k => $chan)
-		{
-			if($chan['targetIndex'] == $info['index'])
-			{
-				$channels[$k]['resolver'] = true;
-			}
-		}
-	}
-	if(isset($info['services']['_xrd._tcp']))
-	{
-		$uri = null;
-		if(isset($info['services']['_xrd._tcp']['params']['path']))
-		{
-			$p = $info['services']['_xrd._tcp']['params']['path'];
-			if(substr($p, 0, 1) != '/') $p = '/' . $p;
-			foreach($info['services']['_xrd._tcp']['targets'] as $targ)
-			{
-				$uri = 'http://' . $targ['host'] . ':' . $targ['port'] . $p;
-				break;
-			}
-		}
-		if(strlen($uri))
-		{
-			$xrd[$uri] = $uri;
-		}
-	}
-	if(isset($info['services']['_http._tcp']))
-	{
-		$uri = null;
-		$host = null;
-		if(isset($info['services']['_http._tcp']['params']['path']))
-		{
-			$p = $info['services']['_http._tcp']['params']['path'];
-			if(substr($p, 0, 1) != '/') $p = '/' . $p;
-			foreach($info['services']['_http._tcp']['targets'] as $targ)
-			{
-				$uri = 'http://' . $targ['host'] . ':' . $targ['port'] . $p;
-				$host = $targ['host'];
-				break;
-			}
-		}
-		if(strlen($uri))
-		{
-			foreach($channels as $k => $chan)
-			{
-				if($chan['targetIndex'] == $info['index'])
-				{
-					$channels[$k]['website'] = $uri;
-					$channels[$k]['websiteHost'] = $host;
-				}
-			}
-		}
-	}
-	$targets[$fqdn] = $info;
 }
 
 if(!empty($_REQUEST['xrd']))
 {
-	while(count($xrdFetched) < count($xrd))
+	$processXRD = true;
+}
+
+/* Build the initial channel line-up from the list of sources */
+while(count($sources))
+{
+	$source = array_shift($sources);
+	switch($source['kind'])
 	{
-		foreach($xrd as $uri)
-		{
+		case 'xrd':
+			$uri = $source['url'];
 			if(isset($xrdFetched[$uri])) continue;
 			$xrdFetched[$uri] = true;
-			$xml =  simplexml_load_file($uri);
-			if(is_object($xml))
+			$xrds->mergeFrom(XRDS::xrdsFromURI($uri));
+			break;
+		case 'fm':
+			FM::addChannelsFromSource($listing, $source['ecc'], $source['region']);
+			break;
+		case 'dvb':
+			DVB::addChannelsFromSource($listing, $source['onid'], $source['nid']);
+			break;
+		default:
+			trigger_error('Unsupported source kind ' . $source['kind'], E_USER_WARNING);
+	}
+	$channels = $listing->channels();
+	foreach($channels as $chan)
+	{
+		if(empty($chan->xrdFetched) && isset($chan->services['_xrd._tcp']))
+		{
+			$chan->xrdFetched = true;
+			$haveXRD = true;
+			if($processXRD)
 			{
-				if($xml->getName() == 'XRD')
-				{
-					$entries = array(xrd_parse($xml));
-				}
-				else
-				{
-					$entries = array();
-					foreach($xml->XRD as $x)
-					{
-						$entries[] = xrd_parse($x);
-					}
-				}
-				foreach($entries as $entry)
-				{
-					if(!is_array($entry)) continue;
-					if(strlen($entry['subject']))
-					{
-						$xrdServices[$entry['subject']] = $entry;
-					}
-				}
-	//			print_r($xrdServices);
-	//			die();
-			}
-			else
-			{
-				$alerts[] = 'Failed to load ' . _e($uri);
+				if(isset($xrdFetched[$chan->services['_xrd._tcp']])) continue;
+				$sources[] = array('kind' => 'xrd', 'url' => $chan->services['_xrd._tcp']);
 			}
 		}
 	}
 }
 
-foreach($xrdServices as $subject => $service)
-{
-	$svcClass = null;
-	$service['channels'] = array();
-	$service['website'] = $service['websiteHost'] = null;
-	$service['parent'] = null;
-	if(isset($service['links']['alternate']))
-	{
-		foreach($service['links']['alternate'] as $link)
+/* $xrds->recurse(); */
+$xrds->locateParents();
+$xrds->matchPlatformsAgainstListing($listing);
+$listing->matchXRDS($xrds);
+$xrds->addIPServicesToListing($listing);
+
+/* 		if(isset($entry['links']['self']))
 		{
-			if($link['type'] == 'text/html')
+			foreach($entry['links']['self'] as $link)
 			{
-				$service['website'] = $link['href'];
-				try
+				if($link['type'] == 'application/xrd+xml')
 				{
-					if((@$info = parse_url($link['href'])))
-					{
-						$service['websiteHost'] = $info['host'];
-					}
-				}
-				catch(Exception $e) {}
-			}
-		}
-	}
-	if(isset($service['links']['http://purl.org/ontology/po/parent_service'][0]))
-	{
-		$parentUri = $service['links']['http://purl.org/ontology/po/parent_service'][0]['href'];
-		if(isset($xrdServices[$parentUri]))
-		{
-			$service['parent'] = $parentUri;
-		}
-	}
-		
-	/* Match channels to DVB services */
-	if(isset($service['links']['http://purl.org/ontology/po/DVB']))
-	{
-		foreach($service['links']['http://purl.org/ontology/po/DVB'] as $dvb)
-		{
-			foreach($channels as $k => $chan)
-			{
-				if(!strcmp($chan['uri'], $dvb['href']))
-				{
-					$service['channels'][$k] = $k;
-					$channels[$k]['subject'] = $subject;
-					$channels[$k]['parent'] = $service['parent'];
-//					if($channels[$k]['parent'])
-//					{
-//						die('set ' . $channels[$k]['name'] . ' to be ' . $channels[$k]['parent']);
-//					}
-					$svcClass = $chan['serviceClass'];
+					$xrd[$link['href']] = $link['href'];
 				}
 			}
 		}
-	}
-	if(isset($service['props']['http://www.w3.org/2000/01/rdf-schema#label'][0]))
-	{
-		$service['label'] = $service['props']['http://www.w3.org/2000/01/rdf-schema#label'][0];
-	}
-	if(isset($service['props']['http://projectbaird.com/ns/serviceClass'][0]))
-	{
-		$service['serviceClass'] = $service['props']['http://projectbaird.com/ns/serviceClass'][0];
-	}
-	if(!isset($service['serviceClass']))
-	{
-		$service['serviceClass'] = $svcClass;
-	}
-	$xrdServices[$subject] = $service;
-}
+*/
 
-foreach($xrdServices as $subject => $service)
-{
-	if(!isset($service['serviceClass']))
-	{
-		if(isset($service['parent']) && isset($xrdServices[$service['parent']]['serviceClass']))
-		{
-			$xrdServices[$subject]['serviceClass'] = $xrdServices[$service['parent']]['serviceClass'];
-		}
-	}
-}
 
+/*
 foreach($xrdServices as $service)
 {
-	/* Skip entries which already exist in the line-up */
+	// Skip entries which already exist in the line-up
 	if(count($service['channels'])) continue;
-	/* Skip entries which don't have a label */
+	// Skip entries which don't have a label
 	if(!isset($service['label'])) continue;
-	/* Skip entries which don't have a service class */
+	// Skip entries which don't have a service class
 	if(!isset($service['serviceClass'])) continue;
 	
 	$channel = null;
@@ -391,7 +165,7 @@ foreach($xrdServices as $service)
 		}
 		
 	}
-	/* On-demand and interactive services use a link relation of 'self' */
+	// On-demand and interactive services use a link relation of 'self'
 	if(($service['serviceClass'] == 'demand' || $service['serviceClass'] == 'interactive') && isset($service['links']['self'][0]))
 	{
 		$channel = array(
@@ -407,7 +181,7 @@ foreach($xrdServices as $service)
 			'streams' => $service['links']['self'],
 		);
 	}
-	/* Linear services use a link relation of http://purl.org/ontology/po/IPStream */
+	// Linear services use a link relation of http://purl.org/ontology/po/IPStream
 	if($service['serviceClass'] == 'linear' && isset($service['links']['http://purl.org/ontology/po/IPStream'][0]))
 	{
 		$channel = array(
@@ -475,17 +249,10 @@ foreach($xrdServices as $service)
 		}
 	}
 }
-
-$x = 9001;
-foreach($extraChannels as $chan)
-{
-	$chan['lcn'] = null;
-	$channels[$x] = $chan;
-	$x++;
-}
+*/
 
 /* Merge XRD data */
-foreach($channels as $k => $chan)
+/* foreach($channels as $k => $chan)
 {
 	if(isset($chan['subject']))
 	{
@@ -526,69 +293,6 @@ foreach($channels as $k => $chan)
 		}		
 	}
 }
-
-function xrd_parse($node)
-{
-	global $xrd;
-	
-	$entry = array(
-		'subject' => null,
-		'props' => array(),
-		'links' => array(),
-	);
-	$entry['subject'] = trim($node->Subject);
-	foreach($node->Link as $l)
-	{
-		$a = $l->attributes();
-		$k = trim($a->rel);
-		if(!strlen($k)) continue;
-		$link = array('href' => trim($a->href), 'type' => trim($a->type));
-		foreach($l->Property as $prop)
-		{
-			$a = $prop->attributes();
-			$pk = trim($a->type);
-			if(!strlen($pk)) continue;
-			$link[$pk] = trim($prop);
-		}
-		if(isset($link['http://projectbaird.com/ns/media']))
-		{
-			$link['media'] = $link['http://projectbaird.com/ns/media'];
-		}
-		else
-		{
-			$link['media'] = 'all';
-		}
-		if(isset($link['http://projectbaird.com/ns/delivery']))
-		{
-			$link['delivery'] = $link['http://projectbaird.com/ns/delivery'];
-		}
-		else
-		{
-			$link['delivery'] = null;
-		}
-		$entry['links'][$k][] = $link;
-	}
-	foreach($node->Property as $prop)
-	{
-		$a = $prop->attributes();
-		$k = trim($a->type);
-		if(!strlen($k)) continue;
-		$entry['props'][$k][] = trim($prop);
-	}
-	if(isset($entry['links']['self']))
-	{
-		foreach($entry['links']['self'] as $link)
-		{
-			if($link['type'] == 'application/xrd+xml')
-			{
-				$xrd[$link['href']] = $link['href'];
-			}
-		}
-	}
-	return $entry;
-}
-
-ksort($channels);
-
+*/
 
 require_once(dirname(__FILE__) . '/view.phtml');

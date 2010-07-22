@@ -5,85 +5,85 @@
 							<th scope="col">#</th>
 							<th scope="col">Name</th>
 							<th scope="col">Kind</th>
-							<th scope="col">Service class</th>
-							<th scope="col">Encrypted</th>
-							<th scope="col">Audio-only</th>
-							<th scope="col">OTA EPG</th>
+							<th scope="col">Class</th>
+							<th scope="col">CA</th>
+							<th scope="col">Audio</th>
+							<th scope="col">EPG</th>
 							<th scope="col">Target</th>
 							<th scope="col">RadioEPG</th>
 							<th scope="col">RadioVIS</th>
+							<th scope="col">RadioTAG</th>
 							<th scope="col">Website</th>
-							<th scope="col">Metadata resolver</th>
-							<th scope="col">Streams</th>
+							<th scope="col">Resolver</th>
+							<th scope="col">XRD</th>
+							<th scope="col">Sources</th>
 						</tr>
 					</thead>
 					<tbody>
 <?php
+$channels = $listing->channels();
 foreach($channels as $num => $info)
 {
-	$class = array('service');
-	$class[] = $info['kind'];
-	$class[] = $info['serviceClass'];
-	$class[] = empty($info['encrypted']) ? 'fta' : 'ca';
-	if(empty($info['data']))
-	{
-		$class[] = empty($info['audio']) ? 'video' : 'audio';
-	}
-	else
-	{
-		$class[] = 'data';
-	}
-	$class = implode(' ', $class);
+	$class = implode(' ', array(
+		'service',
+		$info->kind,
+		$info->serviceClass,
+		$info->ca ? 'ca' : 'fta',
+		$info->data ? 'data' : ($info->audio ? 'audio' : 'video'),
+		));
 ?>
 						<tr class="<?php e($class); ?>">
 <?php
-echo '<th scope="row">' . $info['lcn'] . '</th>';
-echo '<td class="name"><a href="' . _e($info['lookup']) . '">';
-if(isset($info['depiction']))
+echo '<th scope="row">' . $info->lcn . '</th>';
+echo '<td class="name"><a href="' . _e($info->lookupURL) . '">';
+if(isset($info->depiction[0]))
 {
-	echo '<img src="' . _e($info['depiction']) . '" style="max-height: 100px;"><br>';
+	echo '<img src="' . _e($info->depiction[0]->href) . '" style="max-height: 100px;"><br>';
 }
-echo  _e($info['name']) . '</a></td>';
-echo '<td class="kind">' . _e($platform[$info['kind']]['shortName']). '</td>';
-echo '<td class="serviceClass">' . _e($info['serviceClass']) . (!strlen($info['lcn']) ? ' [Alternative variant]': null) . '</td>';
-echo '<td class="encrypted">' . (!empty($info['encrypted']) ? 'Yes' : '&nbsp;') . '</td>';
-echo '<td class="audio">' . (!empty($info['audio']) ? 'Yes' : '&nbsp;') . '</td>';
-echo '<td class="ota-epg">' . (!empty($info['ota']) ? 'Yes' : '&nbsp;') . '</td>';
-if($info['target'])
+echo  _e($info->displayName) . '</a></td>';
+echo '<td class="kind">' . _e($platform[$info->kind]['shortName']). '</td>';
+echo '<td class="serviceClass">' . _e($info->serviceClass) . (!strlen($info->lcn) ? ' [Alternative variant]': null) . '</td>';
+echo '<td class="encrypted">' . (!empty($info->ca) ? 'Yes' : '&nbsp;') . '</td>';
+echo '<td class="audio">' . (!empty($info->audio) ? 'Yes' : '&nbsp;') . '</td>';
+echo '<td class="epg">' . (!empty($info->hasOtaEpg) ? 'OTA' : '&nbsp;') . '</td>';
+if($info->rdns)
 {
-	echo '<td class="target"><a href="#target-' . ($info['targetIndex'] + 1) . '">' . ($info['targetIndex'] + 1) . '</a></td>';
+	echo '<td class="target"><abbr title="' . _e($info->rdns->target) . '">…</abbr></td>';
 }
 else
 {
 	echo '<td class="target">&nbsp;</td>';
 }
-echo '<td class="radioepg"></td>';
-echo '<td class="radiovis"></td>';
-if(isset($info['website']))
+echo '<td class="radioepg">' . (isset($info->services['_radioepg._tcp']) ? 'Yes' : '&nbsp;') . '</td>';
+echo '<td class="radiovis">' . (isset($info->services['_radiovis._tcp']) ? 'Yes' : '&nbsp;') . '</td>';
+echo '<td class="radiotag">' . (isset($info->services['_radiotag._tcp']) ? 'Yes' : '&nbsp;') . '</td>';
+if(isset($info->services['_http._tcp']))
 {
-	echo '<td class="website"><a href="' . _e($info['website']) . '">' . _e($info['websiteHost']) . '</a></td>';
+	echo '<td class="website"><a href="' . _e($info->services['_http._tcp']['uri']) . '" title="' . _e($info->services['_http._tcp']['uri']) . '">…</a></td>';
 }
 else
 {
-	echo '<td class="website"></td>';
+	echo '<td class="website">&nbsp;</td>';
 }
-if(!empty($info['resolver']))
+if(isset($info->services['_broadcast-meta._tcp']))
 {
-	echo '<td class="resolver"><a href="' . _e($info['lookup']) . '">Yes</a></td>';
+	echo '<td class="resolver"><a href="' . _e($info->lookupURL) . '">Yes</a></td>';
 }
 else
 {
 	echo '<td class="resolver">&nbsp;</td>';
 }
-if(isset($info['streams']))
+echo '<td class="xrd">' . (isset($info->services['_xrd._tcp']) ? 'Yes' : '&nbsp;') . '</td>';
+
+if(isset($info->sources))
 {
 	echo '<td class="streams">';
 	$list = array();
-	foreach($info['streams'] as $info)
+	foreach($info->sources as $source)
 	{
-		$list[] = '<a href="' . _e($info['href']) . '">' . _e($info['type']) . '</a> (' . $info['media'] . (strlen($info['delivery']) ? '; ' . $info['delivery'] : null) .  ')';
+		$list[] = '<a href="' . _e($source['href']) . '">' . _e($source['type']) . '</a> (' . $source['media'] . (isset($source['proto']) ? ';' . $source['proto'] : null) . (strlen($source['delivery']) ? '; ' . $source['delivery'] : null) . ')';
 	}
-	echo implode(', ', $list);
+	echo implode('<br>', $list);
 	echo '</td>';
 }
 else

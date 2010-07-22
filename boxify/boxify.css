@@ -1,5 +1,9 @@
 /* Overrides for Boxify */
 
+table.lineup {
+	max-width: 100%;
+}
+
 div.channel-grid {
 	background: #444;
 }
