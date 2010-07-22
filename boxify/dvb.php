@@ -39,7 +39,7 @@ abstract class DVB
 			{
 				$chan = new DVBChannel(intval(strval($onid), 16), intval(strval($tsid), 16), intval(strval($sid), 16), intval(strval($nid), 16));
 				$chan->available = true;
-				$chan->callsign = $chan->name = $channel['name'];
+				$chan->callsign = $chan->displayName = $channel['name'];
 				$chan->lcn = $channel['lcn'];
 				if($channel['data'])
 				{
