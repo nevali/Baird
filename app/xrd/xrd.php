@@ -162,7 +162,7 @@ class XRDS
 						$link->depth = intval($prop);
 						break;
 					case 'http://projectbaird.com/ns/preferredBackground':
-						$link->preferredBackground = intval($prop);
+						$link->preferredBackground = trim($prop);
 						break;
 				}
 			}

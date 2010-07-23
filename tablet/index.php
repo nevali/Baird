@@ -115,10 +115,13 @@ if(isset($selectedChannel->services['_broadcast-meta._tcp']))
 	}
 }
 
-$d = new XRDLink('bbcone.png', 'image/png');
+// print_r($selectedChannel->depiction); die();
+
+/*$d = new XRDLink('bbcone.png', 'image/png');
 $d->height = 18;
 $d->preferredBackground = '#ae1005';
 
 $selectedChannel->depiction[] = $d;
+*/
 
 require_once(dirname(__FILE__) . '/view.phtml');
