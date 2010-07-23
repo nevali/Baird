@@ -44,7 +44,7 @@
 		<Link rel="alternate" type="text/html" href="http://www.bbc.co.uk/bbcone/" />
 		<Link rel="http://purl.org/ontology/po/broadcaster" href="http://www.bbc.co.uk/#broadcaster" />
 		<Link rel="http://xmlns.com/foaf/0.1/depiction" type="image/jpeg" href="http://www.bbc.co.uk/iplayer/img/tv/bbc_one.jpg" />
-		<Link rel="http://xmlns.com/foaf/0.1/depiction" type="image/png" href="http://projectbaird.com/toys/tablet/bbcone.png">
+		<Link rel="http://xmlns.com/foaf/0.1/depiction" type="image/png" href="http://toys.projectbaird.com/tablet/bbcone.png">
 			<Property type="http://projectbaird.com/ns/width">107</Property>
 			<Property type="http://projectbaird.com/ns/height">18</Property>
 			<Property type="http://projectbaird.com/ns/preferredBackground">#ae1005</Property>
@@ -62,7 +62,7 @@
 		<Link rel="alternate" type="text/html" href="http://www.bbc.co.uk/bbctwo/" />
 		<Link rel="http://purl.org/ontology/po/broadcaster" href="http://www.bbc.co.uk/#broadcaster" />
 		<Link rel="http://xmlns.com/foaf/0.1/depiction" type="image/jpeg" href="http://www.bbc.co.uk/iplayer/img/tv/bbc_two.jpg" />
-		<Link rel="http://xmlns.com/foaf/0.1/depiction" type="image/png" href="http://projectbaird.com/toys/tablet/bbctwo.png">
+		<Link rel="http://xmlns.com/foaf/0.1/depiction" type="image/png" href="http://toys.projectbaird.com/tablet/bbctwo.png">
 			<Property type="http://projectbaird.com/ns/width">110</Property>
 			<Property type="http://projectbaird.com/ns/height">18</Property>
 			<Property type="http://projectbaird.com/ns/preferredBackground">#005e70</Property>
