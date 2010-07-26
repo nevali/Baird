@@ -1,6 +1,7 @@
 ---
 title: Content feeds
 layout: default
+section: specs
 path: applications/feeds/
 ---
 

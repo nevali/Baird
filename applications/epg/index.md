@@ -1,6 +1,7 @@
 ---
 title: IP-delivered Electronic Programme Guide
 layout: default
+section: specs
 path: applications/epg/
 ---
 

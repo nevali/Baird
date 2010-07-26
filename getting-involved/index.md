@@ -1,15 +1,16 @@
 ---
 title: Getting involved
 layout: default
+section: getting-involved
 path: getting-involved/
 ---
 
 There are a few different ways that you can get involved in Project Baird,
 whatever you can contribute to the project.
 
-The [wiki pages](http://wiki.github.com/nexgenta/Baird/) are all editable by anybody —
-all you need is a (free) GitHub account. Feel free to add comments or make
-additions and amendments to what’s there.
+The [wiki pages](http://wiki.github.com/nexgenta/Baird/) are all editable by
+anybody — all you need is a (free) GitHub account. Feel free to add comments or
+make additions and amendments to what’s there.
 
 Once the specifications themselves begin to be drafted, they will be placed in
 [the repository itself](http://github.com/nexgenta/Baird/) (which this website points to). Anybody can use <code>git</code>

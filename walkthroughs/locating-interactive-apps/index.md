@@ -6,10 +6,10 @@ layout: default
 1. Construct a [TVDNS](/discovery/tvdns) or RadioDNS domain name for the
 current service
 
-2. Query DNS for the [<code>content-manifest</code>](http://wiki.github.com/nexgenta/Baird/service-manifests)
+2. Query DNS for the [<code>xrd</code>](http://wiki.github.com/nexgenta/Baird/service-manifests)
 application
 
-3. Download the manifest Atom feed and locate the feed related to the current service
+3. Download the manifest XRD and locate the feed related to the current service
 
 4. Download the content feed for the current service
 

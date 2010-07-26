@@ -1,6 +1,7 @@
 ---
 title: Service manifests
 layout: default
+section: specs
 path: applications/manifests/
 ---
 

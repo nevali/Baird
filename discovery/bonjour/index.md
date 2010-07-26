@@ -1,10 +1,11 @@
 ---
 title: Service discovery on a local network
 layout: default
+section: specs
 path: discovery/bonjour/
 ---
 
-For some [services](/services/), it is more appropriate that they be
+For some [applications](/applications/), it is more appropriate that they be
 advertised and discovered automatically by devices on a local wired or
 wireless network, rather than advertised by a broadcaster and discovered
 by a connected receiver.

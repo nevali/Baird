@@ -1,6 +1,7 @@
 ---
 title: Aims
 layout: default
+section: aims
 path: aims/
 ---
 

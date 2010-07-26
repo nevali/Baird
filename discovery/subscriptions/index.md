@@ -1,6 +1,7 @@
 ---
-title: Manual service descriptions
+title: Manual application subscriptions
 layout: default
+section: specs
 path: discovery/subscriptions/
 ---
 

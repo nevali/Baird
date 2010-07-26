@@ -1,6 +1,7 @@
 ---
 title: Broadcast metadata resolution
 layout: default
+section: specs
 path: applications/broadcast-meta/
 ---
 

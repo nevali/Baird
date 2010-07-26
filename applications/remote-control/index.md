@@ -1,6 +1,7 @@
 ---
 title: Remote control
 layout: default
+section: specs
 path: applications/remote-control
 ---
 

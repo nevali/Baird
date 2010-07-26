@@ -1,6 +1,7 @@
 ---
 title: IP-based applications
 layout: default
+section: specs
 path: applications/
 ---
 

@@ -1,6 +1,8 @@
 ---
 title: Project Baird namespace
 layout: default
+section: specs
+path: ns/
 ---
 
 <code>http://projectbaird.com/ns/</code> is the namespace used for Project

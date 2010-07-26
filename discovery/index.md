@@ -1,6 +1,7 @@
 ---
-title: Service Discovery
+title: Application Discovery
 layout: default
+section: specs
 path: discovery/
 ---
 

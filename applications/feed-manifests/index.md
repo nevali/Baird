@@ -1,6 +1,7 @@
 ---
 title: Feed manifests
 layout: default
+section: specs
 path: applications/feed-manifests/
 ---
 

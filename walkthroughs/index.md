@@ -1,6 +1,8 @@
 ---
 title: Walkthroughs
 layout: default
+section: walkthroughs
+path: walkthroughs/
 ---
 
 This section contains process walkthroughs: step-by-step recipes for how to

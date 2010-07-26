@@ -1,6 +1,7 @@
 ---
 title: Pairing protocol
 layout: default
+section: specs
 path: applications/pairing-protocol/
 ---
 
