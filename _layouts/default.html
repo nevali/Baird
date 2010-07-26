@@ -13,20 +13,25 @@
 		<title>{{ page.title }} &bull; Project Baird</title>
 		<meta name="google-site-verification" content="2lN805mKFfcgb-R7RvFKTntgr1eNuXpomvPsyaxiXmU" />
 	</head>
-	<body class="default">
+	<body class="default {{ page.section }}">
 		<div id="surround">
-			<h1><span id="caption">This is Project Baird.</span><span id="logo"></span></h1>
-			<ul id="contents" class="no-print">
-				<li><a href="{{ site.url }}/">Introduction</a></li>
-				<li><a href="{{ site.url }}/aims/">Aims</a></li>
-				<li><a href="{{ site.url }}/specs/">Specifications</a></li>
-				<li><a href="{{ site.url }}/getting-involved/">Getting Involved</a></li>
-				<li><a href="{{ site.url }}/walkthroughs/">Walkthroughs</a></li>
-			</ul>
+			<h1><a href="{{ site.url }}/"><span id="caption">This is Project Baird.</span><span id="logo"></span></a></h1>
+			<ul id="contents" class="no-print"><!--
+				--><li{% if page.section == 'home' %} class="active"{% endif %}><a href="{{ site.url }}/">Introduction</a></li><!--
+				--><li{% if page.section == 'aims' %} class="active"{% endif %}><a href="{{ site.url }}/aims/">Aims</a></li><!--
+				--><li{% if page.section == 'specs' %} class="active"{% endif %}><a href="{{ site.url }}/specs/">Specifications</a></li><!--
+				--><li{% if page.section == 'getting-involved' %} class="active"{% endif %}><a href="{{ site.url }}/getting-involved/">Getting Involved</a></li><!--
+				--><li{% if page.section == 'walkthroughs' %} class="active"{% endif %}><a href="{{ site.url }}/walkthroughs/">Walkthroughs</a></li><!--
+				--><li><a href="http://toys.projectbaird.com/">Prototypes</a></li><!--
+			--></ul>
+			{% if page.separated %}
+			{{ content }}
+			{% else %}
 			<div class="section">
 				<h2>{{ page.title }}</h2>
 				{{ content }}
 			</div>
+			{% endif %}
 		</div>
 		<div id="footer">
 			<p>Copyright © 2009-2010. Dèanta ann an Alba.</p>
