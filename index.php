@@ -1,18 +1,8 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="UTF-8">
-		<title>Project Baird Toys</title>
-		<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.7.0/build/reset/reset-min.css"> 
-		<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.7.0/build/base/base-min.css"> 
-		<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.7.0/build/fonts/fonts-min.css"> 
-		<link rel="stylesheet" type="text/css" href="http://projectbaird.com/screen.css" media="screen"> 
-		<link rel="stylesheet" type="text/css" href="http://projectbaird.com/print.css" media="print"> 
-		<link rel="stylesheet" type="text/css" href="boxify.css" media="screen">
-	</head>
-	<body class="toys boxify">
-		<div id="surround">
-			<h1>Toys</h1>
+<?php
+
+require(dirname(__FILE__) . '/templates/toys/header.phtml');
+
+?>
 			<div class="section">
 				<dl>
 					<dt><a href="/lookup/">Lookup Tool</a></dt>
@@ -54,6 +44,5 @@
 					</dd>
 				</dl>
 			</div>
-		</div>
-	</body>
-</html>
+<?php
+require_once(dirname(__FILE__) . '/templates/toys/footer.phtml');

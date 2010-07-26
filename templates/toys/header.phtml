@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title><?php
+if(isset($title) && strlen($title))
+{
+	echo $title . ' &bull; Prototypes &bull; Project Baird';
+}
+else
+{
+	echo 'Prototypes &bull; Project Baird';
+}
+?></title>
+		<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.7.0/build/reset/reset-min.css"> 
+		<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.7.0/build/base/base-min.css"> 
+		<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.7.0/build/fonts/fonts-min.css"> 
+		<link rel="stylesheet" type="text/css" href="http://projectbaird.com/screen.css" media="screen"> 
+		<link rel="stylesheet" type="text/css" href="http://projectbaird.com/print.css" media="print"> 
+		<link rel="stylesheet" type="text/css" href="boxify.css" media="screen">
+	</head>
+	<body class="default toys">
+		<div id="surround">
+			<h1><a href="http://toys.projectbaird.com/"><span id="caption">This is Project Baird.</span><span id="logo"></span></a></h1>
+			<ul id="contents" class="no-print"><!--
+				--><li><a href="http://projectbaird.com/">Introduction</a><!--
+				--><li><a href="http://projectbaird.com/aims/">Aims</a></li><!--
+				--><li><a href="http://projectbaird.com/specs/">Specifications</a></li><!--
+				--><li><a href="http://projectbaird.com/getting-involved/">Getting Involved</a></li><!--
+				--><li><a href="http://projectbaird.com/walkthroughs/">Walkthroughs</a></li><!--
+				--><li class="active"><a href="/">Prototypes</a></li><!--
+			--></ul>
