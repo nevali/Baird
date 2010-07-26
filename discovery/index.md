@@ -9,10 +9,11 @@ path: discovery/
 including audiovisual content feeds, can be located by connected and
 companion devices.
 
-There are three main “strands” to this:
+There are serveral different sources of advertisements of applications:
 
-1. [TVDNS](tvdns/) - allowing automatic discovery of broadcasters' IP-delivered services relating over-the-air broadcasts
-2. Advertising and locating IP-delivered services on a local network with [Bonjour](bonjour/)
-3. [Subscribing](subscriptions/) to services manually (i.e., user-initiated subscriptions)
+* [Manual subscriptions](subscriptions/)
+* [DNS-SD browse domains](bonjour/) (including <code>.local</code>, the mDNS browse domain)
+* Per-service domain names embedded in broadcast Service Information tables
+* [TVDNS domains](tvdns/)
 
-Layered above the discovery layer are the IP-delivered [services](/services/) themselves.
+Layered above the discovery layer are the IP-delivered [applications](/applications/) themselves.

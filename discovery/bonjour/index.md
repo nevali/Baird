@@ -1,5 +1,5 @@
 ---
-title: Service discovery on a local network
+title: Service discovery on a private network
 layout: default
 section: specs
 path: discovery/bonjour/
@@ -18,3 +18,10 @@ Bonjour is widely-deployed in a range of different devices, with a number of
 competing implementations in existence, from both [Apple](http://opensource.apple.com/source/mDNSResponder/)
 and [others](http://avahi.org/).
 
+Beyond device-to-user (D2U) applications, Bonjour-based service discovery
+can be employed to allow applications provisioned on a local network, or
+on a service-provider’s network, to be advertised alongside those discoverable
+by other means.
+
+Devices should support both local (multicast-based) DNS service discovery
+as well wide-area discovery.
