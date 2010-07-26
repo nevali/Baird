@@ -79,7 +79,7 @@ built.
 * [Programmes Ontology](http://www.bbc.co.uk/ontologies/programmes/) and [Music Ontology](http://musicontology.com/)
 * [RadioDNS](http://www.radiodns.org/)
 * [TV-Anytime](http://www.tv-anytime.org/)
-* [URIplay](http://uriplay.org/)
+* [Atlas](http://docs.atlasapi.org/)
 * [XRD](http://hueniverse.com/xrd/)
 
 (Please note that there is no formal affiliation between Project Baird
