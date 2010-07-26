@@ -26,6 +26,30 @@ can perform DNS lookups in order to locate IP-delivered applications relating
 to that station. These applications are principally advertised by way of <code>SRV</code>
 records. Further background can be found on the [RadioDNS website](http://radiodns.org/about-radiodns/).
 
+### Benefits of TVDNS
+
+TVDNS allows a content provider to offer ancilliary services and content without
+requiring modifications to the broadcast stream. This is especially important
+for smaller broadcasters for whom the finer detail of delivery is outsourced
+to a third party, or in situations where inserting additional information into
+the broadcast stream might otherwise be logistically problematic.
+
+TVDNS is broadly agnostic: although it is specified here for DVB-based broadcasting
+systems, it would also be generally applicable to other systems, such as ATSC
+and ISDB.
+
+### Downsides to TVDNS
+
+TVDNS is inherently reliant upon a single party and the resources of that party in
+order to function: the operator of the domain name used as a root in all TVDNS-generated
+domain names is ultimately responsible for ensuring that a stable and consistent
+service is available. For some broadcasters, it might be preferable to instead
+provide a domain name which is used as a service-discovery target as part of the
+Service Description Table (SDT) contained within the broadcast stream — this would
+allow receivers to make the association between a broadcast service and a set of
+applications advertised through a DNS domain name operated by the broadcaster without
+involving a third party.
+
 ### TVDNS Specification (r02 - 2010-06-12)
 
 The TVDNS specification is defined as a set of amendments to the [RadioDNS Technical Specification (RDNS01 v0.6.1 — 2009-06-15)](http://radiodns.org/wp-content/uploads/2009/03/rdns011.pdf) (PDF).
