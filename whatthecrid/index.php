@@ -38,9 +38,6 @@ function dvbMatch($onid, $tsid = null, $sid = null, $nid = null, $list = null)
 
 
 $endpoint = NOTUBE_QUERY_URL;
-
-// The list of service identifiers that we have responsibility for resolving for
-
 $service = null;
 $start = null;
 $duration = null;
