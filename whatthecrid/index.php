@@ -333,11 +333,14 @@ function _e()
 			if(preg_match('!^http://www.bbc.co.uk/programmes/([a-z0-9]+)#!i', $match['prog'], $matches) && count($matches) >= 2)
 			{
 				echo '<li><a href="http://www.bbc.co.uk/iplayer/episode/' . $matches[1] . '">Watch on iPlayer</a> (if available)</li>';
+				echo '<li><a href="http://dev.notu.be/2010/07/recommendations_experiment/classify?pid=' . $matches[1] . '">Automated classification from Libby\'s NoTube recommendations experiment</a></li>';
+				echo '<li><a href="http://dev.notu.be/2010/07/recommendations_experiment/suggest?pid=' . $matches[1] . '">More like this from Libby\'s NoTube recommendations experiment</a> (using PID)</li>';
 			}
 		} ?>
 		<?php if(isset($match['crid']))
 		{
-			echo '<li><a href="http://g.bbcredux.com/search?repeats=on&pcrid=' . _e($match['crid']) . '">Find media using Redux</a> (BBC staff only)</li>';
+			echo '<li><a href="http://g.bbcredux.com/search?repeats=on&pcrid=' . _e($match['crid']) . '">Find media using Redux</a> [<a href="http://g.redux.com/search?repeats=on&lucky=true&pcrid=' . _e($match['crid']) . '">Feeling lucky?</a>] (BBC staff only)</li>';
+			echo '<li><a href="http://dev.notu.be/2010/07/recommendations_experiment/suggest?crid=' . _e($match['crid']) . '">More like this from Libby\'s NoTube recommendations experiment</a> (using CRID)</li>';
 		} ?>
 		</ul>
 	</body>
