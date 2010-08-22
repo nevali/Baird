@@ -3,10 +3,10 @@ title: Retrieving broadcast-related metadata on companion devices
 layout: default
 ---
 
-1. Locate the [remote control application](http://wiki.github.com/nexgenta/Baird/ip-remote-control)
+1. Locate the [remote control application](http://github.com/nexgenta/Baird/wiki/IP-remote-control)
 using Bonjour.
 
-2. If required, use the [pairing protocol](http://wiki.github.com/nexgenta/Baird/pairing-protocol)
+2. If required, use the [pairing protocol](http://github.com/nexgenta/Baird/wiki/Pairing-protocol)
 to pair with the receiver.
 
 3. Request details of the currently-airing programme via the remote control

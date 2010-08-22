@@ -1,8 +1,8 @@
 ---
-title: Content feeds
+title: Service feeds
 layout: default
 section: specs
 path: applications/feeds/
 ---
 
-This section is currently being specified on the [project wiki](http://wiki.github.com/nexgenta/Baird/content-feeds).
+This section is currently being specified on the [project wiki](http://github.com/nexgenta/Baird/wiki/Service-feeds).

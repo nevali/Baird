@@ -46,26 +46,28 @@ are a number of different kinds of application which can advertised by a
 provider. These can be employed directly by a hybrid receiver device, but
 can also be utilised by a “second screen”, or companion, device.
 
-* A [service manifest](http://wiki.github.com/nexgenta/Baird/service-manifests) is an XML-based document which allows a broadcaster to describe the different channels it broadcasts and the different media which carries them. A device can perform matching and filtering and automatically augment a channel line-up.
-* [Content feeds](http://wiki.github.com/nexgenta/Baird/content-feeds) are an Atom-based format which allows content, including audio, video and interactive sources, to be associated with individual programmes.
+* A [service manifest](http://github.com/nexgenta/Baird/wiki/Service-manifests) is an XML-based document which allows a broadcaster to describe the different channels it broadcasts and the different media which carries them. A device can perform matching and filtering and automatically augment a channel line-up.
+* Service manifests are located through [XRD document discovery using DNS-SD](http://github.com/nexgenta/Baird/wiki/XRD-document-discovery-using-DNS-SD)
+* [Service feeds](http://github.com/nexgenta/Baird/wiki/Service-feeds) are an Atom-based format which allows content, including audio, video and interactive sources, to be associated with individual programmes.
 * The [Electronic Programme Guide](applications/epg/) application allows EPG data to be delivered out-of-band, typically over IP. This allows companion devices access to the same EPG information a traditional receiver already has, and also allows a hybrid receiver to augment its EPG data (for example, the additional data can contain information covering a longer period than the broadcast EPG, or might include images representing programmes).
-* The [URI resolver](http://wiki.github.com/nexgenta/Baird/programmes-ontology-resolver) allows receiver or other device to obtain a canonical URL for a version of a programme. This URL can then be used as an identifier for other applications, or can be queried directly in order to receive programme information in various formats.
+* The [metadata resolver](http://github.com/nexgenta/Baird/wiki/Metadata-resolver) allows receiver or other device to obtain a canonical URL for a version of a programme. This URL can then be used as an identifier for other applications, or can be queried directly in order to receive programme information in various formats.
 
 #### 3. Device-to-user (D2U) applications
 
 As well as describing applications which can be advertised by service providers, there are a set of applications which can be advertised by devices, principally across local networks.
 
-* The [pairing protocol](http://wiki.github.com/nexgenta/Baird/pairing-protocol) describes the mechanism for companion devices to be “paired” with receivers, resulting in a set of credentials which can be used with other applications.
+* The [pairing protocol](http://github.com/nexgenta/Baird/wiki/Pairing-protocol) describes the mechanism for companion devices to be “paired” with receivers, resulting in a set of credentials which can be used with other applications.
 * The [“Now Playing” (NOWP) protocol](specs/draft-mcroberts-nowp.html) allows a companion device to query a receiver for URIs identifying the current broadcast service (if any) and currently-playing item of content.
-* The [remote control](http://wiki.github.com/nexgenta/Baird/ip-remote-control) protocol allows direct control of a receiver (or other playback device) over an IP network.
-* [XMPP](http://wiki.github.com/nexgenta/Baird/xmpp) is a standard messaging protocol, commonly used for instant messaging (IM) applications, but increasingly for other kinds of inter-device and inter-user messaging.
-* [Recommendations and sharing across the social graph](http://wiki.github.com/nexgenta/Baird/social-graph)
+* The [remote control](http://github.com/nexgenta/Baird/wiki/IP-remote-control) protocol allows direct control of a receiver (or other playback device) over an IP network.
+* [XMPP](http://github.com/nexgenta/Baird/wiki/XMPP) is a standard messaging protocol, commonly used for instant messaging (IM) applications, but increasingly for other kinds of inter-device and inter-user messaging.
+* [Recommendations and sharing across the social graph](http://github.com/nexgenta/Baird/wiki/Social-graph)
 
 #### 4. Other supporting specifications
 
 * [dvb: URI scheme](specs/draft-mcroberts-uri-dvb.html)
-* [Device profiles](http://wiki.github.com/nexgenta/Baird/device-profiles)
-* [Web application support for TV tuners](http://wiki.github.com/nexgenta/Baird/javascript-support-for-tuners)
+* [Profiles](http://github.com/nexgenta/Baird/wiki/Profiles)
+* [Web application support for TV tuners](http://github.com/nexgenta/Baird/wiki/Javascript-support-for-tuners)
+* [XRD extensions for web applications](http://github.com/nexgenta/Baird/wiki/XRD-extensions-for-web-applications)
 
 ### Key standards and related projects
 

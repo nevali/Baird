@@ -8,7 +8,7 @@ layout: default
 1. Construct a [TVDNS](/discovery/tvdns) or RadioDNS domain name for the
 current service
 
-2. Query DNS for the [<code>xrd</code>](http://wiki.github.com/nexgenta/Baird/service-manifests)
+2. Query DNS for the [<code>xrd</code>](http://github.com/nexgenta/Baird/wiki/Service-manifests)
 application
 
 3. Download the manifest XRD
@@ -45,7 +45,7 @@ an <code>atom:link</code> element where:
 	* Properly-populated feed manifest and service feeds are available
 2. See [http://projectbaird.com/ns/](/ns/) for a description of element,
 attribute and link relation extensions
-3. See [the device profiles](http://wiki.github.com/nexgenta/Baird/device-profiles)
+3. See [the device profiles](http://github.com/nexgenta/Baird/wiki/Profiles)
 for information on anticipated content type support on different devices
 4. See [Atom Link Extensions](http://tools.ietf.org/html/draft-snell-atompub-link-extensions-06) for information on the <code>le:media</code> attribute.
 5. Media queries are defined by the Atom Link Extensions specification to match those specified [by CSS3](http://www.w3.org/TR/css3-mediaqueries/)

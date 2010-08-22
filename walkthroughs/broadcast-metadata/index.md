@@ -6,7 +6,7 @@ layout: default
 1. Construct a [TVDNS](/discovery/tvdns) or RadioDNS domain name for the
 current service
 
-2. Query DNS for the [<code>broadcast-meta</code>](http://wiki.github.com/nexgenta/Baird/programmes-ontology-resolver)
+2. Query DNS for the [<code>broadcast-meta</code>](http://github.com/nexgenta/Baird/wiki/Metadata-resolver)
 application
 
 3. Connect to the resolver service and supply the current programme’s

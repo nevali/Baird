@@ -6,12 +6,12 @@ layout: default
 1. Construct a [TVDNS](/discovery/tvdns) or RadioDNS domain name for the
 current service
 
-2. Query DNS for the [<code>xrd</code>](http://wiki.github.com/nexgenta/Baird/service-manifests)
+2. Query DNS for the [<code>xrd</code>](http://github.com/nexgenta/Baird/wiki/Service-manifests)
 application
 
 3. Download the manifest XRD and locate the feed related to the current service
 
-4. Download the content feed for the current service
+4. Download the feed for the current service
 
 5. Locate the <code>atom:entry</code> related to the current programme, using
 <code>atom:link</code> elements specifying <code>rel="alternate"</code> with an
@@ -46,7 +46,7 @@ dependencies.
 	* Properly-populated feed manifest and service feeds are available
 2. See [http://projectbaird.com/ns/](/ns/) for a description of element,
 attribute and link relation extensions
-3. See [the device profiles](http://wiki.github.com/nexgenta/Baird/device-profiles)
+3. See [the device profiles](http://github.com/nexgenta/Baird/wiki/Device-profiles)
 for information on anticipated content type support on different devices
 4. See [Atom Link Extensions](http://tools.ietf.org/html/draft-snell-atompub-link-extensions-06)
 for information on the <code>le:media</code> attribute.
