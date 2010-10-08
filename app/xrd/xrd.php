@@ -1,5 +1,7 @@
 <?php
 
+uses('curl');
+
 class XRDLink
 {
 	public $rel;
@@ -69,7 +71,17 @@ class XRDS
 	{
 		if(strlen($uri))
 		{
-			$xml =  simplexml_load_file($uri);
+			if(defined('CACHE_DIR'))
+			{
+				$curl = new CurlCache($uri);
+			}
+			else
+			{
+				$curl = new Curl($uri);
+			}
+			$curl->returnTransfer = true;
+			$buf = $curl->exec();
+			$xml =  simplexml_load_string($buf);
 			if(is_object($xml))
 			{
 				if($xml->getName() == 'XRD')
