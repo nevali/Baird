@@ -1,0 +1,38 @@
+<?php
+
+$title = 'Now playing';
+
+require(dirname(__FILE__) . '/../templates/toys/header.phtml');
+
+?>
+<div class="section">
+	<h2>Now Playing</h2>
+	<p>
+	This prototype implements the <a href="http://github.com/nexgenta/Baird/wiki/NOWP-protocol">"Now Playing" protocol</a>, which
+	allows a device to ask a receiver for information about the currently-playing media.
+	</p>
+	<p>
+	This prototype does not require authentication. A real implementation would ordinarily require
+	pairing before it would provide the information.
+	</p>
+	<p>
+	This version uses <a href="http://services.notu.be/resolver">Libby’s DVB data</a> as a back-end.
+    </p>
+</div>
+<?php
+
+	if(count($links))
+	{
+		echo '<div class="section">';
+		echo '<h2>Results</h2>';
+		echo '<p>Below is the <code>Link</code> HTTP header from this response. NOWP clients should ignore the actual response body.</p>';
+		echo '<p><pre>';
+		echo "Link: ";
+		e(implode(",\n\t", $links));
+		echo '</pre></p></div>';
+	}
+
+?>
+<?php
+
+require(dirname(__FILE__) . '/../templates/toys/footer.phtml');
