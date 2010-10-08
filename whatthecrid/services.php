@@ -122,5 +122,7 @@ $services = array(
 	'http://www.bbc.co.uk/services/cbeebies#service' => array(
 		'name' => 'cbeebies',
 	),
-
+	'http://www.bbc.co.uk/services#service' => array(
+		'name' => 'bbctv',
+	),
 );
