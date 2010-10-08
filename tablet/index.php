@@ -109,13 +109,6 @@ if(isset($selectedChannel) && isset($selectedChannel->services['_broadcast-meta.
 	$curl->fetchHeaders = true;
 	$curl->followLocation = false;
 	$ret = $curl->exec();
-/*	$ch = curl_init($url);
-	curl_setopt($ch, CURLOPT_HTTPHEADER, array('Host: ' . $selectedChannel->rdns->fqdn));
-	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-	curl_setopt($ch, CURLOPT_HEADER, true);
-	curl_setopt($ch, CURLOPT_NOBODY, true);						
-	curl_setopt($ch, CURLOPT_FOLLOWLOCATION, false);
-	$ret = curl_exec($ch); */
 	if($ret)
 	{
 		$headers = explode("\n", $ret);
@@ -141,10 +134,6 @@ function fetch_po($location)
 	{
 		return null;
 	}
-/*	ob_start();
-	$doc = cache_fetch_rdf($location);
-	ob_end_clean();
-	$doc = RDF::documentFromXMLString($doc, $location); */
 	$primary = ProgrammesOntology::instanceFromDocument($doc);
 	if(!empty($_REQUEST['dump-docs']))
 	{
