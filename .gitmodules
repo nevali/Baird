@@ -1,3 +1,6 @@
 [submodule "platform"]
 	path = platform
 	url = git://github.com/nexgenta/eregansu.git
+[submodule "app/po"]
+	path = app/po
+	url = git://github.com/nexgenta/po.git
