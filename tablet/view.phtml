@@ -42,31 +42,47 @@ else
 ?>
 			
 			<h2<?php echo $style; ?>><?php e($selectedChannel->displayName); ?></h2>
-			<?php if($event) { ?>
+			<?php if($episode) { ?>
 			<div class="now-playing">
-				<h3><?php
-				if(isset($event['programme']['display_title']))
-				{
-					if(isset($event['programme']['display_title']['title']) && isset($event['programme']['display_title']['subtitle']))
-					{
-						e($event['programme']['display_title']['title'] . ': ' . $event['programme']['display_title']['subtitle']);
-					}
-					else
-					{
-						e($event['programme']['display_title']['title']);
-					}
-				}
-				else
-				{
-					e($event['programme']['title']);
-				}
-				?></h3>
+				 <h3><?php e($page_title); ?></h3>
 				<p>
-					<?php e($event['programme']['medium_synopsis']); ?>
+<?php
+if(strlen($episode->mediumSynopsis))
+{					
+	e($episode->mediumSynopsis);
+}
+else if(strlen($episode->longSynopsis))
+{
+	e($episode->longSynopsis);
+}
+?>
 				</p>
-				<p class="depiction"><img src="http://www.bbc.co.uk/iplayer/images/episode/<?php e($event['programme']['pid']); ?>_640_360.jpg" height="200" /></p>
+<?php
+$depiction = null;
+if(isset($episode->depiction))
+{
+	$depiction = $episode->depiction;
+}
+else if(isset($series->depiction))
+{
+	$depiction = $series->depiction;
+}
+else if(isset($brand->depiction))
+{
+	$depiction = $brand->depiction;
+}
+if(strlen($depiction))
+{
+	echo '<p class="depiction"><img src="' . _e($depiction) . '" height="200" /></p>';
+}
+$url = $location;
+if(isset($episode->microsite))
+{
+	$url = $episode->microsite;
+}
+?>
 				<ul class="links">
-					<li><a href="http://www.bbc.co.uk/programmes/<?php e($event['programme']['pid']); ?>">Find out more</a></li>
+					<li><a href="<?php e($url); ?>">Find out more</a></li>
 				</ul>
 				<?php } ?>
 			</div>
@@ -75,11 +91,17 @@ else
 				<p>
 					Some recommendations
 				</p>
+<?php
+if(isset($subjects))
+{
+//	print_r($subjects);
+}
+?>
 			</div>
 			<div class="block">
 				<h3>Coming up</h3>
 				<p>
-					I live for the future. Tell me what's on next.
+					I live for the future. Tell me what’s on next.
 				</p>
 			</div>
 		</div>
@@ -91,6 +113,29 @@ else
 				<li class="icon-favourites"><a href="#">Favourites</a></li>
 				<li class="icon-recommended"><a href="#">Recommendations</a></li>
 			</ul>
+<?php
+if(count($applinks))
+{
+	echo '<h3>Would you like to know more?</h3>';
+	echo '<dl class="nav">';
+	foreach($applinks as $topic => $links)
+	{
+		if(count($links) == 1)
+		{
+			echo '<dt class="icon-tv"><a href="' . _e($links[0]['href']) . '" title="' . _e($links[0]['action']) . '">' . _e($links[0]['topic']) . '</a></dt>';
+		}
+		else
+		{
+			echo '<dt class="icon-tv">' . _e($links[0]['topic']) . '</dt>';
+			foreach($links as $l)
+			{
+				echo '<dd><a href="' . _e($l['href']) . '" title="' . _e($l['action']) . '">' . _e($l['label']) . '</a></dd>';				
+			}
+		}
+	}
+	echo '</dl>';
+}
+?>
 		</div>
 		<span id="strip"></span>
 	</body>

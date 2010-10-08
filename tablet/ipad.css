@@ -145,6 +145,17 @@ body {
 	height: 200px;
 }
 
+#sidebar h3 {
+	border-top: solid #ddd 1px;
+	border-bottom: solid #797f90 1px;
+	background: -webkit-gradient(linear, left top, left bottom, from(#f4f5f7), to(#a9adba));
+	color: #717880;
+	font-size: 16px;
+	line-height: 40px;
+	font-family: 'Helvetica';
+	text-shadow: 1px 1px 2px #fff;
+	text-align: center;
+}
 
 #sidebar ul.nav li {
 	height: 35px;
@@ -181,4 +192,17 @@ body {
 }
 #sidebar ul li.icon-recommended a {
 	background-position: 10px -105px;
+}
+#sidebar dt, #sidebar dd {
+    padding-left: 56px;
+	line-height: 32px;
+}
+#sidebar dd {
+	padding-left: 72px;
+}
+#sidebar dt {
+	font-weight: bold;
+}
+#sidebar dl a {
+	font-weight: normal;
 }
