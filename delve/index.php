@@ -9,7 +9,7 @@ require_once(dirname(__FILE__) . '/../platform/lib/common.php');
 uses('rdf', 'curl');
 
 $format = 'json';
-$location = null;
+$location = $reverse = $flat = null;
 if(!isset($_REQUEST['uri']))
 {
 	require_once(dirname(__FILE__) . '/form.phtml');
