@@ -1,0 +1,46 @@
+<?php
+
+$title = 'Same-as service';
+
+require(dirname(__FILE__) . '/../templates/toys/header.phtml');
+
+if(!isset($location))
+{
+	$location = null;
+}
+
+?>
+<div class="section">
+	<h2>Same-as service</h2>
+	<p>
+	This service fetches an RDF resource and returns the list of subjects
+	which are <code>owl:sameAs</code>, <code>skos:exactMatch</code>,
+	<code>skos:closeMatch</code>, <code>skos:narrowMatch</code> and
+	<code>skos:broadMatch</code> to the primary topic of the resource.
+	</p>
+	<p>
+	The service also queries <a href="http://sameas.org">sameas.org</a>
+	for known alternates.
+	</p>
+	<form method="get" action="">
+	<input type="hidden" name="format" value="html">
+	<label for="uri">URI:</label>
+	<input type="text" id="uri" name="uri" size="80" value="<?php e($location);?>">
+	<input type="submit">
+	</form>
+</div>
+
+<?php
+
+if(isset($list))
+{
+		echo '<div class="section">';
+		echo '<h2>Results</h2>';
+		echo '<p><pre>';
+		ob_start();
+		print_r($list);
+		e(ob_get_clean());
+		echo '</pre></p></div>';
+}
+
+require(dirname(__FILE__) . '/../templates/toys/footer.phtml');
