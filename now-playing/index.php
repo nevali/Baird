@@ -1,9 +1,6 @@
 <?php
 
-define('MODULES_ROOT', dirname(__FILE__) . '/../app/');
-define('CACHE_DIR', dirname(__FILE__) . '/../cache/');
-define('CACHE_TIME', 3600);
-
+require_once(dirname(__FILE__) . '/config.php');
 require_once(dirname(__FILE__) . '/../platform/lib/common.php');
 require_once(dirname(__FILE__) . '/../boxify/channel.php');
 require_once(dirname(__FILE__) . '/../boxify/dvb.php');
@@ -33,6 +30,7 @@ foreach($platform['dvb']['onid'][$onid]['nid'][$nid]['tsid'] as $tsid => $ts)
 			$channel['tsid'] = $tsid;
 			$channel['sid'] = $sid;
 			$channel['service'] = 'dvb://' . $channel['onid'] . '.' . $channel['tsid'] . '.' . $channel['sid'];
+			$channel['fqdn'] = $channel['nid'] . '.' . $channel['sid'] . '.' . $channel['tsid'] . '.' . $channel['onid'] . '.dvb.tvdns.net';
 			break;
 		}
 	}
@@ -46,53 +44,32 @@ $nowp = null;
 
 if($channel)
 {
-	$fqdn = $channel['nid'] . '.' . $channel['sid'] . '.' . $channel['tsid'] . '.' . $channel['onid'] . '.dvb.tvdns.net';
-	$url = 'http://services.notu.be/resolve?transmissionTime=&noredirect=1';
-	$curl = new CurlCache($url);
-	$curl->cacheTime = 60;
-	$curl->headers = array('Host: ' . $fqdn);
-	$curl->returnTransfer = true;
-	$curl->fetchHeaders = false;
-	$curl->followLocation = false;
-	$ret = json_decode($curl->exec(), true);
-	if(!empty($_REQUEST['dump-raw']))
+	$db = DBCore::connect(CRIDS_IRI);
+	$row = $db->row('SELECT * FROM {crids} WHERE "active" = 1 AND "service" = ? AND "start" <= NOW() ORDER BY "start" DESC', $channel['name']);
+	
+	if($row)
 	{
-		echo '<pre>';
-		print_r($ret);
-		die();
-	}
-	if(is_array($ret) && $ret[0] == 200)
-	{
-		foreach($ret[1] as $entry)
-		{
-			if(isset($entry['dvb']) && strncmp($entry['dvb'], 'dvb:', 4))
-			{
-				continue;
-			}
-			$start = explode('^', $entry['start']);
-			if(strncmp($start[0], strftime('%Y-%m-%d'), 10))
-			{
-				continue;
-			}
-			$nowp['crid'] = $entry['crid'];
-			$nowp['dvb'] = $entry['dvb'];
-			$nowp['start'] = $start[0];
-			$nowp['service'] = $channel['service'];
-			$nowp['fqdn'] = $fqdn;
-			break;
-		}
+		$nowp['crid'] = $row['crid'];
+		$nowp['dvb'] = $row['dvb'];
+		$nowp['start'] = strftime('%Y-%m-%dT%H:%M:%SZ', strtotime($row['start']));
+		$nowp['service'] = $channel['service'];
+		$nowp['fqdn'] = $channel['fqdn'];
 	}
 }
 
 $links = array();
 if(isset($nowp))
 {
-	$links[] = '<' . $nowp['crid'] . '>; rel="http://purl.org/ontology/po/Version"';
+	if(strlen($nowp['crid']))
+	{
+		$links[] = '<' . $nowp['crid'] . '>; rel="http://purl.org/ontology/po/Version"';
+	}
 	$links[] = '<' . $nowp['dvb'] . '>; rel="http://purl.org/ontology/po/Broadcast"; scheduledStart="' . $nowp['start'] . '"';
 	$links[] = '<' . $nowp['service'] . '>; rel="http://purl.org/ontology/po/Channel"';
 	$links[] = '<dns:' . $nowp['fqdn'] . '>; rel="http://purl.org/ontology/po/Channel"';
 }
 
+header('X-Device-DisplayName: Televisor');
 header('Link: ' . implode(',', $links));
 
 require_once(dirname(__FILE__) . '/view.phtml');
