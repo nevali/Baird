@@ -1,0 +1,50 @@
+<?php
+
+$title = 'Delve service';
+
+require(dirname(__FILE__) . '/../templates/toys/header.phtml');
+
+if(!isset($location))
+{
+	$location = null;
+}
+
+?>
+<div class="section">
+	<h2>Delve service</h2>
+	<p>
+	This service fetches an RDF resource and returns the list of subject
+	URIs referenced by it.
+	</p>
+	<p>
+	It is very much a blunt instrument, designed for use in subject-discovery
+	applications, such as the <a href="/tablet/">tablet prototype</a>.
+	</p>
+	<form method="get" action="">
+	<input type="hidden" name="format" value="html">
+	<p>
+	<label for="uri">URI:</label>
+	<input type="text" id="uri" name="uri" size="80" value="<?php e($location);?>">
+	<input type="submit">
+	</p>
+	<p>Mode:</p>
+	<p><label for="mode-norm"><input type="radio" name="mode" id="mode-norm" value="normal" <?php if(!$reverse && !$flat) echo "checked"; ?>>&nbsp;Normal</label></p>
+	<p><label for="mode-flat"><input type="radio" name="mode" id="mode-flat" value="flat" <?php if($flat) echo "checked";?>>&nbsp;Flat</label></p>
+	<p><label for="mode-reverse"><input type="radio" name="mode" id="mode-reverse" value="reverse" <?php if($reverse) echo "checked";?>>&nbsp;Reverse</label></p>
+	</form>
+</div>
+
+<?php
+
+if(isset($subjects))
+{
+		echo '<div class="section">';
+		echo '<h2>Results</h2>';
+		echo '<p><pre>';
+		ob_start();
+		print_r($subjects);
+		e(ob_get_clean());
+		echo '</pre></p></div>';
+}
+
+require(dirname(__FILE__) . '/../templates/toys/footer.phtml');

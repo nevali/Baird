@@ -8,13 +8,33 @@ require_once(dirname(__FILE__) . '/../platform/lib/common.php');
 
 uses('rdf', 'curl');
 
+$format = 'json';
+$location = null;
 if(!isset($_REQUEST['uri']))
 {
+	require_once(dirname(__FILE__) . '/form.phtml');
 	exit();
 }
 $location = $_REQUEST['uri'];
 $reverse = !empty($_REQUEST['reverse']);
 $flat = !empty($_REQUEST['flat']);
+if(isset($_REQUEST['format']))
+{
+	$format = $_REQUEST['format'];
+}
+if(!empty($_REQUEST['mode']))
+{
+	if($_REQUEST['mode'] == 'reverse')
+	{
+		$reverse = true;
+		$flat = false;
+	}
+	else if($_REQUEST['mode'] == 'flat')
+	{
+		$reverse = false;
+		$flat = true;
+	}
+}
 $doc = RDF::documentFromURL($location);
 $subjects = array();
 if(is_object($doc))
@@ -27,6 +47,12 @@ if(is_object($doc))
 			delve_property($subjects, $k, $v, $reverse, $flat);
 		}
 	}
+}
+
+if($format == 'html')
+{
+	require_once(dirname(__FILE__) . '/form.phtml');
+	exit();
 }
 
 header('Content-type: text/javascript');
