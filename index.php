@@ -30,7 +30,7 @@ require(dirname(__FILE__) . '/templates/toys/header.phtml');
 							<li><a href="/boxify/?kind=dvb&onid=233a&nid=3098&xrd=1&xrdurl[]=seesaw-sample">Standard channel line-up with XRD processing enabled and a user service subscription</a></li>
 						</ul>
 					</dd>
-					<dt><a href="/tablet/?kind=dvb&onid=233a&nid=3098&tsid=1041&sid=10bf">Tablet</a></dt>
+					<dt><a href="/tablet/">Tablet</a></dt>
 					<dd>
 						<p>
 							Simple (and currently limited) iPad UI mock-up for a “second screen” application. Demonstrates
@@ -38,9 +38,22 @@ require(dirname(__FILE__) . '/templates/toys/header.phtml');
 							in tandem.
 						</p>
 						<ul>
-							<li><a href="/tablet/?kind=dvb&onid=233a&nid=3098&tsid=1041&sid=1041">BBC One (West)</a></li>
-							<li><a href="/tablet/?kind=dvb&onid=233a&nid=3098&tsid=1041&sid=10bf">BBC Two (England)</a></li>
+							<li><a href="/tablet/">BBC One (West)</a></li>
+							<li><a href="/tablet/#channel=2">BBC Two (England)</a></li>
+							<li><a href="/tablet/#uri=http://programmes.nexgenta.com/b00ty69k/b00ty6b0">Enhanced metadata sample</a></li>
 						</ul>
+					</dd>
+					<dt><a href="/now-playing/">Now playing</a></dt>
+					<dd>
+					<p>What’s on TV right now?</p>
+					</dd>
+					<dt><a href="/sameAs/">sameAs</a></dt>
+					<dd>
+					<p>Determine equivalence and other matches for subjects.</p>
+					</dd>
+					<dt><a href="/rdf/">RDF</a></dt>
+					<dd>
+	<p>Simple RDF/XML parser/unparser written in PHP, using the <a href="http://github.com/nexgenta/eregansu/tree/master/lib/rdf.php">Eregansu framework</a>.</p>
 					</dd>
 				</dl>
 			</div>
