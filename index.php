@@ -55,6 +55,10 @@ require(dirname(__FILE__) . '/templates/toys/header.phtml');
 					<dd>
 	<p>Simple RDF/XML parser/unparser written in PHP, using the <a href="http://github.com/nexgenta/eregansu/tree/master/lib/rdf.php">Eregansu framework</a>.</p>
 					</dd>
+					<dt><a href="/delve/">Delve</a></dt>
+					<dd>
+	<p>Parse an RDF/XML resource and dump the list of subjects (as JSON or HTML).</p>
+					</dd>
 				</dl>
 			</div>
 <?php
