@@ -1,0 +1,3 @@
+This is a sample webapp service which simply redirects to Wikipedia for
+a given dbpedia URI.
+
