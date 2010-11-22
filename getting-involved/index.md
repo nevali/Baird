@@ -26,6 +26,6 @@ the specifications.
 
 A mailing list for discussing Project Baird is being generously hosted by
 [Martyn Drake](http://www.drake.org.uk/). You can subscribe and browse the
-archives at the [list information page](http://lists.drake.org.uk/mailman/listinfo/baird-discuss).
+archives at the [list information page](http://lists.drake.org.uk/mailman/listinfo/baird-discuss_lists.drake.org.uk).
 
 If all else fails, you can send an e-mail to [baird@projectbaird.com](mailto:baird@projectbaird.com).
