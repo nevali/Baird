@@ -1,511 +1,777 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
-<rfc ipr="trust200902" category="info" docName="draft-mcroberts-uri-dvb-04">
-	<front>
-		<title abbrev="URIs for DVB">Uniform Resource Identifiers for Digital Video Broadcasting (DVB)</title>
-		<author initials="M." surname="McRoberts" fullname="Mo McRoberts">
-			<organization>Project Baird</organization>
-			<address>
-				<email>mo.mcroberts@nexgenta.com</email>
-				<uri>http://projectbaird.com/</uri>
-			</address>
-		</author>
-		<date day="7" month="July" year="2010" />
-		<area>General</area>
-		<keyword>I-D</keyword>
-		<keyword>Internet-Draft</keyword>
-		<abstract>
-			<t>
-				This document defines the "dvb" URI scheme for the benefit of the
-				Internet community, given its definition as part of the Digital Video
-				Broadcasting (DVB) suite of ETSI standards.
-			</t>
-		</abstract>
-	</front>
-	<middle>
-		<section title="Introduction">
-			<t>
-				Standards governing televisions, set-top boxes and other consumer
-				electronics devices have for some time been developed with the
-				Internet in mind. The use of Universal Resource Identifiers (URIs)
-				<xref target="RFC 3986" /> is now commonplace, including for the
-				purpose of identifying resources delivered by way of terrestrial,
-				satellite and cable broadcasts.
-			</t>
-			<t>
-				For this purpose, a URI scheme was developed as part of the Digital
-				Video Broadcasting <xref target="DVB" /> suite of standards specifically for the
-				purpose of identifying broadcasts delivered by way of DVB-compliant
-				broadcasting systems.
-			</t>
-		</section>
-		<section title="Digital Video Broadcasting URI">
-			<t>
-				The DVB URI is defined by <xref target="ETSI TS 102 851" />, and that shall be
-				considered the authoritative source of the definition of the
-				scheme-specific-part of the DVB URI. The remainder of this section
-				is therefore non-normative.				
-			</t>
-			<t>
-				URIs employing the dvb scheme are URLs. DVB URLs may refer
-				to any of the following kinds of resource:
-				<list style="symbols">
-					<t>A DVB service</t>
-					<t>Components within a DVB service (such as an audio or video stream)</t>
-					<t>An event (for example, a programme)</t>
-					<t>A transport stream</t>
-					<t>A file contained within a DSM-CC object carousel</t>
-					<t>Interactive applications</t>
-				</list>
-			</t>
-			<section title="Syntax">
-				<figure>
-					<preamble>
-						DVB URLs conform to one of the two following formats:
-					</preamble>
-					<artwork><![CDATA[
-"dvb://" original_network_id "." [ transport_stream_id ]
-[ "." service_id [ "." component-set [ "$" carousel-id ] ]
-[ event-constraint ] ] [ path-absolute ] ]]></artwork>
-				</figure>
-				<figure>					
-					<artwork><![CDATA[
-"dvb://'" textual_service_id "'" [ "." component-set
-[ "$" carousel-id ] ] [ event-constraint ] [ path-absolute ] ]]></artwork>
-				</figure>
-				<figure>
-					<preamble>
-						The URL format is defined in terms of the Augmented Backus-Naur Form
-						(ABNF) notation of <xref target="RFC 5234" /> below. The ABNF below
-						makes use of the following core ABNF syntax rules defined by that
-						specification: DIGIT, ALPHA, and HEXDIG. Additionally, it
-						below makes use of host, path-absolute, unreserved and
-						pct-encoded as defined by <xref target="RFC 3986" />.
-					</preamble>
-	<!-- app-entity, event-constraint -->
-	<artwork><![CDATA[
-dvb_url             =  scheme ":" hier-part
-
-scheme              =  "dvb"
-
-hier-part           =  net-path / abs-path
-
-net-path            =  "//" ( entity [ abs-path ] ) / app-entity
-
-entity-path         =  entity abs-path
-
-entity              =  ts | service | service-comp
-
-ts                  =  original_network_id "." transport_stream_id
-
-service             =  service-no-event [ event-constraint ]
-
-service-comp        =  service-no-event "." component-set
-                       [ "$" carousel-id ]
-                       [ event-constraint ]
-
-service-no-event    =  orignal_network_id "." [ transport_stream_id ]
-                       "." service_id | "'" textual_service_id "'"
-
-component-set       =  comp-tag-set | qual-comp-set
-
-comp-tag-set        =  component_tag *( "&" component_tag )
-
-qual-comp-set       =  qual-comp *( "&" qual-comp )
-
-qual-comp           =  comp-type "=" component-id
-
-comp-type           =  "video" | "audio" | "data" | "subtitle"
-                       | "teletext" | "dvbst"
-
-component-id        =  component_string | "default" | "current"
-                       | "hearing_impaired" | "visually_impared"
-                       | "none"
-
-component_string    =  iso639-lang-code | component_tag
-
-app-entity          =  svc-context | svc-comp-context
-                       | ait-specifier
-
-svc-context         =  "current" | "original"
-
-svc-comp-context    =  "current.audio" | "current.video"
-                       | "current.av"
-
-ait-specifier       =  ait-filter "." "ait" ait-abs-path
-
-ait-filter          =  "current" | service-no-event
-
-ait-abs-path        =  "/" ait-entity
-
-ait-entity          =  "app_root" | ait-app
-
-ait-app             =  org_id_part "." app_id_part [ "?" ait-params ]
-
-ait-params          =  "arg_" 1 * digit "=" *uric [ "&" ait-params ]
-
-event-constraint    =  event-id-mode | tva-id-only-mode | timespec
-
-event-id-mode       =  ";" event_id [ ";" tva-id ] [ timespec ]
-
-tva-id-only-mode    =  ";;" tva-id [ timespec ]
-
-timespec            =  "~" start-time "--" duration
-
-start-time          =  date "T" time "Z"
-
-duration            =  "PT" hours "H" minutes "M" [ seconds "S" ]
-
-date                =  year month day
-
-time                =  hours minutes [ seconds ]
-
-carousel-id         =  transaction_id ; [ETSI EN 301 192]
-
-original_network_id =  hex_string
-
-transport_stream_id =  hex_string
-
-service_id          =  hex_string
-
-component_tag       =  hex_string
-
-event_id            =  hex_string
-
-transaction_id      =  hex_string
-
-abs-path            =  path-absolute  ; [RFC 3986], Section 3.3
-
-textual_service_id  =  host           ; [RFC 3986], Section 3.2.2
-
-org_id_part         =  1 * HEXDIG     ; [ETSI TS 102 812]
-
-app_id_part         =  1 * HEXDIG     ; [ETSI TS 102 812]
-
-iso639-lang-code    =  3 * ALPHA
-
-hex_string          =  1 * HEXDIG
-
-tva-id              =  1 * HEXDIG
-
-year                =  4 DIGIT
-
-month               =  2 DIGIT
-
-day                 =  2 DIGIT
-
-hours               =  2 DIGIT
-
-minutes             =  2 DIGIT
-
-seconds             =  2 DIGIT
-
-uric                =  unreserved / pct-encoded / ";" / "?" / ":"
-                       / "@" / "&" / "=" / "+" / "$" / "," / "/"
-]]></artwork>
-				</figure>
-				<section title="Encoding">
-					<t>
-						Section 5 of <xref target="ETSI TS 102 851" /> specifies that:
-					</t>
-					<t>
-						"All characters not within the range of characters allowed in a
-						URI must be encoded into UTF-8 and included in the URI
-						as a sequence of escaped octets. An escaped octet is encoded
-						as a character triplet, consisting of the percent character
-						"%" followed by the two hexadecimal digits representing the octet
-						code."
-					</t>
-				</section>
-			</section>
-			<section title="Applications">
-				<t>
-					dvb URIs are used most often within the context of DVB itself: interactive
-					television applications use them in order to locate resources and to reference
-					services and programmes which are broadcast.
-				</t>
-				<t>
-					There are, however, wider applications: a dvb URI may be used by anything
-					wishing to identify a DVB service, event, or even specific resource. For example,
-					a receiver connected to a local area network might allow other devices
-					to query it for information regarding the current programme or service: in this
-					context, a dvb URI would typically be the most authoritative single identifier
-					which could be used to to refer to that programme.
-				</t>
-				<t>
-					Similarly, a web service could be implemented by a platform operator or a broadcaster
-					(or some party working on their behalf) which allows resolution of dvb URIs - this
-					would allow a device to retrieve web pages or other content which relate to
-					the current programme (or some other entry in the device's Electronic Programme Guide).
-				</t>
-				<t>
-					Implementing such a system would naturally require some mechanism for devices to
-					discover an appropriate resolution service, and no standard mechanism exists to
-					date, however RadioDNS <xref target="RADIODNS" /> has developed a generic service
-					discovery system for use with broadcast radio which could be applied to DVB (or
-					indeed other broadcast systems) with little in the way of modification.
-				</t>
-			</section>			
-			<section title="Historical Syntax" anchor="historical">
-				<t>
-					Prior to the standardisation of <xref target="ETSI TS 102 851" />,
-					a syntax for dvb URIs was defined by <xref target="DAVIC9" />, Section
-					9.5.2. The syntax defined in <xref target="ETSI TS 102 851" /> was
-					designed to allow applications to work with both the current DVB
-					syntax of URIs and also the historical syntax defined by DAVIC.
-				</t>
-				<figure>
-					<preamble>
-						The syntax below makes use of HEXDIG from the core ABNF syntax rules
-						defined by <xref target="RFC 5234" />. Additionally, it makes use of
-						unreserved and escaped as defined by <xref target="RFC 3986" />.
-					</preamble>
-					<artwork><![CDATA[
-dvb_url             =  scheme ":" hier-part
-
-scheme              =  "dvb"
-
-hier-part           =  net-path / abs-path
-
-net-path            =  "//" entity [ abs-path ]
-
-entity              =  transport-stream / service / service-component
-
-transport-stream    =  original_network_id "." transport_stream_id
-
-service             =  original_network_id [ "." 
-                       transport_stream_id ] "." service_id
-                       [ event-constraint ]
-
-service-component   =  service "." component-tag-set
-                       [ event-constraint ]
-
-component-tag-set   =  component-tag *( "&" component-tag )
-
-event-constraint    =  ";" event_id
-
-abs-path            =  "/" segment
-
-path_segments       =  segment *( "/" segment )
-
-segment             =  *pchar *( ";" param )
-
-param               =  *pchar
-
-pchar               =  unreserved | escaped | ":" | "@" | "&" | "=" 
-                       | "+" | "$" | ","
-
-original_network_id =  hex_string
-
-transport_stream_id =  hex_string
-
-service_id          =  hex_string
-
-component_tag       =  hex_string
-
-event_id            =  hex_string
-
-hex_string          =  1 * HEXDIG
-
-]]></artwork>
-					</figure>
-			</section>
-			<section title="Examples" anchor="examples">
-				<t>
-					<list style="hanging">
-						<t hangText="dvb://233a.1041"><vspace />
-							DVB transport stream
-						</t>
-						<t hangText="dvb://233a.1041.10bf"><vspace />
-							DVB service
-						</t>
-						<t hangText="dvb://233a.1004.1044;8fff"><vspace />
-							Event within a DVB service
-						</t>				
-						<t hangText="dvb://233a.1004.1044;8fff~20100706T000315Z--PT00H03M00S"><vspace />
-							Time-constrained event on a DVB service
-						</t>
-						<t hangText="dvb://233a.1004.1044;8fff@2010-07-06T00:03:15Z/PT00H03M00S"><vspace />
-							Time-constrained event on a DVB service (historical syntax)
-						</t>
-						<t hangText="dvb://233a.1041.10bf/doc/form.pdf"><vspace />
-							File in a subdirectory of the default object carousel of a specific DVB service
-						</t>
-						<t hangText="dvb:/image.png"><vspace />
-							File in root directory of the default object carousel on the current service
-						</t>
-					</list>
-				</t>
-			</section>
-		</section>
-		<section title="IANA Considerations" anchor="iana">
-			<t>
-				This specification requests the IANA provisionally register the
-				"dvb" URI scheme as specified in this document and summarized in the
-				following template, per <xref target="BCP 115" />:
-			</t>
-			<t>
-				<list style="hanging">
-					<t hangText="URI scheme name."><vspace />dvb</t>
-					<t hangText="Status."><vspace />provisional</t>
-					<t hangText="URI scheme syntax."><vspace />See Table 1 of <xref target="ETSI TS 102 851" /></t>
-					<t hangText="URI scheme semantics."><vspace />
-						The dvb scheme references services and resources which are transmitted
-						using Digital Video Broadcasting-compliant broadcasting systems.
-					</t>
-					<t hangText="Encoding considerations."><vspace />
-						See Section 5 of <xref target="ETSI TS 102 851" />
-					</t>
-					<t hangText="Applications/protocols that use this URI scheme name."><vspace />
-						dvb URIs are used throughout DVB-compliant broadcasting systems, for
-						example within Freeview and Freesat in the United Kingdom. They are
-						also used in TV-Anytime <xref target="TV-ANYTIME" /> metadata where it relates
-						to services transmitted by DVB systems.					
-					</t>
-					<t hangText="Interoperability considerations."><vspace />None known.</t>
-					<t hangText="Security considerations."><vspace />
-						See <xref target="security" />.
-					</t>
-					<t hangText="Contact."><vspace />
-						Mo McRoberts &lt;mo.mcroberts@nexgenta.com&gt;
-					</t>
-					<t hangText="Author/Change controller."><vspace />
-						Mo McRoberts &lt;mo.mcroberts@nexgenta.com&gt;					
-					</t>
-					<t hangText="References."><vspace />
-						See Section 5.
-					</t>
-				</list>
-			</t>
-		</section>
-		<section title="Security Considerations" anchor="security">
-			<t>
-				Section 7 of <xref target="RFC 3986" /> describes general security considerations
-				for URI schemes. The sections relating to reliability and
-				consistency, malicious construction, back-end transcoding, rare
-				IP address formats and semantic attacks all apply to dvb URIs.
-				The section relating to sensitive information does not apply,
-				given that dvb URIs do not contain authentication information.				
-			</t>
-			<t>
-				The security considerations of the Digital Video Broadcasting suite
-				of standards in general are not covered in this document.
-			</t>			
-		</section>
-	</middle>
-	<back>
-		<references title="Normative References">
-			<reference anchor="RFC 3986">
-				<front>
-					<title>Uniform Resource Identifier (URI): Generic Syntax</title>
-					<author initials="T." surname="Berners-Lee">
-						<organization abbrev="W3C/MIT">World Wide Web Consortium / Massachusetts Institute of Technology</organization>
-					</author>
-					<author initials="R." surname="Fielding">
-						<organization>Day Software</organization>
-					</author>
-					<author initials="L." surname="Masinter">
-						<organization>Adobe Systems</organization>
-					</author>
-					<date month="January" year="2005" />
-				</front>
-				<seriesInfo name="RFC" value="3986" />
-			</reference>
-			<reference anchor="ETSI TS 102 851" target="http://www.etsi.org/deliver/etsi_ts/102800_102899/102851/01.01.01_60/ts_102851v010101p.pdf">
-				<front>
-					<title>Digital Video Broadcasting (DVB); Uniform Resource Identifiers (URI) for DVB Systems</title>
-					<author>
-						<organization abbrev="EBU">European Broadcasting Union</organization>
-					</author>
-					<author>
-						<organization abbrev="DVB">DVB Project</organization>
-					</author>
-					<author>
-						<organization abbrev="ETSI">European Telecommunications Standards Institute</organization>
-					</author>
-					<date month="January" year="2010" />
-				</front>
-				<seriesInfo name="ETSI TS" value="102 851" />
-			</reference>
-		</references>
-		<references title="Informative References">
-			<reference anchor="DVB" target="http://www.dvb.org/">
-				<front>
-					<title>DVB Project</title>
-					<author />
-					<date />
-				</front>
-			</reference>
-			<reference anchor="TV-ANYTIME" target="http://www.tv-anytime.org/">
-				<front>
-					<title>TV Anytime Forum</title>
-					<author />
-					<date />
-				</front>
-			</reference>
-			<reference anchor="RFC 5234">
-				<front>
-					<title>Augmented BNF for Syntax Specifications: ABNF</title>
-					<author initials="D." surname="Crocker" role="editor">
-						<organization>Brandenburg InternetWorking</organization>
-					</author>
-					<author initials="P." surname="Overell">
-						<organization>THUS plc.</organization>
-					</author>
-					<date month="January" year="2008" />
-				</front>
-				<seriesInfo name="RFC" value="5234" />
-				<seriesInfo name="STD" value="68" />
-			</reference>
-			<reference anchor="ETSI TS 102 812" target="http://www.etsi.org/deliver/etsi_ts/102800_102899/102812/01.02.02_60/ts_102812v010202p.pdf">
-				<front>
-					<title>Digital Video Broadcasting (DVB); Multimedia Home Platform (MHP) Specification 1.1.1</title>
-					<author>
-						<organization abbrev="EBU">European Broadcasting Union</organization>
-					</author>
-					<author>
-						<organization abbrev="DVB">DVB Project</organization>
-					</author>
-					<author>
-						<organization abbrev="ETSI">European Telecommunications Standards Institute</organization>
-					</author>
-					<date month="August" year="2008" />
-				</front>			
-				<seriesInfo name="ETSI TS" value="102 812" />
-			</reference>
-			<reference anchor="DAVIC9">
-				<front>
-					<title>DAVIC 1.4.1 Specification Part 9: Information Representation</title>
-					<author>
-						<organization abbrev="DAVIC">Digital Audio-Video Council</organization>
-					</author>
-					<date year="1999" />
-				</front>			
-			</reference>
-			<reference anchor="BCP 115">
-				<front>
-					<title>Guidelines and Registration Procedures for New URI Schemes</title>
-					<author initials="T." surname="Hansen">
-						<organization abbrev="AT&amp;T">AT&amp;T Laboratories</organization>
-					</author>
-					<author initials="T." surname="Hardie">
-						<organization abbrev="Qualcomm">Qualcomm, Inc.</organization>
-					</author>
-					<author initials="L." surname="Masinter">
-						<organization abbrev="Adobe">Adobe Systems</organization>
-					</author>
-					<date month="February" year="2006" />
-				</front>
-				<seriesInfo name="RFC" value="4395" />
-				<seriesInfo name="BCP" value="115" />
-			</reference>
-			<reference anchor="RADIODNS" target="http://radiodns.org/">
-				<front>
-					<title>RadioDNS</title>
-					<author />
-					<date />
-				</front>
-			</reference>				
-		</references>
-	</back>	
+<rfc ipr="trust200902" submissionType="independent" category="info" seriesNo="5"
+   docName="draft-mcroberts-uri-dvb-05">
+
+   <front>
+      <title abbrev="URIs for DVB"> Uniform Resource Identifier (URI) Scheme for Digital Video
+         Broadcasting (DVB) Programme Resources</title>
+
+      <author initials="M." surname="McRoberts" fullname="Mo McRoberts" role="editor">
+         <organization>Project Baird</organization>
+         <address>
+            <email>mo.mcroberts@nexgenta.com</email>
+            <uri>http://projectbaird.com/</uri>
+         </address>
+      </author>
+
+      <author initials="A." surname="Adolf" fullname="Alexander Adolf">
+         <organization>Conditon-ALPHA</organization>
+         <address>
+            <postal>
+               <street>Gabelsbergerstrasse 60b</street>
+               <code>80333</code><city>Munich</city>
+               <country>GERMANY</country>
+            </postal>
+            <email>alexander.adolf@me.com</email>
+            <uri>http://www.condition-alpha.com</uri>
+         </address>
+      </author>
+
+      <date day="26" month="November" year="2010"/>
+
+      <area>General</area>
+
+      <keyword>I-D</keyword>
+      <keyword>Internet-Draft</keyword>
+      <keyword>URI</keyword>
+      <keyword>Uniform Resource Identifier</keyword>
+      <keyword>DVB</keyword>
+      <keyword>Digital Video Broadcast</keyword>
+      <keyword>Digital Television</keyword>
+      <keyword>Video</keyword>
+      <keyword>Audio</keyword>
+      <keyword>Multimedia</keyword>
+      <keyword>Streaming</keyword>
+
+      <abstract>
+         <t>Uniform Resource Identifier (URI) schemes for broadcasting programme resources
+            transmitted over MPEG-2 Transport Streams <xref target="MPEG-Systems"/> have been
+            devised in their process of creating standards by the Digital Video Broadcasting Project
+            (DVB), the Association of Radio Industries and Businesses in Japan (ARIB) and the
+            OpenCable Application Platform (OCAP) to acquire current and future scheduled
+            publications of broadcast media content from multimedia applications such as HTTP, MHP
+            <xref target="DVB-MHP"/>, OCAP <xref target="OCAP1.0"/> or other XML based
+            metadata.</t>
+
+         <t>These URI locate the actual digital TV, Radio or other multimedia broadcast programme
+            service (i.e. channel or event) and the audio-visual components conforming to that
+            programme for e.g. a HTTP based programme guide in the internet or other XML based
+            programme guides in digital broadcast set-top boxes. </t>
+
+         <t>This document defines the "dvb" URI scheme for the benefit of the Internet community,
+            given its definition as part of the Digital Video Broadcasting (DVB) suite of ETSI
+            standards.</t>
+      </abstract>
+   </front>
+
+   <middle>
+      <section title="Introduction">
+         <t>Standards governing televisions, set-top boxes and other consumer electronics devices
+            have for some time been developed with the Internet in mind. The use of Universal
+            Resource Identifiers (URIs) <xref target="RFC3986"/> is now commonplace, including for
+            the purpose of identifying resources delivered by way of terrestrial, satellite and
+            cable broadcasts.</t>
+
+         <t>For this purpose, a URI scheme was developed as part of the <xref target="DVB">Digital
+               Video Broadcasting</xref> suite of standards specifically for the purpose of
+            identifying broadcasts delivered by way of DVB-compliant broadcasting systems. </t>
+
+         <t>With the advent of digital broadcasting, digital multimedia broadcast services to the
+            home, based on MPEG-2 Transport Streams <xref target="MPEG-Systems"/> have been widely
+            available in recent years. Each broadcasting programme and composing components (i.e.
+            audio-visual and generic data components) are identifiable in the MPEG-2 Transport
+            Stream. TV/Radio broadcasting programmes within MPEG-2 Transport Stream packets can be
+            delivered over an IP network as well as over a digital broadcast network.</t>
+
+         <t>The EPG (Electronic Programme Guide) service for TV/Radio programmes by which people are
+            able to search-select and acquire the favorite programme, must be able to locate
+            selected programme or service in a canonical form. This programme guide is now available
+            on web servers through the internet or im metadata services within the digital
+            broadcasting service to identify the actual broadcast programme material for such
+            advanced broadcasting services.</t>
+
+         <t>This document defines the Uniform Resource Identifier (URI) schemes for broadcast
+            programme resources over MPEG-2 Transport Stream <xref target="MPEG-Systems"/> for DVB
+            services, in conformance with the generic URI syntax <xref target="RFC3986"/> to have a
+            high affinity with IP networks.</t>
+
+         <t>The Digital Video Broadcasting Project (DVB) is an industry-led consortium of over 270
+            broadcasters, manufacturers, network operators, software developers, regulatory bodies
+            and others in over 35 countries committed to designing global standards for the global
+            delivery of digital television and data services. Services using DVB standards are
+            available on every continent with a total of more than 500 million DVB receivers already
+            deployed. More information on DVB can be found on their website at <eref
+               target="http://www.dvb.org">http://www.dvb.org</eref></t>
+
+         <t>This URI specification is for a permanent assignment.</t>
+
+         <section title="Terminology">
+            <t><spanx style="strong">MPEG-2 Transport Stream:</spanx> Transport Stream defined in
+               the MPEG-2 standard <xref target="MPEG-Systems"/>, a method of transmission at the
+               MPEG-2 level using TS Packets. It represents level 2 of the ISO/OSI reference
+               model.</t>
+
+            <t><spanx style="strong">MPEG-2 standard:</spanx> A set of standards specified by the
+               Motion Picture Experts Group (MPEG), and published by the International Standards
+               Organisation (ISO)</t>
+         </section>
+
+         <section title="Transmission Scheme">
+            <t>The Audio, Visual or Private data components constituting the TV/Radio programme
+               (SERVICE) are defined as elementary stream components. And these constituted TV/Radio
+               programmes (SERVICEs) are bundled in a TRANSPORT STREAM (e.g. channel) for delivering
+               over a single BROADCASTING NETWORK (e.g. Satellite, Cable or Terrestrial). The
+               distinguished unique number for each packet, elementary component, transport stream
+               and transmission network is assigned and transmitted over the satellite, cable or
+               terrestrial broadcasting media, even over the IP network, together with the
+               information table which describes these assigned numbers in the form of MPEG-2
+               standard <xref target="MPEG-Systems"/>.</t>
+
+            <figure title="Programme Delivery Scheme in MPEG-2 Transport Stream" align="center">
+               <artwork>
++---------------------------------------------------+
+| BROADCASTING NETWORK                              |
+| (e.g. Satellite, Cable, Terrestrial)              |
+|    +---------------------------------------+      |
+|    | TRANSPORT STREAM                      |-*    |
+|    | (e.g. channel)                        | |    |
+|    |   +-----------------------------+     | |    |
+|    |   | SERVICE                     |-*   | |    |
+|    |   |  +---------------------+    | |   | |    |
+|    |   |  | Audio/Visual and    |-*  | |   | |    |
+|    |   |  | Private data        | |  | |   | |    |
+|    |   |  | components          | |  | |   | |    |
+|    |   |  +---------------------+ |  | |   | |    |
+|    |   |    *---------------------*  | |   | |    |
+|    |   |                             | |   | |    |
+|    |   +-----------------------------+ |   | |    |
+|    |     *-----------------------------*   | |    |
+|    |                                       | |    |
+|    +---------------------------------------+ |    |
+|      *---------------------------------------*    |
+|                                                   |
++---------------------------------------------------+
+               </artwork>
+            </figure>
+
+         </section>
+      </section>
+
+      <section title="Digital Video Broadcasting URI Scheme" anchor="dvburi-scheme">
+         <t>The DVB URI is defined by <xref target="DVB-URI"/>, and that shall be considered the
+            authoritative source of the definition of the scheme-specific-part of the DVB URI.</t>
+
+         <t> URIs employing the dvb scheme are URLs. DVB URLs may refer to any of the following
+            kinds of resource: <list style="symbols">
+               <t>A DVB service</t>
+               <t>Components within a DVB service (such as an audio or video stream)</t>
+               <t>An event (for example, a programme)</t>
+               <t>A transport stream</t>
+               <t>A file contained within a DSM-CC object carousel</t>
+               <t>Interactive applications</t>
+            </list>
+         </t>
+
+         <section title="Syntax">
+            <t>This URI scheme is in conformance with the generic URI syntax <xref target="RFC3986"/>.
+               It takes the form:</t>
+
+            <figure align="left">
+               <artwork>
+MPEG-2_TS_URI       = transmission_scheme ":" path
+
+transmission_scheme = "dvb"
+
+path                = [ "//" broadcast_auth_domain ] comp_path
+               </artwork>
+            </figure>
+
+            <section title="transmission_scheme">
+               <t> The transmission_scheme name represents the transmission system using the MPEG-2
+                  standard in the digital broadcasting service in accordance with Section 3.1 of
+                  <xref target="RFC3986"/>.</t>
+
+               <t>In this definition "dvb" represents the DVB system which is based on <xref
+                     target="BT.1306"/>, <xref target="BO.1516"/>, <xref target="J.83"/>, and <xref
+                     target="DVB-IPTV"/>.</t>
+            </section>
+
+            <section title="broadcast_auth_domain">
+               <t>The broadcast_auth_domain includes the unique number to which a government
+                  authority or approved organization govern for the sake of preserving uniqueness.
+                  Hence broadcast_auth_domain allows to identify a specific broadcasting company or
+                  service in the digital broadcasting network. The unique number in
+                  broadcast_auth_domain consists of a sequence of characters separated by ".", which
+                  is preceded by a double slash ("//") and terminated by a slash ("/").</t>
+
+               <figure align="left">
+                  <artwork>
+broadcast_auth_domain = 0*255 ( unreserved | sub-delims )
+
+unreserved            = ALPHA | DIGIT | "-" | "." | "_" | "~"
+
+sub-delims            = "!" | "$" | "&amp;" | "'" | "(" | ")" |
+                        "*" | "+" | "," | ";" | "="
+                  </artwork>
+               </figure>
+
+               <t>This broadcast_auth_domain consists of unique name in the digital broadcasting
+                  network conforming to the URI.</t>
+            </section>
+
+            <section title="comp_path">
+               <t>The comp_path indicates the unique number of the audio, visual and private data
+                  component(s) constituting a broadcast programme or event and is assigned in each
+                  broadcasting company or authority for preserving uniqueness in a sequence of
+                  TV/Radio programmes in one channel. The broadcast_auth_domain identifies the
+                  broadcast programme (e.g. channel or specific programme event) and comp_path
+                  determines the component of the broadcasting programme.</t>
+
+               <t>comp_path consists of a sequence of characters separated by a slash ("/") to
+                  indicate the audio, visual and private data component(s) within the scope of the
+                  broadcast authority indicated in the broadcast_auth_domain.</t>
+
+               <figure>
+                  <artwork>
+comp_path = *( "/" segment )
+
+segment   = *pchar
+
+pchar     = unreserved | pct-encoded | sub-delims | ":" | "@"
+                  </artwork>
+               </figure>
+
+               <t>comp_path can be structured in hierarchical or non-hierarchical form to identify
+                  particular programme not only audio, visual and private data component over the
+                  MPEG-2 Transport Stream.</t>
+            </section>
+         </section>
+
+         <section title="Encoding">
+            <t>Section 5 of <xref target="DVB-URI"/> specifies that: </t>
+
+            <t>&quot;All characters not within the range of characters allowed in a URI must be
+               encoded into UTF-8 and included in the URI as a sequence of escaped octets. An
+               escaped octet is encoded as a character triplet, consisting of the percent character
+               &quot;%&quot; followed by the two hexadecimal digits representing the octet
+               code.&quot; </t>
+         </section>
+
+         <section title="Community Considerations">
+            <section title="Context of Use">
+               <t>The "dvb" URIs are used as references to resources in digitial multimedia
+                  programmes, most often within the context of DVB itself: interactive television
+                  applications use them in order to locate resources and to reference services and
+                  programmes. These are typically broadcast via satellite, cable and terrestrial
+                  systems, but may also be retrieved on-demand from a server via the Internet.
+                  Providers of such broadcast services may e.g. reference programmes in the
+                  broadcast from an Electronic Programme Guide (EPG) which is published on their
+                  web- site. On another example, the metadata which is part of the multimedia
+                  broadcasts can also contain such URIs to establish hyperlinks between broadcast
+                  services. This might for instance include multi-angle video services (e.g. for
+                  sports events). Users of suitably equipepd clients - i.e. with a suitable tuner
+                  card and software installed (Open Source tools include e.g.
+                  http://www.linuxtv.org/ and http://www.mythtv.org/) - are able to exchange such
+                  URIs (e.g. via an instant messaging service or email) to provide each other
+                  clickable hyperlinks to multimedia content they deem of interest.</t>
+
+               <t>DVB has published specifications for the distribution of multimedia services via
+                  IP unicast and multicast mechanisms. In this context, such URIs are usable in any
+                  player client software (no tuner card required) that implements the respective
+                  protocols and has the relevant audio and video codecs installed. </t>
+               <t><list style="symbols">
+                     <t>For example, a receiver connected to a local area network might allow other
+                        devices to query it for information regarding the current programme or
+                        service: in this context, a dvb URI would typically be the most
+                        authoritative single identifier which could be used to to refer to that
+                        programme.</t>
+
+                     <t>Similarly, a web service could be implemented by a platform operator or a
+                        broadcaster (or some party working on their behalf) which allows resolution
+                        of dvb URIs - this would allow a device to retrieve web pages or other
+                        content which relate to the current programme (or some other entry in the
+                        device's Electronic Programme Guide).</t>
+                  </list></t>
+
+               <t>Implementing such a system naturally requires some mechanism for devices to
+                  discover an appropriate resolution service. DVB has developed has developed a
+                  service discovery and selection (SD&amp;S) solution as part of
+                  <xref target="DVB-IPTV"/>.
+               </t>
+            </section>
+            
+            <section title="Resolution Considerations">
+               <t>The resolution is determined through the process of development of
+                  DVB standards by the Digital Video Broadcasting Project (DVB).</t>
+               
+               <t>Since the implementations envisaged cover a wide range of devices with quite
+                  different access methods and capabilities, no single resolution or delegation
+                  mechanism can be referenced in this document.</t>
+               
+               <t>Currently 2 client system classes are covered by DVB specifications:</t>
+               
+               <t><list style="symbols">
+                     <t>A broadcast set-top box which only has a unidirectional, receive-only
+                        connection. Hence all DVB URIs need to be resolvable from the service
+                        discovery information received in the broadcast stream.</t>
+                  
+                     <t>A "home network end device" (HNED) which could be an IPTV set-top box,
+                        networked TV or personal digital recorder with an Ethernet or WLAN
+                        connection to a home gateway device.</t>
+               </list>
+               </t>
+               
+               <t>Further device classes will be addressed as DVB standardisation progresses. The
+                  dvb URIs must however remain valid. DVB will define appropriate resolution
+                  mechanisms to ensure that DVB URIs remain valid for those new device classes as
+                  well.</t>
+               
+               <t>For the two above example device classes, 3 ways of conveying such resolution
+                  information are currently defined by DVB:</t>
+               
+               <t><list style="symbols">
+                     <t>Repeated, cyclic transmission of service discovery information as auxiliary
+                        data in digital TV broadcast streams over satellite, cable or terrestrial
+                        transmissions according to <xref target="DVB-SI"/>, <xref target="DVB-DATA"/>
+                        and <xref target="DVB-TVA"/>.</t>
+                  
+                     <t>Repeated, cyclic multicast transmission of SD&amp;S Records via the DVBSTP
+                        protocol according to <xref target="DVB-IPTV"/>.</t>
+                  
+                     <t>Unicast delivery of SD&amp;S Records in response to HTTP "GET /dvb/sdns"
+                        requests according to <xref target="DVB-IPTV"/>.</t>
+               </list></t>
+            </section>
+
+            <section title="Implementation Considerations">
+               
+               <section title="Considerations for resolution server software">
+                  <t>With on-going development of DVB standards, DVB will establish requirements and
+                     seek candidates for operating resolution servers as appropriate.</t>
+               
+                  <t>To boot-strap the resolution process, a DVB client needs to discover an entry
+                     point (or set of) from which to obtain an initial Service Discovery and
+                     Selection XML record:</t>
+               
+                  <t><list style="symbols">
+                        <t>By default, the service discovery information is provided on the IANA
+                           registered well-known port dvbservdsc (port number 3937) via tcp and udp
+                           (see <eref target="http://www.iana.org/assignments/port-numbers">
+                           http://www.iana.org/assignments/port-numbers</eref>) on the IANA
+                           registered well-known multicast addresses 224.0.23.14 (DvbServDisc on
+                           IPv4) and FF0X:0:0:0:0:0:0:12D (DvbServDisc on IPv6).</t>
+                     
+                        <t>As set forth in <xref target="DVB-IPTV"/>, a list of non-default Service
+                           Discovery and Selection (SD&amp;S) entry points addresses may also be
+                           provided via DNS based on the service location resource record (SRV RR)
+                           <xref target="RFC2782"/>. The service name for DVB services is
+                           "_dvbservdsc", the protocol may be tcp or udp, while the rest of the name
+                           is the domain name maintained by DVB for service discovery. This domain
+                           name is set to "services.dvb.org". The DVB organization will maintain the
+                           services.dvb.org domain name for service discovery and new service
+                           providers should register with DVB to add them to the DNS SRV list.</t>
+                  </list></t>
+               </section>
+               
+               <section title="Considerations for resolution client software">
+                  <t>To obtain the initial Service Discovery and Selection (SD&amp;S) XML record, a
+                     client must by default first join the IANA registered well-known multicast
+                     addresses 224.0.23.14 (DvbServDisc on IPv4) and/or FF0X:0:0:0:0:0:0:12D
+                     (DvbServDisc on IPv6) and try to obtain a boot-strap record from the IANA
+                     registered well-known port dvbservdsc (port number 3937) via tcp and udp (see
+                     <eref target="http://www.iana.org/assignments/port-numbers">
+                        http://www.iana.org/assignments/port-numbers</eref>).</t>
+               
+                  <t>To discover non-default entry points addresses, <xref target="DVB-IPTV"/>
+                     defines that a list of Service Discovery and Selection (SD&amp;S) entry points
+                     addresses may be acquired via DNS according to the service location resource
+                     record (SRV RR) <xref target="RFC2782"/>. The service name is "_dvbservdsc",
+                     the protocol may be tcp or udp, while the rest of the name is the domain name
+                     maintained by DVB for service discovery. This domain name is set to
+                     "services.dvb.org". So the lookup shall be either
+                     "_dvbservdsc._tcp.services.dvb.org" or "_dvbservdsc._udp.services.dvb.org".
+                     This requires that the terminal support an SRV cognizant DNS client and
+                     according to the specification in <xref target="RFC2782"/>. The DVB
+                     organization will maintain the services.dvb.org domain name for service
+                     discovery. HTTP servers will be found via the tcp protocol method whilst the
+                     multicast addresses will be found via the udp protocol method.</t>
+               </section>
+            </section>
+         </section>
+
+         <section title="Rights to Use Trademarks" anchor="trademarks">
+            <t>Conforming to section 7.4 of <xref target="RFC3978"/>, the DVB Project who is the
+               holder of various trademark and logo rights amongst others but not limited to the
+               term "dvb", hereby grants IETF a perpetual license to use any such trademarks or
+               service marks solely in exercising its rights to reproduce, publish and modify this
+               IETF contribution. This license does not authorize any IETF participant to use any
+               trademark or service mark in connection with any product or service offering, but
+               only in the context of IETF Documents and discussions.</t>
+         </section>
+
+         <section title="Examples" anchor="examples">
+            <t>
+               <list style="hanging">
+                  <t hangText="dvb://233a.1041"><vspace/> The DVB transport stream with id 0x1041
+                     and with original network id 0x233a.<vspace/>
+                  </t>
+                  <t hangText="dvb://233a.1041.10bf"><vspace/> The DVB service with id 0x10bf in the
+                     DVB transport stream with id 0x1041 and with original network id
+                     0x233a.<vspace/>
+                  </t>
+                  <t hangText="dvb://233a.1041.10bf.audio=fra"><vspace/> The default video stream
+                     and the French language audio stream in the indicated DVB service.<vspace/>
+                  </t>
+                  <t hangText="dvb://233a.1041.10bf.audio=qaa&amp;subtitles=eng"><vspace/> The
+                     default video stream, the original language audio stream, and the English
+                     language subtitle stream in the indicated DVB service.<vspace/>
+                  </t>
+                  <t hangText="dvb://'MetroTV'"><vspace/> The DVB service named "MetroTV".<vspace/>
+                  </t>
+                  <t hangText="dvb://'MetroTV'.teletext=default"><vspace/> The teletext stream of
+                     DVB service named "MetroTV".<vspace/>
+                  </t>
+                  <t hangText="dvb://233a.1004.1044;8fff"><vspace/> Event with id 0x8fff within the
+                     indicated DVB service.<vspace/>
+                  </t>
+                  <t hangText="dvb://233a.1004.1044;8fff~20100706T000315Z--PT00H03M00S"><vspace/>
+                     Event with id 0x8fff within the indicated DVB service, starting at 00 hours, 03
+                     minutes and 15 seconds UTC on July, 6th, 2010, lasting for 00 hours and 03
+                     minutes.<vspace/>
+                  </t>
+                  <t hangText="dvb://233a.1041.10bf/doc/form.pdf"><vspace/> File in a subdirectory
+                     of an object carousel, for which the root object is carried in the default
+                     object carousel of the referenced DVB service.<vspace/>
+                  </t>
+                  <t hangText="dvb:/image.png"><vspace/> File in root directory of an object
+                     carousel, for which the root object is carried in the default object carousel
+                     of the current service.<vspace/>
+                  </t>
+               </list>
+            </t>
+         </section>
+      </section>
+
+      <section title="IANA Considerations" anchor="iana">
+         <t> This specification requests the IANA provisionally register the "dvb" URI scheme as
+            specified in this document and summarized in the following template, per
+            <xref target="BCP115"/>: </t>
+
+         <section title="DVB Registration Template">
+            <t><list style="hanging">
+                  <t hangText="URI scheme name:">dvb<vspace/></t>
+                  <t hangText="Status:">Permanent<vspace/></t>
+                  <t hangText="URI scheme syntax:">See section <xref target="dvburi-scheme"/>.
+                     <vspace/></t>
+                  <t hangText="URI scheme semantics:">See section <xref target="dvburi-scheme"/>.
+                     <vspace/></t>
+                  <t hangText="Encoding considerations:">Conformance with RFC3986, no special
+                     considerations.<vspace/></t>
+                  <t hangText="Applications/protocols that use this URI scheme name:">dvb URIs are
+                     used throughout DVB-compliant broadcasting systems, for example within Freeview
+                     and Freesat in the United Kingdom. They are also used in TV-Anytime
+                     <xref target="TV-Anytime"/> metadata where it relates to services transmitted by
+                     DVB systems.<vspace/></t>
+                  <t hangText="Interoperability considerations:">None.<vspace/></t>
+                  <t hangText="Security considerations:">See section <xref target="security"
+                     />.<vspace/></t>
+                  <t hangText="Contact:"><list style="hanging">
+                        <t hangText="Name:">Mr. Alexander Adolf</t>
+                        <t hangText="Title:">Chair - DVB TM-GBS working group</t>
+                        <t hangText="Affiliation:">Condition-ALPHA Digital Broadcast Technology</t>
+                        <t hangText="Address:">Gabelsbergerstrasse 60b, 80333 M&uuml;nchen,
+                           GERMANY</t>
+                        <t hangText="Phone:">+4915112722124</t>
+                        <t hangText="Email:">alexander.adolf@me.com</t>
+                     </list></t>
+                  <t hangText="Author/Change controller:"><list style="hanging">
+                        <t hangText="Name:">Mr. Peter Siebert</t>
+                        <t hangText="Title:">Executive Director</t>
+                        <t hangText="Affiliation:">DVB Project</t>
+                        <t hangText="Address:">17a Ancienne Route, 1218 Grand-Sacconnex,
+                           SWITZERLAND</t>
+                        <t hangText="Phone:">+41227172717</t>
+                        <t hangText="Email:">siebert@dvb.org</t>
+                     </list></t>
+               </list>
+            </t>
+         </section>
+
+         <section title="Security Considerations" anchor="security">
+            <t>Section 7 of <xref target="RFC3986"/> describes general security considerations for
+               URI schemes. The sections relating to reliability and consistency, malicious
+               construction, back-end transcoding, rare IP address formats and semantic attacks all
+               apply to dvb URIs. The section relating to sensitive information does not apply,
+               given that dvb URIs do not contain authentication information.</t>
+
+            <t>The security considerations of the Digital Video Broadcasting suite of standards in
+               general are not covered in this document.</t>
+         </section>
+      </section>
+   </middle>
+
+   <back>
+
+      <references title="Normative References">
+
+         <reference anchor="RFC3986">
+            <front>
+               <title>Uniform Resource Identifier (URI): Generic Syntax</title>
+               <author initials="T." surname="Berners-Lee">
+                  <organization abbrev="W3C/MIT">World Wide Web Consortium / Massachusetts Institute
+                     of Technology</organization>
+               </author>
+               <author initials="R." surname="Fielding">
+                  <organization>Day Software</organization>
+               </author>
+               <author initials="L." surname="Masinter">
+                  <organization>Adobe Systems</organization>
+               </author>
+               <date month="January" year="2005"/>
+            </front>
+            <seriesInfo name="RFC" value="3986"/>
+         </reference>
+
+         <reference anchor="RFC3978">
+            <front>
+               <title>IETF Rights in Contributions</title>
+               <author initials="S." surname="Bradner">
+                  <organization>???</organization>
+               </author>
+               <date month="March" year="2005"/>
+            </front>
+            <seriesInfo name="RFC" value="3978"/>
+         </reference>
+
+         <reference anchor="DVB-URI"
+            target="http://www.etsi.org/deliver/etsi_ts/102800_102899/102851/01.01.01_60/ts_102851v010101p.pdf">
+            <front>
+               <title>Digital Video Broadcasting (DVB); Uniform Resource Identifiers (URI) for DVB
+                  Systems</title>
+               <author>
+                  <organization abbrev="DVB">DVB Project</organization>
+               </author>
+               <date/>
+            </front>
+            <seriesInfo name="ETSI" value="TS 102 851"/>
+         </reference>
+      </references>
+
+      <references title="Informative References">
+
+         <reference anchor="BT.1306">
+            <front>
+               <title>Error-correction, data framing, modulation and emission methods for digital
+                  terrestrial television broadcasting</title>
+               <author>
+                  <organization abbrev="ITU">International Telecommunication Union</organization>
+               </author>
+               <date month="October" year="2000"/>
+            </front>
+            <seriesInfo name="ITU-R" value="BT.1306"/>
+         </reference>
+
+         <reference anchor="BO.1516">
+            <front>
+               <title>Digital multiprogramme television systems for use by satellites operating in
+                  the 11/12 GHz frequency range</title>
+               <author>
+                  <organization abbrev="ITU">International Telecommunication Union</organization>
+               </author>
+               <date month="April" year="2001"/>
+            </front>
+            <seriesInfo name="ITU-R" value="BO.1516"/>
+         </reference>
+
+         <reference anchor="J.83">
+            <front>
+               <title>Digital multi-programme systems for television, sound and data services for
+                  cable distribution</title>
+               <author>
+                  <organization abbrev="ITU">International Telecommunication Union</organization>
+               </author>
+               <date month="April" year="1997"/>
+            </front>
+            <seriesInfo name="ITU-T" value="J.83"/>
+         </reference>
+
+         <reference anchor="MPEG-Systems">
+            <front>
+               <title>Information technology -- Generic coding of moving pictures and associated
+                  audio information: Systems</title>
+               <author>
+                  <organization abbrev="SMPTE">Society of Motion Picture and Television
+                     Engineers</organization>
+               </author>
+               <date month="December" year="2000"/>
+            </front>
+            <seriesInfo name="ISO/IEC" value="13818-1"/>
+         </reference>
+
+         <reference anchor="DVB" target="http://www.dvb.org/">
+            <front>
+               <title>DVB Project</title>
+               <author>
+                  <organization/>
+               </author>
+
+               <date/>
+            </front>
+         </reference>
+
+         <reference anchor="TV-Anytime" target="http://www.tv-anytime.org/">
+            <front>
+               <title>TV-Anytime Forum</title>
+               <author>
+                  <organization/>
+               </author>
+               <date/>
+            </front>
+         </reference>
+
+         <reference anchor="RFC5234">
+            <front>
+               <title>Augmented BNF for Syntax Specifications: ABNF</title>
+               <author initials="D." surname="Crocker" role="editor">
+                  <organization>Brandenburg InternetWorking</organization>
+               </author>
+               <author initials="P." surname="Overell">
+                  <organization>THUS plc.</organization>
+               </author>
+               <date month="January" year="2008"/>
+            </front>
+            <seriesInfo name="RFC" value="5234"/>
+            <seriesInfo name="STD" value="68"/>
+         </reference>
+         
+         <reference anchor="RFC2782">
+            <front>
+               <title>A DNS RR for specifying the location of services (DNS SRV)</title>
+               <author initials="A." surname="Gulbrandsen"><organization>Troll Technologies</organization></author>
+               <author initials="P." surname="Vixie"><organization>Internet Software Consortium</organization></author>
+               <author initials="L." surname="Esibov"><organization>Microsoft Corp.</organization></author>
+               <date month="February" year="2000"/>
+            </front>
+            <seriesInfo name="RFC" value="2782"/>
+         </reference>
+         
+         
+         <reference anchor="DVB-IPTV"
+            target="http://www.etsi.org/deliver/etsi_ts/102000_102099/102034/01.04.01_60/ts_102034v010401p.pdf">
+            <front>
+               <title>Digital Video Broadcasting (DVB); Transport of MPEG-2 TS Based DVB Services
+                  over IP Based Networks</title>
+               <author>
+                  <organization abbrev="DVB">DVB Project</organization>
+               </author>
+               <date/>
+            </front>
+            <seriesInfo name="ETSI" value="TS 102 034"/>
+         </reference>
+
+         <reference anchor="DVB-HN"
+            target="http://www.etsi.org/deliver/etsi_ts/102900_102999/102905/01.01.01_60/ts_102905v010101p.pdf">
+            <front>
+               <title>Digital Video Broadcasting (DVB); Technical Specification for DVB Services in
+                  the Home Network Phase 1</title>
+               <author>
+                  <organization abbrev="DVB">DVB Project</organization>
+               </author>
+               <date/>
+            </front>
+            <seriesInfo name="ETSI" value="TS 102 905"/>
+         </reference>
+
+         <reference anchor="DVB-TVA"
+            target="http://www.etsi.org/deliver/etsi_ts/102300_102399/102323/01.04.01_60/ts_102323v010401p.pdf">
+            <front>
+               <title>Digital Video Broadcasting (DVB); Carriage and signalling of TV-Anytime
+                  information in DVB transport streams</title>
+               <author>
+                  <organization abbrev="DVB">DVB Project</organization>
+               </author>
+               <date/>
+            </front>
+            <seriesInfo name="ETSI" value="TS 102 323"/>
+         </reference>
+
+         <reference anchor="DVB-MHP"
+            target="http://www.etsi.org/deliver/etsi_ts/102800_102899/102812/01.02.02_60/ts_102812v010202p.pdf">
+            <front>
+               <title>Digital Video Broadcasting (DVB); Multimedia Home Platform (MHP) Specification
+                  1.1.1</title>
+               <author>
+                  <organization abbrev="DVB">DVB Project</organization>
+               </author>
+               <date/>
+            </front>
+            <seriesInfo name="ETSI" value="TS 102 812"/>
+         </reference>
+
+         <reference anchor="DVB-SI"
+            target="http://www.etsi.org/deliver/etsi_en/300400_300499/300468/01.11.01_60/en_300468v011101p.pdf">
+            <front>
+               <title>Digital Video Broadcasting (DVB); Specification for Service Information (SI) in DVB systems</title>
+               <author>
+                  <organization abbrev="DVB">DVB Project</organization>
+               </author>
+               <date/>
+            </front>
+            <seriesInfo name="ETSI" value="EN 300 468"/>
+         </reference>
+
+         <reference anchor="DVB-DATA"
+            target="http://www.etsi.org/deliver/etsi_en/301100_301199/301192/01.04.02_60/en_301192v010402p.pdf">
+            <front>
+               <title>Digital Video Broadcasting (DVB); DVB specification for data broadcasting</title>
+               <author>
+                  <organization abbrev="DVB">DVB Project</organization>
+               </author>
+               <date/>
+            </front>
+            <seriesInfo name="ETSI" value="EN 301 192"/>
+         </reference>
+         
+         
+         <reference anchor="OCAP1.0">
+            <front>
+               <title>OpenCable Application Platform (OCAP) specification, I16</title>
+               <author>
+                  <organization>CableLabs</organization>
+               </author>
+               <date/>
+            </front>
+            <seriesInfo name="OCAP" value="OC-SP-OCAP1.0-I16-050803"/>
+         </reference>
+
+         <reference anchor="DAVIC9">
+            <front>
+               <title>DAVIC 1.4.1 Specification Part 9: Information Representation</title>
+               <author>
+                  <organization abbrev="DAVIC">Digital Audio-Video Council</organization>
+               </author>
+               <date year="1999"/>
+            </front>
+         </reference>
+
+         <reference anchor="BCP115">
+            <front>
+               <title>Guidelines and Registration Procedures for New URI Schemes</title>
+               <author initials="T." surname="Hansen">
+                  <organization abbrev="AT&amp;T">AT&amp;T Laboratories</organization>
+               </author>
+               <author initials="T." surname="Hardie">
+                  <organization abbrev="Qualcomm">Qualcomm, Inc.</organization>
+               </author>
+               <author initials="L." surname="Masinter">
+                  <organization abbrev="Adobe">Adobe Systems</organization>
+               </author>
+               <date month="February" year="2006"/>
+            </front>
+            <seriesInfo name="RFC" value="4395"/>
+            <seriesInfo name="BCP" value="115"/>
+         </reference>
+      </references>
+   </back>
 </rfc>
