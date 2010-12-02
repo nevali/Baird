@@ -4,8 +4,8 @@
 Network Working Group                                  M. McRoberts, Ed.
 Internet-Draft                                             Project Baird
 Intended status: Informational                                  A. Adolf
-Expires: May 30, 2011                                     Conditon-ALPHA
-                                                       November 26, 2010
+Expires: January 8, 2011                                 Condition-ALPHA
+                                                            July 7, 2010
 
 
 Uniform Resource Identifier (URI) Scheme for Digital Video Broadcasting
@@ -52,12 +52,12 @@ Status of this Memo
 
 
 
-McRoberts & Adolf         Expires May 30, 2011                  [Page 1]
+McRoberts & Adolf        Expires January 8, 2011                [Page 1]
 
-Internet-Draft                URIs for DVB                 November 2010
+Internet-Draft                URIs for DVB                     July 2010
 
 
-   This Internet-Draft will expire on May 30, 2011.
+   This Internet-Draft will expire on January 8, 2011.
 
 Copyright Notice
 
@@ -108,9 +108,9 @@ Copyright Notice
 
 
 
-McRoberts & Adolf         Expires May 30, 2011                  [Page 2]
+McRoberts & Adolf        Expires January 8, 2011                [Page 2]
 
-Internet-Draft                URIs for DVB                 November 2010
+Internet-Draft                URIs for DVB                     July 2010
 
 
 1.  Introduction
@@ -164,30 +164,19 @@ Internet-Draft                URIs for DVB                 November 2010
 
 
 
-McRoberts & Adolf         Expires May 30, 2011                  [Page 3]
+McRoberts & Adolf        Expires January 8, 2011                [Page 3]
 
-Internet-Draft                URIs for DVB                 November 2010
+Internet-Draft                URIs for DVB                     July 2010
 
 
-1.1.  Terminology
+1.1.  Transmission Scheme
 
-   *MPEG-2 Transport Stream:* Transport Stream defined in the MPEG-2
-   standard [MPEG-Systems], a method of transmission at the MPEG-2 level
-   using TS Packets.  It represents level 2 of the ISO/OSI reference
-   model.
-
-   *MPEG-2 standard:* A set of standards specified by the Motion Picture
-   Experts Group (MPEG), and published by the International Standards
-   Organisation (ISO)
-
-1.2.  Transmission Scheme
-
-   The Audio, Visual or Private data components constituting the TV/
-   Radio programme (SERVICE) are defined as elementary stream
-   components.  And these constituted TV/Radio programmes (SERVICEs) are
-   bundled in a TRANSPORT STREAM (e.g. channel) for delivering over a
-   single BROADCASTING NETWORK (e.g.  Satellite, Cable or Terrestrial).
-   The distinguished unique number for each packet, elementary
+   The audio, visual or private data components constituting a TV/radio
+   programme ("service") are defined as elementary stream (ES)
+   components.  Several of these TV/radio programmes are bundled in a
+   transport stream (TS) multiplex for delivering over a broadcast
+   transmission network (e.g. satellite, cable or terrestrial).  The
+   distinguished unique number for each TS mux packet, elementary stream
    component, transport stream and transmission network is assigned and
    transmitted over the satellite, cable or terrestrial broadcasting
    media, even over the IP network, together with the information table
@@ -198,14 +187,14 @@ Internet-Draft                URIs for DVB                 November 2010
            | BROADCASTING NETWORK                              |
            | (e.g. Satellite, Cable, Terrestrial)              |
            |    +---------------------------------------+      |
-           |    | TRANSPORT STREAM                      |-*    |
+           |    | TRANSPORT STREAM MULTIPLEX            |-*    |
            |    | (e.g. channel)                        | |    |
            |    |   +-----------------------------+     | |    |
            |    |   | SERVICE                     |-*   | |    |
            |    |   |  +---------------------+    | |   | |    |
            |    |   |  | Audio/Visual and    |-*  | |   | |    |
-           |    |   |  | Private data        | |  | |   | |    |
-           |    |   |  | components          | |  | |   | |    |
+           |    |   |  | Private Data        | |  | |   | |    |
+           |    |   |  | Components          | |  | |   | |    |
            |    |   |  +---------------------+ |  | |   | |    |
            |    |   |    *---------------------*  | |   | |    |
            |    |   |                             | |   | |    |
@@ -217,68 +206,191 @@ Internet-Draft                URIs for DVB                 November 2010
            |                                                   |
            +---------------------------------------------------+
 
-
-
-
-McRoberts & Adolf         Expires May 30, 2011                  [Page 4]
-
-Internet-Draft                URIs for DVB                 November 2010
-
-
            Programme Delivery Scheme in MPEG-2 Transport Stream
 
+   All these elements are unambiguously identified in DVB systems by
+   numerical ids:
+
+   o  A *network_id* identifies a broadcast transmission network.  On
+      satellite and IP broadband, typically one network_id corresponds
+      to an operator.  On cable and terrestrial, where different radio
+      frequencies might be used in different regions, operators
+      typically use one network_id per such region.
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-McRoberts & Adolf         Expires May 30, 2011                  [Page 5]
+McRoberts & Adolf        Expires January 8, 2011                [Page 4]
 
-Internet-Draft                URIs for DVB                 November 2010
+Internet-Draft                URIs for DVB                     July 2010
+
+
+   o  An *original_network_id* is used where TV/radio programmes are
+      taken from one network, and are re-transmitted on another one.  To
+      enable receivers detecting that a programme is identical to
+      another one, the original_network_id is used to indicate from
+      which network the programme originates.
+
+   o  A *transport_stream_id* is used to refer to a time-domain
+      multiplex of several programmes carried in TS packets.  One or
+      more multiplexes can be transmitted on any given radio frequency
+      in a DVB network.
+
+   o  A *service_id* identifies a TV/radio or data programme within a TS
+      multiplex.  The number of programmes is limited by the capacity of
+      the underlying physical channel.
+
+   o  A *component_tag* identifies an elementary stream (ES) of video,
+      audio, teletext, subtitles, or other data within a service.
+
+
+                  +---------+
+                  |         |-------+
+                  |         |       >+++++ Service 1 +++++
+                  |         >  TS 1 |
+                  |         |       >***** Service 2 *****
+                  |  NET 1  |-------+
+                  |         |-------+
+                  |         |       >===== Service 3 =====
+                  |         >  TS 2 >xxxxx Service 4 xxxxx
+                  |         |       >##### Service 5 #####
+                  |         |-------+
+                  +---------+
+
+          Relationship of Network, Transport Stream, and Service
+
+   The original_network_id is an attribute of a transport stream (TS).
+   In the simplest case, all services originate from the network on
+   which they are transmitted.  Then, the original_network_id of all the
+   TS will be equal to the network_id.  This typically happens on
+   networks operated by public broadcasters.  If one of the public
+   broadcaster's TS is for instance re-transmitted by a cable operator,
+   the information about this TS would indicate the cable operator's
+   network_id, and the original_network_id of the public broadcaster.
+   Hence all assigned network_id values must represent actual broadcast
+   network infrastructures, whereas this is not required for
+   original_network_id values.  A globally active content provider may
+   for example choose to register an original_network_id, and distribute
+   pre-multiplexed TS to broadcasters, without operating any broadcast
+   network of its own.
+
+
+
+McRoberts & Adolf        Expires January 8, 2011                [Page 5]
+
+Internet-Draft                URIs for DVB                     July 2010
+
+
+   Both, the original_network_id and the network_id are coordinated by
+   the DVB Project.  The DVB Project in turn has delegated the
+   management of DVB identifiers to DVB Services Sarl [DVB-SVCS].  DVB
+   Services maintains a public register of all assignments, and accepts
+   requests for new assignments on their website.
+
+   Due to the way broadcast transmission networks are operated, some
+   relationships exist between these identifiers:
+
+   o  Each TS is part of exactly one orginial_network_id (see above).
+
+   o  Hence, each TS is unambiguously identified by the tuple
+      {original_network_id, transport_stream_id}.
+
+   o  According to [DVB-SI-SPEC], each service_id is unique within a TS.
+      Hence a service is unambiguously identified by the tuple
+      {original_network_id, transport_stream_id, service_id}.
+
+   o  [DVB-SI-GDL] additionally requires that each service_id be unique
+      within an original_network_id.  Hence, in areas where [DVB-SI-GDL]
+      has been made part of the broadcast profile, the tuple
+      {original_network_id, service_id} unambiguously identifies a
+      service.
+
+   During a scan run, a receiver will pick up information about TS.  It
+   will learn their transport_stream_id, original_network_id and
+   network_id.  Since it scans different radio frequency channels, it is
+   able to link these identifiers to radio frequencies and other
+   modulation parameters.  On [DVB-IPTV], of course no radio frquencies
+   are used.  The model of broadcasters, networks, and services is
+   however maintained.  Hence a [DVB-IPTV] receiver uses the same
+   identifiers with the above semantics to identify services.
+
+   Finally, a DVB service is composed of one or more components.  These
+   are identified within the service by their component_tag.  A
+   component can be either an elementary stream (ES) carrying video,
+   audio, teletext, subtitles, or other synchronised data, or generic
+   data (see also [DVB-DATA], [DVB-TVA] and [DVB-MHP]).  Each of these
+   components is then sliced into fragments and packetised in TS packets
+   [MPEG-Systems].  All packets for a given component are labeled with
+   the same TS packet identifier (PID), effectively providing a virtual
+   channel in the TS for the component.  All packtes are then
+   multiplexed in the time domain according ot each component's data
+   rate requirements, and the resulting TS is passed to the transmission
+   equipment.  For examples how these identifiers are used, please refer
+   to Section 2.5.
+
+
+
+
+
+McRoberts & Adolf        Expires January 8, 2011                [Page 6]
+
+Internet-Draft                URIs for DVB                     July 2010
+
+
+           ...|v|v|v|a|t|v|v|v|v|v|a|s|v|v|a|v|v|t|a|v|v|...
+              |1|1|1|1|1|2|2|2|2|2|2|2|1|1|1|2|2|1|2|1|2|
+          ---------------------------------------------------->
+                                                          time
+           |x| : a TS packet
+           |x|
+
+           v1, a1, t1: SD video, audio and teletext of service 1
+           v2, a2, s2: HD video, audio and subtitles of service 2
+
+                     Example TS time domain multiplex
+
+   In the above figure, all TS packets for "v1" would share the same PID
+   value.  Equally, all TS packets for "a2" would also share another PID
+   value, etc.  The metadata describing the network, transport streams,
+   services, and their components is transmitted in a TS on well-known
+   PID values according to [MPEG-Systems] and [DVB-SI-SPEC].  These
+   metadata TS packets are not shown in the above figure.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+McRoberts & Adolf        Expires January 8, 2011                [Page 7]
+
+Internet-Draft                URIs for DVB                     July 2010
 
 
 2.  Digital Video Broadcasting URI Scheme
@@ -332,13 +444,14 @@ Internet-Draft                URIs for DVB                 November 2010
 
 
 
-McRoberts & Adolf         Expires May 30, 2011                  [Page 6]
+McRoberts & Adolf        Expires January 8, 2011                [Page 8]
 
-Internet-Draft                URIs for DVB                 November 2010
+Internet-Draft                URIs for DVB                     July 2010
 
 
    consists of a sequence of characters separated by ".", which is
-   preceded by a double slash ("//") and terminated by a slash ("/").
+   preceded by a double slash ("//") and optionally terminated by a
+   slash ("/").
 
    broadcast_auth_domain = 0*255 ( unreserved | sub-delims )
 
@@ -347,21 +460,23 @@ Internet-Draft                URIs for DVB                 November 2010
    sub-delims            = "!" | "$" | "&" | "'" | "(" | ")" |
                            "*" | "+" | "," | ";" | "="
 
-   This broadcast_auth_domain consists of unique name in the digital
+   This broadcast_auth_domain consists of a unique name in the digital
    broadcasting network conforming to the URI.
 
 2.1.3.  comp_path
 
-   The comp_path indicates the unique number of the audio, visual and
-   private data component(s) constituting a broadcast programme or event
-   and is assigned in each broadcasting company or authority for
-   preserving uniqueness in a sequence of TV/Radio programmes in one
-   channel.  The broadcast_auth_domain identifies the broadcast
-   programme (e.g. channel or specific programme event) and comp_path
-   determines the component of the broadcasting programme.
+   The comp_path indicates the unique identification of the audio,
+   visual and data component(s) constituting a broadcast programme or
+   event.  It can also be structured in hierarchical or non-hierarchical
+   form to identify particular programmes of a service.  It is assigned
+   in each broadcasting company or authority for preserving uniqueness
+   in a sequence of TV/radio programmes in one service.  The
+   broadcast_auth_domain identifies the broadcast programme (e.g.
+   channel or specific programme event) and comp_path determines the
+   component(s) of the broadcasting programme.
 
-   comp_path consists of a sequence of characters separated by a slash
-   ("/") to indicate the audio, visual and private data component(s)
+   comp_path consists of a sequence of characters, optionally separated
+   by a slash ("/"), to indicate the audio, visual and data component(s)
    within the scope of the broadcast authority indicated in the
    broadcast_auth_domain.
 
@@ -370,10 +485,6 @@ Internet-Draft                URIs for DVB                 November 2010
    segment   = *pchar
 
    pchar     = unreserved | pct-encoded | sub-delims | ":" | "@"
-
-   comp_path can be structured in hierarchical or non-hierarchical form
-   to identify particular programme not only audio, visual and private
-   data component over the MPEG-2 Transport Stream.
 
 2.2.  Encoding
 
@@ -388,9 +499,10 @@ Internet-Draft                URIs for DVB                 November 2010
 
 
 
-McRoberts & Adolf         Expires May 30, 2011                  [Page 7]
+
+McRoberts & Adolf        Expires January 8, 2011                [Page 9]
 
-Internet-Draft                URIs for DVB                 November 2010
+Internet-Draft                URIs for DVB                     July 2010
 
 
 2.3.  Community Considerations
@@ -428,9 +540,9 @@ Internet-Draft                URIs for DVB                 November 2010
       typically be the most authoritative single identifier which could
       be used to to refer to that programme.
 
-   o  Similarly, a web service could be implemented by a platform
-      operator or a broadcaster (or some party working on their behalf)
-      which allows resolution of dvb URIs - this would allow a device to
+   o  Similarly, a web service can be implemented by a platform operator
+      or a broadcaster (or some party working on their behalf) which
+      allows resolution of dvb URIs - this would allow a device to
       retrieve web pages or other content which relate to the current
       programme (or some other entry in the device's Electronic
       Programme Guide).
@@ -444,9 +556,9 @@ Internet-Draft                URIs for DVB                 November 2010
 
 
 
-McRoberts & Adolf         Expires May 30, 2011                  [Page 8]
+McRoberts & Adolf        Expires January 8, 2011               [Page 10]
 
-Internet-Draft                URIs for DVB                 November 2010
+Internet-Draft                URIs for DVB                     July 2010
 
 
 2.3.2.  Resolution Considerations
@@ -480,7 +592,7 @@ Internet-Draft                URIs for DVB                 November 2010
 
    o  Repeated, cyclic transmission of service discovery information as
       auxiliary data in digital TV broadcast streams over satellite,
-      cable or terrestrial transmissions according to [DVB-SI],
+      cable or terrestrial transmissions according to [DVB-SI-SPEC],
       [DVB-DATA] and [DVB-TVA].
 
    o  Repeated, cyclic multicast transmission of SD&S Records via the
@@ -500,9 +612,9 @@ Internet-Draft                URIs for DVB                 November 2010
 
 
 
-McRoberts & Adolf         Expires May 30, 2011                  [Page 9]
+McRoberts & Adolf        Expires January 8, 2011               [Page 11]
 
-Internet-Draft                URIs for DVB                 November 2010
+Internet-Draft                URIs for DVB                     July 2010
 
 
    To boot-strap the resolution process, a DVB client needs to discover
@@ -556,9 +668,9 @@ Internet-Draft                URIs for DVB                 November 2010
 
 
 
-McRoberts & Adolf         Expires May 30, 2011                 [Page 10]
+McRoberts & Adolf        Expires January 8, 2011               [Page 12]
 
-Internet-Draft                URIs for DVB                 November 2010
+Internet-Draft                URIs for DVB                     July 2010
 
 
 2.4.  Rights to Use Trademarks
@@ -574,13 +686,56 @@ Internet-Draft                URIs for DVB                 November 2010
 
 2.5.  Examples
 
+   These examples make heavy use of the identifiers defined by DVB to
+   identify entities.  Please see Section 1 for an explanation of the
+   concepts.
+
+2.5.1.  Referring to transport streams and services
+
+   In the below examples, a receiver uses the identifiers in the URI to
+   search its internal database of radio frequencies and modulation
+   parameters, which it built during a service scan run.  It uses the
+   identifiers as keys to look up in the various tables.
+
    dvb://233a.1041
-      The DVB transport stream with id 0x1041 and with original network
-      id 0x233a.
+      The DVB transport stream multiplex with id 0x1041 and with
+      original network id 0x233a.  This might be used by a broadcaster
+      to provide an entry point to its service offering, without picking
+      out any of his services in particular.
 
    dvb://233a.1041.10bf
       The DVB service with id 0x10bf in the DVB transport stream with id
-      0x1041 and with original network id 0x233a.
+      0x1041 and with original network id 0x233a.  This could be used as
+      the link behind a "watch this now" button.
+
+   dvb://233a..10bf
+      The DVB service with id 0x10bf and with original network id
+      0x233a.  This could be used as the link behind a "watch this now"
+      button.  Note that compared to the previous example the transport
+      stream id is omitted.  This is possible in areas where
+      [DVB-SI-GDL] is applicable.
+
+   dvb://'MetroTV'
+      The DVB service named "MetroTV".  Note that as opposed to the
+      previous example, the reference to the service's name is not
+      necessarily unambiguous and requires more contextual information
+      to be resolved.  For "speaking" or "promotional" URIs, [DVB-TVA]
+      might be a more general alternative.
+
+
+
+McRoberts & Adolf        Expires January 8, 2011               [Page 13]
+
+Internet-Draft                URIs for DVB                     July 2010
+
+
+2.5.2.  Referring to service components
+
+   In addition to referring to a TV/radio programme as a whole, it might
+   be desirable to be able to pick out specific variations of audio and
+   video provided by a programme.  One could for instance always be
+   interested in the video with open signing, or in the audio for the
+   visually impaired.
 
    dvb://233a.1041.10bf.audio=fra
       The default video stream and the French language audio stream in
@@ -590,32 +745,85 @@ Internet-Draft                URIs for DVB                 November 2010
       The default video stream, the original language audio stream, and
       the English language subtitle stream in the indicated DVB service.
 
-   dvb://'MetroTV'
-      The DVB service named "MetroTV".
+   dvb://233a.1041.10bf.video=default&audio=visually_impaired  The
+      default video stream and the audio stream for the visually
+      impaired in the indicated DVB service.
 
-   dvb://'MetroTV'.teletext=default
-      The teletext stream of DVB service named "MetroTV".
+   dvb://233a.1041.10bf.fqc=50B,3&fqc=640,5,fra  The HD video stream
+      (stream_content 0x5 and component_type 0x0B) with component_tag 3,
+      and the French language ("fra") HE.AAC audio for the visually
+      impaired (stream_content 0x6 and component_type 0x40) with
+      component_tag 5.
+
+2.5.3.  References for triggering
+
+   Applications might want to trigger on the start and/or end of TV/
+   radio programmes.  The user might e.g. have set a flag on the
+   programme, so that the receiver will remind him when it begins, or
+   might even automatically switch to the respective service when the
+   programme begins, and back to the previous service whe it is over.
+   Or a user might have selected a programme for recording.  These
+   scenarios require that an application has some notion of the start
+   and end times of TV/radio programmes.
+
+   Creating accurate recordings of broadcast content is a non-trivial
+   task.  For a wider discussion of this, please see [DVB-TVA].
+   Although individual service components can be selected for recording,
+   all components of the service should generally be recorded where
+   appropriate.  This would for instance enable to use the original
+   language audio instead of the dubbed version on special playback
+   occasions.
+
+
+
+
+
+
+
+McRoberts & Adolf        Expires January 8, 2011               [Page 14]
+
+Internet-Draft                URIs for DVB                     July 2010
+
 
    dvb://233a.1004.1044;8fff
-      Event with id 0x8fff within the indicated DVB service.
+      Event with id 0x8fff within the indicated DVB service.  A receiver
+      would look up the EPG information for the given service, and for
+      the indicated event within that service.  The EPG information will
+      contain the wall-clock start time and duration of the programme as
+      published e.g. also in print.  Since the actual times of
+      transmission may be different, triggers should only be fired with
+      appropriate lead-in and lead-out times relative to the published
+      EPG times.  Receivers can also use additional information in the
+      EPG, in particular the running_status.  Not all broadcasters do
+      however manage the running_status reliably or in real-time.
 
-   dvb://233a.1004.1044;8fff~20100706T000315Z--PT00H03M00S
+   dvb://233a.1004.1044.audio=fra;8fff  French audio version of the
+      event with id 0x8fff within the indicated DVB service.  The video
+      would also be implied if it is a TV service.  See also previous
+      example.
+
+   dvb://233a.1004.1044;8fff~20100706T000315Z--PT00H31M17S
       Event with id 0x8fff within the indicated DVB service, starting at
       00 hours, 03 minutes and 15 seconds UTC on July, 6th, 2010,
-      lasting for 00 hours and 03 minutes.
+      lasting for 00 hours, 31 minutes and 17 seconds.  This form of the
+      URI can be used to convey more accurate transmission times for the
+      content.  The programme may be advertised as starting at 00:00 and
+      ending at 00:30 in the EPG.  This extended information in the
+      locator can be used to get a much more accurate trigger for the
+      programme.  The lead-in and lead-out times can be reduced to the
+      minimum needed to account for the skews of the local and
+      broadcaster clocks.
+
+2.5.4.  Referring to data objects
+
+   [DVB-DATA] defines - among other things - an object carousel which
+   can be mounted as a file system.  The data for this object carousel
+   is transmitted repeatedly.
 
    dvb://233a.1041.10bf/doc/form.pdf
       File in a subdirectory of an object carousel, for which the root
       object is carried in the default object carousel of the referenced
       DVB service.
-
-
-
-
-McRoberts & Adolf         Expires May 30, 2011                 [Page 11]
-
-Internet-Draft                URIs for DVB                 November 2010
-
 
    dvb:/image.png
       File in root directory of an object carousel, for which the root
@@ -628,49 +836,65 @@ Internet-Draft                URIs for DVB                 November 2010
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-McRoberts & Adolf         Expires May 30, 2011                 [Page 12]
+McRoberts & Adolf        Expires January 8, 2011               [Page 15]
 
-Internet-Draft                URIs for DVB                 November 2010
+Internet-Draft                URIs for DVB                     July 2010
+
+
+   dvb://233a..10bf.3$10a1240f/doc/form.pdf
+      File in a subdirectory of an object carousel, for which the root
+      object has the transaction id 10a1240f and is carried in the ES
+      with component_tag 3 of the referenced DVB service.  Note that
+      compared to the first example the transport stream id is omitted.
+      This is possible in areas where [DVB-SI-GDL] is applicable.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+McRoberts & Adolf        Expires January 8, 2011               [Page 16]
+
+Internet-Draft                URIs for DVB                     July 2010
 
 
 3.  IANA Considerations
@@ -685,9 +909,9 @@ Internet-Draft                URIs for DVB                 November 2010
 
    Status:  Permanent
 
-   URI scheme syntax:  See section Section 2.
+   URI scheme syntax:  See Section 2.
 
-   URI scheme semantics:  See section Section 2.
+   URI scheme semantics:  See Section 2.
 
    Encoding considerations:  Conformance with RFC3986, no special
       considerations.
@@ -700,7 +924,7 @@ Internet-Draft                URIs for DVB                 November 2010
 
    Interoperability considerations:  None.
 
-   Security considerations:  See section Section 3.2.
+   Security considerations:  See Section 3.2.
 
    Contact:
 
@@ -724,9 +948,9 @@ Internet-Draft                URIs for DVB                 November 2010
 
 
 
-McRoberts & Adolf         Expires May 30, 2011                 [Page 13]
+McRoberts & Adolf        Expires January 8, 2011               [Page 17]
 
-Internet-Draft                URIs for DVB                 November 2010
+Internet-Draft                URIs for DVB                     July 2010
 
 
       Name:  Mr. Peter Siebert
@@ -780,9 +1004,9 @@ Internet-Draft                URIs for DVB                 November 2010
 
 
 
-McRoberts & Adolf         Expires May 30, 2011                 [Page 14]
+McRoberts & Adolf        Expires January 8, 2011               [Page 18]
 
-Internet-Draft                URIs for DVB                 November 2010
+Internet-Draft                URIs for DVB                     July 2010
 
 
 4.  References
@@ -825,22 +1049,24 @@ Internet-Draft                URIs for DVB                 November 2010
 
    [DVB]      "DVB Project", <http://www.dvb.org/>.
 
+   [DVB-SVCS]
+              "DVB Services Sarl", <http://www.dvbservices.com/>.
+
    [TV-Anytime]
               "TV-Anytime Forum", <http://www.tv-anytime.org/>.
 
    [RFC5234]  Crocker, D., Ed. and P. Overell, "Augmented BNF for Syntax
               Specifications: ABNF", RFC 5234, STD 68, January 2008.
 
+
+
+McRoberts & Adolf        Expires January 8, 2011               [Page 19]
+
+Internet-Draft                URIs for DVB                     July 2010
+
+
    [RFC2782]  Gulbrandsen, A., Vixie, P., and L. Esibov, "A DNS RR for
               specifying the location of services (DNS SRV)", RFC 2782,
-
-
-
-McRoberts & Adolf         Expires May 30, 2011                 [Page 15]
-
-Internet-Draft                URIs for DVB                 November 2010
-
-
               February 2000.
 
    [DVB-IPTV]
@@ -865,11 +1091,18 @@ Internet-Draft                URIs for DVB                 November 2010
               <http://www.etsi.org/deliver/etsi_ts/102800_102899/102812/
               01.02.02_60/ts_102812v010202p.pdf>.
 
-   [DVB-SI]   DVB Project, "Digital Video Broadcasting (DVB);
+   [DVB-SI-SPEC]
+              DVB Project, "Digital Video Broadcasting (DVB);
               Specification for Service Information (SI) in DVB
               systems", ETSI EN 300 468, <http://www.etsi.org/deliver/
               etsi_en/300400_300499/300468/01.11.01_60/
               en_300468v011101p.pdf>.
+
+   [DVB-SI-GDL]
+              DVB Project, "Digital Video Broadcasting (DVB); Guidelines
+              on implementation and usage of Service Information (SI)",
+              ETSI TS 101 211, <http://www.etsi.org/deliver/etsi_tr/
+              101200_101299/101211/01.09.01_60/tr_101211v010901p.pdf>.
 
    [DVB-DATA]
               DVB Project, "Digital Video Broadcasting (DVB); DVB
@@ -879,6 +1112,14 @@ Internet-Draft                URIs for DVB                 November 2010
 
    [OCAP1.0]  CableLabs, "OpenCable Application Platform (OCAP)
               specification, I16", OCAP OC-SP-OCAP1.0-I16-050803.
+
+
+
+
+McRoberts & Adolf        Expires January 8, 2011               [Page 20]
+
+Internet-Draft                URIs for DVB                     July 2010
+
 
    [DAVIC9]   Digital Audio-Video Council, "DAVIC 1.4.1 Specification
               Part 9: Information Representation", 1999.
@@ -892,9 +1133,48 @@ Internet-Draft                URIs for DVB                 November 2010
 
 
 
-McRoberts & Adolf         Expires May 30, 2011                 [Page 16]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+McRoberts & Adolf        Expires January 8, 2011               [Page 21]
 
-Internet-Draft                URIs for DVB                 November 2010
+Internet-Draft                URIs for DVB                     July 2010
 
 
 Authors' Addresses
@@ -907,7 +1187,7 @@ Authors' Addresses
 
 
    Alexander Adolf
-   Conditon-ALPHA
+   Condition-ALPHA
    Gabelsbergerstrasse 60b
    Munich  80333
    GERMANY
@@ -948,5 +1228,5 @@ Authors' Addresses
 
 
 
-McRoberts & Adolf         Expires May 30, 2011                 [Page 17]
+McRoberts & Adolf        Expires January 8, 2011               [Page 22]
 
