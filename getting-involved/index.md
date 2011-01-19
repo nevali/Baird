@@ -24,6 +24,8 @@ the project, either with feature requests (for example, support for particular
 kinds of device, new services, and so on), or to highlight problems with
 the specifications.
 
+If you use IRC, you'll find us on [NoTube’s](http://www.notube.tv) IRC channel, <code>#notube</code>, on [irc.freenode.net](http://freenode.net). Note that this channel is [logged](http://dev.notu.be/2011/01/notubot/) and links are posted to the NoTube [delicious account](http://www.delicious.com/notube).
+
 A mailing list for discussing Project Baird is being generously hosted by
 [Martyn Drake](http://www.drake.org.uk/). You can subscribe and browse the
 archives at the [list information page](http://lists.drake.org.uk/mailman/listinfo/baird-discuss_lists.drake.org.uk).
