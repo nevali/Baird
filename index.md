@@ -14,7 +14,12 @@ Project Baird is built upon, wherever possible, existing standards and
 projects. Anybody is welcome to fork and submit patches to the Project
 Baird repository.
 
-### Focus areas
+### Recent publications
+
+* [Introduction to Project Baird for the DVB meeting in Geneva in November 2010](pubs/Baird-DVB-Overview.pdf) (1.4MB PDF)
+* [NoTube and Project Baird position paper for the second W3C Web and TV Workshop, submitted January 2011](pubs/notube_baird_webontv_position.pdf) (100KB PDF)
+
+### Project Focus areas
 
 Note: links below to wiki pages represent early drafts; names may change (and indeed
 have in the past), and things may get thrown out and started again. Feel free to
