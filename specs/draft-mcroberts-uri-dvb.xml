@@ -27,7 +27,7 @@
          </address>
       </author>
 
-      <date day="8" month="July" year="2011"/>
+      <date day="9" month="July" year="2011"/>
 
       <area>General</area>
 
@@ -372,11 +372,13 @@ dvb_entity            = *( original_network_id | transport_stream | service )
 
 transport_stream      = original_network_id "." transport_stream_id
 
-service               = service_string [ "." component_string [ "$" carousel_id ] ] [ event_string ]
+service               = service_string [ "." component_string
+                          [ "$" carousel_id ] ] [ event_string ]
 
 service_string        = textual_service | hier_service
 
-hier_service          = original_network_id [ "." [ transport_stream_id ] "." service_id
+hier_service          = original_network_id [ "." [ transport_stream_id ]
+                          "." service_id ]
 
 orginal_network_id    = hex_string
 
@@ -401,15 +403,15 @@ unreserved            = ALPHA | DIGIT | "-" | "." | "_" | "~"
 sub-delims            = "!" | "$" | "&amp;" | "'" | "(" | ")" |
                         "*" | "+" | "," | ";" | "="
 
-HEX                   = DIGIT | "A" | "B" | "C" | "D" | "E" | "F" | "a" | "b" | "c" | "d" | "e" | "f"
+HEX                   = DIGIT | "A" | "B" | "C" | "D" | "E" | "F" | 
+                        "a" | "b" | "c" | "d" | "e" | "f"
 
-DIGIT                 = "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"
-
-
+DIGIT                 = "0" | "1" | "2" | "3" | "4" |
+                        "5" | "6" | "7" | "8" | "9"
                   </artwork>
                </figure>
                <t>
-				 The broadcast_auth_domain, if present, may identify one the following:<list style="symbol">
+				 The broadcast_auth_domain, if present, may identify one the following:<list style="symbols">
 				 <t>An original_network_id</t>
 				 <t>A transport stream (through combination of original_network_id and transport_stream_id)</t>
 				 <t>A service, either through hexadecimal numeric identifiers or through in textual form</t>
@@ -425,23 +427,30 @@ DIGIT                 = "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9
 				 </t>
 				 <figure align="left">
 				   <artwork>
-component_string              = component_tag_set | qualified_component_set | fully_qualified_component_set
+component_string              = component_tag_set | qualified_component_set |
+                                fully_qualified_component_set
 
 component_tag_set             = component_tag *( "&amp;" component_tag )
 
 component_tag                 = hex_string
 
-qualified_component_set       = qualified_component *( "&amp;" qualified_component )
+qualified_component_set       = qualified_component 
+                                *( "&amp;" qualified_component )
 
 qualified_component           = component_type "-" component_id
 
-component_type                = "video" | "audio" | "data" | "subtitle" | "teletext" | "dvbst"
+component_type                = "video" | "audio" | "data" | "subtitle" |
+                                "teletext" | "dvbst"
 
-component_id                  = component_tag | iso639_lang_code | "default" | "current" | "hearing_impaired" | "visually_impaired" | "none"
+component_id                  = component_tag | iso639_lang_code | "default" |
+                                "current" | "hearing_impaired" |
+                                "visually_impaired" | "none"
 
-fully_qualified_component_set = fully_qualified_component *( "&amp;" fully_qualified_component )
+fully_qualified_component_set = fully_qualified_component
+                                *( "&amp;" fully_qualified_component )
 
-fully_qualified_component     = "fqc-" stream_and_component_type "," component_type [ "," iso639_lang_code ]
+fully_qualified_component     = "fqc-" stream_and_component_type ","
+                                component_type [ "," iso639_lang_code ]
 
 stream_and_component_type     = hex_string
 
@@ -497,7 +506,8 @@ period           = "PT" hours "H" minutes "M" [ seconds "S" ]
 			   </t>
 			   <figure align="left">
 				 <artwork>
-dvbapp_entity             = service_context | service_component_context | ait_string
+dvbapp_entity             = service_context | service_component_context |
+                            ait_string
 
 service_context           = "current" | "original"
 
@@ -523,7 +533,8 @@ LOWHEX                    = DIGIT | "a" | "b" | "c" | "d" | "e" | "f"
 
 LOWPOSHEX                 = POSDIGIT | "a" | "b" | "c" | "d" | "e" | "f"
 
-POSDIGIT                  = "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"
+POSDIGIT                  = "1" | "2" | "3" | "4" | "5" | 
+                            "6" | "7" | "8" | "9"
 				 </artwork>
 			   </figure>
 			   <t>
@@ -1054,21 +1065,6 @@ pchar     = unreserved | pct-encoded | sub-delims | ":" | "@"
             </front>
          </reference>
 
-         <reference anchor="RFC5234">
-            <front>
-               <title>Augmented BNF for Syntax Specifications: ABNF</title>
-               <author initials="D." surname="Crocker" role="editor">
-                  <organization>Brandenburg InternetWorking</organization>
-               </author>
-               <author initials="P." surname="Overell">
-                  <organization>THUS plc.</organization>
-               </author>
-               <date month="January" year="2008"/>
-            </front>
-            <seriesInfo name="RFC" value="5234"/>
-            <seriesInfo name="STD" value="68"/>
-         </reference>
-         
          <reference anchor="RFC2782">
             <front>
                <title>A DNS RR for specifying the location of services (DNS SRV)</title>
@@ -1091,18 +1087,6 @@ pchar     = unreserved | pct-encoded | sub-delims | ":" | "@"
                <date/>
             </front>
             <seriesInfo name="ETSI" value="TS 102 034"/>
-         </reference>
-
-         <reference anchor="DVB-HN" target="http://www.etsi.org/deliver/etsi_ts/102900_102999/102905/01.01.01_60/ts_102905v010101p.pdf">
-            <front>
-               <title>Digital Video Broadcasting (DVB); Technical Specification for DVB Services in
-                  the Home Network Phase 1</title>
-               <author>
-                  <organization abbrev="DVB">DVB Project</organization>
-               </author>
-               <date/>
-            </front>
-            <seriesInfo name="ETSI" value="TS 102 905"/>
          </reference>
 
          <reference anchor="DVB-TVA" target="http://www.etsi.org/deliver/etsi_ts/102300_102399/102323/01.04.01_60/ts_102323v010401p.pdf">
@@ -1172,16 +1156,6 @@ pchar     = unreserved | pct-encoded | sub-delims | ":" | "@"
                <date/>
             </front>
             <seriesInfo name="OCAP" value="OC-SP-OCAP1.0-I16-050803"/>
-         </reference>
-
-         <reference anchor="DAVIC9">
-            <front>
-               <title>DAVIC 1.4.1 Specification Part 9: Information Representation</title>
-               <author>
-                  <organization abbrev="DAVIC">Digital Audio-Video Council</organization>
-               </author>
-               <date year="1999"/>
-            </front>
          </reference>
 
          <reference anchor="BCP115">
