@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
-<rfc ipr="trust200902" submissionType="independent" category="info" seriesNo="5" docName="draft-mcroberts-uri-dvb-05">
+<rfc ipr="trust200902" submissionType="independent" category="info" seriesNo="6" docName="draft-mcroberts-uri-dvb-06">
 
    <front>
       <title abbrev="URIs for DVB">Uniform Resource Identifier (URI) Scheme for Digital Video
@@ -27,7 +27,7 @@
          </address>
       </author>
 
-      <date day="9" month="July" year="2011"/>
+      <date day="8" month="July" year="2011"/>
 
       <area>General</area>
 
