@@ -27,7 +27,7 @@
          </address>
       </author>
 
-      <date day="5" month="January" year="2011"/>
+      <date day="8" month="July" year="2011"/>
 
       <area>General</area>
 
@@ -53,68 +53,89 @@
             <xref target="DVB-MHP"/>, OCAP <xref target="OCAP1.0"/> or other XML based
             metadata.</t>
 
-         <t>These URI locate the actual digital TV, Radio or other multimedia broadcast programme
-            service (i.e. channel or event) and the audio-visual components conforming to that
-            programme for e.g. a HTTP based programme guide in the internet or other XML based
-            programme guides in digital broadcast set-top boxes. </t>
+         <t>
+		   These URI are used to locate the actual digital TV, Radio or other multimedia
+		    broadcast programme services (i.e., channels or events) and also the audio-visual
+			components related to that programme, for example an HTTP-based programme guide on
+			the Web or other XML-based electronic programme guides in digital broadcast
+			receivers.
+		 </t>
 
-         <t>This document defines the "dvb" URI scheme for the benefit of the Internet community,
-            given its definition as part of the Digital Video Broadcasting (DVB) suite of ETSI
-            standards.</t>
+         <t>
+		   This document defines the "dvb" URI scheme for the benefit of the Internet community,
+		   given its definition as part of the Digital Video Broadcasting (DVB) suite of ETSI
+		   standards.
+		 </t>
       </abstract>
    </front>
 
    <middle>
       <section title="Introduction" anchor="introduction">
-         <t>Standards governing televisions, set-top boxes and other consumer electronics devices
-            have for some time been developed with the Internet in mind. The use of Universal
-            Resource Identifiers (URIs) <xref target="RFC3986"/> is now commonplace, including for
-            the purpose of identifying resources delivered by way of terrestrial, satellite and
-            cable broadcasts.</t>
+         <t>
+		   Standards governing televisions, set-top boxes and other consumer electronics devices
+		   have for some time been developed with the Internet in mind. The use of Universal
+		   Resource Identifiers (URIs) <xref target="RFC3986"/> is now commonplace, including for
+		   the purpose of identifying resources delivered by way of terrestrial, satellite and
+		   cable broadcasts.
+		 </t>
 
-         <t>For this purpose, a URI scheme was developed as part of the <xref target="DVB">Digital
-               Video Broadcasting</xref> suite of standards specifically for the purpose of
-            identifying broadcasts delivered by way of DVB-compliant broadcasting systems. </t>
+         <t>
+		   For this purpose, a URI scheme was developed as part of the <xref target="DVB">Digital
+		   Video Broadcasting</xref> suite of standards specifically for the purpose of
+		   identifying broadcasts delivered by way of DVB-compliant broadcasting systems.
+		 </t>
 
-         <t>With the advent of digital broadcasting, digital multimedia broadcast services to the
-            home, based on MPEG-2 Transport Streams <xref target="MPEG-Systems"/> have been widely
-            available in recent years. Each broadcasting programme and composing components (i.e.
-            audio-visual and generic data components) are identifiable in the MPEG-2 Transport
-            Stream. TV/Radio broadcasting programmes within MPEG-2 Transport Stream packets can be
-            delivered over an IP network as well as over a digital broadcast network.</t>
+         <t>
+		   With the advent of digital broadcasting, digital multimedia broadcast services to the
+		   home, based on MPEG-2 Transport Streams <xref target="MPEG-Systems"/>, have been widely
+		   available in recent years. Each broadcast programme and component (i.e.
+		   audio-visual and generic data components) are identifiable within the MPEG-2 Transport
+		   Stream. Beyond digital broadcast, television and radio programmes can be delivered to
+		   receivers over an IP-based network within MPEG-2 Transport Stream packets.
+		 </t>
 
-         <t>The EPG (Electronic Programme Guide) service for TV/Radio programmes by which people are
-            able to search-select and acquire the favorite programme, must be able to locate
-            selected programme or service in a canonical form. This programme guide is now available
-            on web servers through the internet or im metadata services within the digital
-            broadcasting service to identify the actual broadcast programme material for such
-            advanced broadcasting services.</t>
+         <t>
+		   The Electronic Programme Guide (EPG) service for television and radio programmes
+		   which allows people to find and select programmes must be able to identify a given
+		   programme in a canonical form. As programme guides are increasingly being made
+		   available on the Web, and on-device programme guides are taking advantage of
+		   Internet connectivity, and as receiving devices are increasingly able to present
+		   programmes delivered both via digital broadcast and a variety of IP-based protocols,
+		   the the use of URIs to identify programmes is an obvious pragmatic choice.
+		 </t>
 
-         <t>This document defines the Uniform Resource Identifier (URI) schemes for broadcast
+         <t>
+		   This document defines the Uniform Resource Identifier (URI) schemes for broadcast
             programme resources over MPEG-2 Transport Stream <xref target="MPEG-Systems"/> for DVB
-            services, in conformance with the generic URI syntax <xref target="RFC3986"/> to have a
-            high affinity with IP networks.</t>
+            services, conforming to the generic URI syntax <xref target="RFC3986"/> to aid in
+			interoperability with existing IP-based services.
+		 </t>
 
-         <t>The Digital Video Broadcasting Project (DVB) is an industry-led consortium of over 270
-            broadcasters, manufacturers, network operators, software developers, regulatory bodies
-            and others in over 35 countries committed to designing global standards for the global
-            delivery of digital television and data services. Services using DVB standards are
-            available on every continent with a total of more than 500 million DVB receivers already
-            deployed. More information on DVB can be found on their website at <eref
-               target="http://www.dvb.org">http://www.dvb.org</eref></t>
+         <t>
+		   The Digital Video Broadcasting Project (DVB) is an industry-led consortium of over 270
+		   broadcasters, manufacturers, network operators, software developers, regulatory bodies
+		   and others in over 35 countries committed to designing global standards for the global
+		   delivery of digital television and data services. Services using DVB standards are
+		   available on every continent with a total of more than 500 million DVB receivers already
+		   deployed. More information on DVB can be found on their website at <eref
+		   target="http://www.dvb.org">http://www.dvb.org</eref>
+		 </t>
 
-         <t>This URI specification is for a permanent assignment.</t>
-
+         <t>
+		 This URI specification is for a permanent assignment.
+		 </t>
+		 
          <section title="Transmission Scheme">
-            <t>The audio, visual or private data components constituting a TV/radio programme
+            <t>
+			  The audio, visual or private data components constituting a TV/radio programme
                ("service") are defined as elementary stream (ES) components. Several of these
                TV/radio programmes are bundled in a transport stream (TS) multiplex for delivering
                over a broadcast transmission network (e.g. satellite, cable or terrestrial). The
-               distinguished unique number for each TS mux packet, elementary stream component,
-               transport stream and transmission network is assigned and transmitted over the
-               satellite, cable or terrestrial broadcasting media, even over the IP network,
-               together with the information table which describes these assigned numbers in the
-               form of MPEG-2 standard <xref target="MPEG-Systems"/>.</t>
+               distinguished unique number for each TS multiplexed packet, elementary stream
+			   component, transport stream and transmission network is assigned and transmitted
+			   over the satellite, cable or terrestrial broadcasting media, or over an IP network,
+               together with an information table which describesthese assigned numbers, as described
+			   by the MPEG-2 standard <xref target="MPEG-Systems"/>.</t>
 
             <figure title="Programme Delivery Scheme in MPEG-2 Transport Stream" align="center">
                <artwork>
@@ -143,29 +164,39 @@
                </artwork>
             </figure>
 
-            <t>All these elements are unambiguously identified in DVB systems by numerical ids:<list
+            <t>These elements are unambiguously identified in DVB systems through numerical identifiers:<list
                   style="symbols">
-                  <t>A <spanx style="strong">network_id</spanx> identifies a broadcast transmission
-                     network. On satellite and IP broadband, typically one network_id corresponds to
-                     an operator. On cable and terrestrial, where different radio frequencies might
-                     be used in different regions, operators typically use one network_id per such
-                     region.</t>
-                  <t>An <spanx style="strong">original_network_id</spanx> is used where TV/radio
-                     programmes are taken from one network, and are re-transmitted on another one.
-                     To enable receivers detecting that a programme is identical to another one, the
-                     original_network_id is used to indicate from which network the programme
-                     originates.</t>
-                  <t>A <spanx style="strong">transport_stream_id</spanx> is used to refer to a
-                     time-domain multiplex of several programmes carried in TS packets. One or more
-                     multiplexes can be transmitted on any given radio frequency in a DVB
-                     network.</t>
-                  <t>A <spanx style="strong">service_id</spanx> identifies a TV/radio or data
-                     programme within a TS multiplex. The number of programmes is limited by the
-                     capacity of the underlying physical channel.</t>
-                  <t>A <spanx style="strong">component_tag</spanx> identifies an elementary stream
-                     (ES) of video, audio, teletext, subtitles, or other data within a service.</t>
-               </list></t>
-
+                  <t>
+					A <spanx style="strong">network_id</spanx> identifies a broadcast transmission
+					network. On satellite and IP broadband, typically one network_id corresponds to
+					an operator. On cable and terrestrial, where different radio frequencies might
+					be used in different regions, operators typically use one network_id per such
+					region.
+				  </t>
+                  <t>
+					An <spanx style="strong">original_network_id</spanx> is used where TV/radio
+					programmes are taken from one network and are re-transmitted on another one
+					(noting that a "network" in this context may simply be a different broadcast
+					region for the same operator). The original_network_id is therefore used
+					by receivers as a means of determining equivalence across different networks.
+				  </t>
+                  <t>
+					A <spanx style="strong">transport_stream_id</spanx> is used to refer to a
+					time-domain multiplex of several programmes carried in TS packets. One or more
+					multiplexes can be transmitted on any given radio frequency in a DVB
+					network.
+				  </t>
+                  <t>
+					A <spanx style="strong">service_id</spanx> identifies a TV, radio or data
+					programme within a TS multiplex. The number of programmes is limited by the
+					capacity of the underlying physical channel.
+				  </t>
+                  <t>
+					A <spanx style="strong">component_tag</spanx> identifies an elementary stream
+					(ES) of video, audio, teletext, subtitles, or other data within a service.
+				  </t>
+			</list></t>
+			
             <figure title="Relationship of Network, Transport Stream, and Service" align="center">
                <artwork>
 +---------+
@@ -183,58 +214,71 @@
             </artwork>
             </figure>
 
-            <t>The original_network_id is an attribute of a transport stream (TS). In the simplest
-               case, all services originate from the network on which they are transmitted. Then,
-               the original_network_id of all the TS will be equal to the network_id. This typically
-               happens on networks operated by public broadcasters. If one of the public
-               broadcaster's TS is for instance re-transmitted by a cable operator, the information
-               about this TS would indicate the cable operator's network_id, and the
-               original_network_id of the public broadcaster. Hence all assigned network_id values
-               must represent actual broadcast network infrastructures, whereas this is not required
-               for original_network_id values. A globally active content provider may for example
-               choose to register an original_network_id, and distribute pre-multiplexed TS to
-               broadcasters, without operating any broadcast network of its own.</t>
+            <t>
+			  The original_network_id is an attribute of a transport stream (TS). In the simplest
+			  case, all services originate from the network on which they are transmitted. In this
+			  case, the original_network_id of all the TS will be equal to the network_id, and
+			  this typically occurs on networks operated by public broadcasters. If one of the public
+			  broadcaster's transport streams is, for example, re-transmitted by a cable operator,
+			  the information about this stream would containe the cable operator's network_id, and the
+			  original_network_id of the public broadcaster.
+			</t>
+			<t>
+			  Thus, all assigned network_id values must correlate with actual broadcast infrastructure,
+			  whereas this is not required for original_network_id values which have a more logical
+			  basis. A globally active content provider may for example choose to register an
+			  original_network_id, and distribute pre-multiplexed transport stream to
+			  broadcasters, without operating any broadcast network of its own.
+			</t>
             
-            <t>Both, the original_network_id and the network_id are coordinated by the DVB Project.
-               The DVB Project in turn has delegated the management of DVB identifiers to DVB
-               Services S&agrave;rl <xref target="DVB-SVCS"/>. DVB Services maintains a public
-               register of all assignments, and accepts requests for new assignments on their
-               website.</t>
+            <t>
+			  The assignment of values for both original_network_id and the network_id are coordinated
+			  by the DVB Project. The DVB Project in turn has delegated the management of DVB
+			  identifiers to DVB Services S&agrave;rl <xref target="DVB-SVCS"/>. DVB Services
+			  maintains a public register of all assignments, and accepts requests for new
+			  assignments on their website.</t>
 
-            <t>Due to the way broadcast transmission networks are operated, some relationships exist
-               between these identifiers:<list style="symbols">
-                  <t>Each TS is part of exactly one orginial_network_id (see above).</t>
-                  <t>Hence, each TS is unambiguously identified by the tuple {original_network_id,
-                     transport_stream_id}.</t>
-                  <t>According to <xref target="DVB-SI-SPEC"/>, each service_id is unique within a
-                     TS. Hence a service is unambiguously identified by the tuple
-                     {original_network_id, transport_stream_id, service_id}.</t>
-                  <t><xref target="DVB-SI-GDL"/> additionally requires that each service_id be
-                     unique within an original_network_id. Hence, in areas where
-                     <xref target="DVB-SI-GDL"/> has been made part of the broadcast profile, the tuple
-                     {original_network_id, service_id} unambiguously identifies a service.</t>
-               </list></t>
+            <t>
+			  Due to the way broadcast transmission networks are operated (and, to an extent, the
+			  design of MPEG-2), some relationships exist between these identifiers:<list style="symbols">
+			  <t>Each TS is part of exactly one orginial_network_id (see above).</t>
+			  <t>Hence, each TS is unambiguously identified by the tuple {original_network_id,
+			  transport_stream_id}.</t>
+			  <t>According to <xref target="DVB-SI-SPEC"/>, each service_id is unique within a
+			  TS. Hence a service is unambiguously identified by the tuple
+			  {original_network_id, transport_stream_id, service_id}.</t>
+			  <t><xref target="DVB-SI-GDL"/> additionally requires that each service_id be
+			  unique within an original_network_id. Hence, in areas where
+			  <xref target="DVB-SI-GDL"/> has been made part of the broadcast profile, the tuple
+			  {original_network_id, service_id} unambiguously identifies a service.</t>
+			</list></t>
+			
+            <t>
+			  During the process of performing a "service scan", a receiver will capture the identifying
+			  information contained within the transport streams and store their transport_stream_id,
+			  original_network_id and network_id, as well as the service_id values of all of the services
+			  carried within that transport stream. As each radio frequency channel is scanned, the
+			  receiver constructs a table correlating each of these tuples with the radio frequency
+			  channels and other modulation parameters, such that when it is required to switch to
+			  specific service within a transport stream, it can tune the radio receiver appropriately.
+			  Within the context of <xref target="DVB-IPTV"/>, of course, there are no radio frequencies,
+			  however the same model of broadcasters, networks and services is maintained and the same
+			  identifiers are used with the same semantics.
+			</t>
 
-            <t>During a scan run, a receiver will pick up information about TS. It will learn their
-               transport_stream_id, original_network_id and network_id. Since it scans different
-               radio frequency channels, it is able to link these identifiers to radio frequencies
-               and other modulation parameters. On <xref target="DVB-IPTV"/>, of course no radio
-               frquencies are used. The model of broadcasters, networks, and services is however
-               maintained. Hence a <xref target="DVB-IPTV"/> receiver uses the same identifiers with
-               the above semantics to identify services.</t>
-
-            <t>Finally, a DVB service is composed of one or more components. These are identified
-               within the service by their component_tag. A component can be either an elementary
-               stream (ES) carrying video, audio, teletext, subtitles, or other synchronised data,
-               or generic data (see also <xref target="DVB-DATA"/>, <xref target="DVB-TVA"/> and
-                  <xref target="DVB-MHP"/>). Each of these components is then sliced into fragments
-               and packetised in TS packets <xref target="MPEG-Systems"/>. All packets for a given
-               component are labeled with the same TS packet identifier (PID), effectively providing
-               a virtual channel in the TS for the component. All packtes are then multiplexed in
-               the time domain according ot each component's data rate requirements, and the
-               resulting TS is passed to the transmission equipment. For examples how these
-               identifiers are used, please refer to <xref target="examples"/>.</t>
-
+            <t>
+			  A DVB service is composed of one or more components. These are identified
+			  within the context of a service by their component_tag. A component can be
+			  either an elementary stream (ES) carrying video, audio, teletext, subtitles,
+			  or other synchronised data or generic data (see also <xref target="DVB-DATA"/>,
+			  <xref target="DVB-TVA"/> and <xref target="DVB-MHP"/>). Each of these
+			  components is sliced into fragments and packetised in TS packets
+			  <xref target="MPEG-Systems"/>. All packets for a given component are labeled
+			  with the same TS Packet Identifier (PID), effectively providing a virtual channel
+			  within the TS for that component. The packets are time-division multiplexed
+			  according to each component's data rate requirements for broadcast.
+			</t>
+			
             <figure title="Example TS time domain multiplex" align="center">
                <artwork>
  ...|v|v|v|a|t|v|v|v|v|v|a|s|v|v|a|v|v|t|a|v|v|...
@@ -248,34 +292,41 @@
  v2, a2, s2: HD video, audio and subtitles of service 2
             </artwork>
             </figure>
-
-            <t>In the above figure, all TS packets for "v1" would share the same PID value. Equally,
-               all TS packets for "a2" would also share another PID value, etc. The metadata
-               describing the network, transport streams, services, and their components is
-               transmitted in a TS on well-known PID values according to <xref target="MPEG-Systems"
-               /> and <xref target="DVB-SI-SPEC"/>. These metadata TS packets are not shown in the
-               above figure.</t>
-         </section>
-      </section>
-
-      <section title="Digital Video Broadcasting URI Scheme" anchor="dvburi-scheme">
-         <t>The DVB URI is defined by <xref target="DVB-URI"/>, and that shall be considered the
-            authoritative source of the definition of the scheme-specific-part of the DVB URI.</t>
-
-         <t> URIs employing the dvb scheme are URLs. DVB URLs may refer to any of the following
-            kinds of resource: <list style="symbols">
-               <t>A DVB service</t>
-               <t>Components within a DVB service (such as an audio or video stream)</t>
-               <t>An event (for example, a programme)</t>
-               <t>A transport stream</t>
-               <t>A file contained within a DSM-CC object carousel</t>
-               <t>Interactive applications</t>
-            </list>
+			
+            <t>
+			  In the above figure, all TS packets for "v1" would share the same PID value.
+			  Similarly, all TS packets for "a2" would also share a different PID value, and so
+			  on. The metadata describing the network, transport streams, services, and their
+			  components is transmitted within a TS using well-known PID values according to
+			  <xref target="MPEG-Systems"/> and <xref target="DVB-SI-SPEC"/>. These metadata
+			  TS packets are not shown in the above figure for clarity.
+			</t>
+		  </section>
+		</section>
+		  
+		<section title="Digital Video Broadcasting URI Scheme" anchor="dvburi-scheme">
+		  <t>
+			The DVB URI is defined by <xref target="DVB-URI"/>, and that shall be considered the
+			authoritative source of the definition of the scheme-specific-part of the DVB URI.
+		  </t>
+		  
+         <t>
+		   URIs employing the dvb scheme are URLs. DVB URLs may refer to any of the following
+		   kinds of resource: <list style="symbols">
+		   <t>A DVB service</t>
+		   <t>Components within a DVB service (such as an audio or video stream)</t>
+		   <t>An event (for example, a programme)</t>
+		   <t>A transport stream</t>
+		   <t>A file contained within a DSM-CC object carousel</t>
+		   <t>Interactive applications</t>
+		 </list>
          </t>
 
          <section title="Syntax">
-            <t>This URI scheme is in conformance with the generic URI syntax <xref target="RFC3986"/>.
-               It takes the form:</t>
+		   <t>
+			 This URI scheme is in conformance with the generic URI syntax <xref target="RFC3986"/>.
+			 It takes the form:
+		   </t>
 
             <figure align="left">
                <artwork>
@@ -283,182 +334,375 @@ MPEG-2_TS_URI       = transmission_scheme ":" path
 
 transmission_scheme = "dvb"
 
-path                = [ "//" broadcast_auth_domain ] comp_path
+path                = dvb_net_path | dvbapp_entity | path-absolute | extension
+
+dvb_net_path        = "//" dvb_entity [ path-absolute ]
                </artwork>
             </figure>
 
             <section title="transmission_scheme">
-               <t> The transmission_scheme name represents the transmission system using the MPEG-2
-                  standard in the digital broadcasting service in accordance with Section 3.1 of
-                  <xref target="RFC3986"/>.</t>
-
-               <t>In this definition "dvb" represents the DVB system which is based on <xref target="BT.1306"/>, <xref target="BO.1516"/>, <xref target="J.83"/>, and <xref target="DVB-IPTV"/>.</t>
+               <t>
+				 The transmission_scheme name represents the transmission system using the MPEG-2
+				 standard in the digital broadcasting service in accordance with Section 3.1 of
+			   <xref target="RFC3986"/>.
+			   </t>
+			   
+               <t>
+				 In this definition "dvb" represents the DVB system which is based on <xref target="BT.1306"/>,
+			   <xref target="BO.1516"/>, <xref target="J.83"/>, and <xref target="DVB-IPTV"/>.</t>
             </section>
 
-            <section title="broadcast_auth_domain">
-               <t>The broadcast_auth_domain includes the unique number to which a government
-                  authority or approved organization govern for the sake of preserving uniqueness.
-                  Hence broadcast_auth_domain allows to identify a specific broadcasting company or
-                  service in the digital broadcasting network. The unique number in
-                  broadcast_auth_domain consists of a sequence of characters separated by ".", which
-                  is preceded by a double slash ("//") and optionally terminated by a slash
-                  ("/").</t>
-
-               <figure align="left">
+            <section title="dvb_entity">
+			  <t>
+				A dvb_entity uniquely identifies an originator, transport stream,
+				service, event or component within the DVB system, either by way of numeric
+				identifiers or through the use of textual service identifiers (some of which
+				are pre-defined, while others may be advertised within the system). The
+				broadcast_auth_domain may also refer to a specific DVB carousel, or include
+				a timed event constraint.
+			  </t>
+			  
+			  <t>
+				The general syntax of the broadcast_auth_domain is as follows (note that some
+				components of the syntax are defined later in this section):
+			  </t>
+			  <figure align="left">
                   <artwork>
-broadcast_auth_domain = 0*255 ( unreserved | sub-delims )
+dvb_entity            = *( original_network_id | transport_stream | service )
+
+transport_stream      = original_network_id "." transport_stream_id
+
+service               = service_string [ "." component_string [ "$" carousel_id ] ] [ event_string ]
+
+service_string        = textual_service | hier_service
+
+hier_service          = original_network_id [ "." [ transport_stream_id ] "." service_id
+
+orginal_network_id    = hex_string
+
+transport_stream_id   = hex_string
+
+network_id            = hex_string
+
+carousel_id           = hex_string
+
+hex_string            = 1 * hex
+
+textual_service       = unreserved_string | quoted_string
+
+unreserved_string     = 1*255 ( unreserved )
+
+quoted_string         = "'" special-string "'"
+
+special_string        = 1*255 ( unreserved | sub-delims )
 
 unreserved            = ALPHA | DIGIT | "-" | "." | "_" | "~"
 
 sub-delims            = "!" | "$" | "&amp;" | "'" | "(" | ")" |
                         "*" | "+" | "," | ";" | "="
+
+HEX                   = DIGIT | "A" | "B" | "C" | "D" | "E" | "F" | "a" | "b" | "c" | "d" | "e" | "f"
+
+DIGIT                 = "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"
+
+
                   </artwork>
                </figure>
+               <t>
+				 The broadcast_auth_domain, if present, may identify one the following:<list style="symbol">
+				 <t>An original_network_id</t>
+				 <t>A transport stream (through combination of original_network_id and transport_stream_id)</t>
+				 <t>A service, either through hexadecimal numeric identifiers or through in textual form</t>
+				 <t>An audio, visual, or data component within a service</t>
+				 <t>A carousel contained within a component of a service</t>
+				 <t>An event which occurs within a service</t>
+			   </list></t>
 
-               <t>This broadcast_auth_domain consists of a unique name in the digital broadcasting
-                  network conforming to the URI.</t>
-            </section>
+			   <section title="component_string">
+				 <t>
+				   The component_string referenced in the syntax above is used to identify a component of
+				   a service and takes the form:
+				 </t>
+				 <figure align="left">
+				   <artwork>
+component_string              = component_tag_set | qualified_component_set | fully_qualified_component_set
 
-            <section title="comp_path">
-               <t>The comp_path indicates the unique identification of the audio, visual and data
-                  component(s) constituting a broadcast programme or event. It can also be
-                  structured in hierarchical or non-hierarchical form to identify particular
-                  programmes of a service. It is assigned in each broadcasting company or authority
-                  for preserving uniqueness in a sequence of TV/radio programmes in one service. The
-                  broadcast_auth_domain identifies the broadcast programme (e.g. channel or specific
-                  programme event) and comp_path determines the component(s) of the broadcasting
-                  programme.</t>
+component_tag_set             = component_tag *( "&amp;" component_tag )
 
-               <t>comp_path consists of a sequence of characters, optionally separated by a slash
-                  ("/"), to indicate the audio, visual and data component(s) within the scope of the
-                  broadcast authority indicated in the broadcast_auth_domain.</t>
+component_tag                 = hex_string
 
-               <figure>
-                  <artwork>
-comp_path = *( "/" segment )
+qualified_component_set       = qualified_component *( "&amp;" qualified_component )
 
-segment   = *pchar
+qualified_component           = component_type "-" component_id
+
+component_type                = "video" | "audio" | "data" | "subtitle" | "teletext" | "dvbst"
+
+component_id                  = component_tag | iso639_lang_code | "default" | "current" | "hearing_impaired" | "visually_impaired" | "none"
+
+fully_qualified_component_set = fully_qualified_component *( "&amp;" fully_qualified_component )
+
+fully_qualified_component     = "fqc-" stream_and_component_type "," component_type [ "," iso639_lang_code ]
+
+stream_and_component_type     = hex_string
+
+iso639_lang_code              = 3 ( "A-Z" | "a-z" )
+				   </artwork>
+				 </figure>
+			   </section>
+			   
+			   <section title="event_string">
+				 <t>An event_string identifies an event occurring within a service:</t>
+				 <figure align="left">
+				   <artwork>
+event_string     = ";" [ event_id ] [ ";" tva_id ] [ "~" time_duration ]
+
+event_id         = hex_string
+
+tva_id           = hex_string
+
+time_duration    = datetime "--" period
+
+datetime         = date "T" time "Z"
+
+date             = year month day
+
+year             = digit digit digit digit
+
+month            = digit digit
+
+day              = digit digit
+
+time             = hours minutes [ seconds ]
+
+hours            = digit digit
+
+minutes          = digit digit
+
+second           = digit digit
+
+period           = "PT" hours "H" minutes "M" [ seconds "S" ]
+				   </artwork>
+				 </figure>
+				 <t>
+				   An event may be identified by its event_id, a TV-Anytime tva_id, a datetime
+				   and duration according to UTC, or any combination of the three.
+				 </t>			  
+			   </section>
+			 </section>
+	
+			 <section title="dvbapp_entity">
+			   <t>
+				 A dvbapp_entity a specific form of DVB entity identifier which is used in interactive
+				 applications, and takes the form:
+			   </t>
+			   <figure align="left">
+				 <artwork>
+dvbapp_entity             = service_context | service_component_context | ait_string
+
+service_context           = "current" | "original"
+
+service_component_context = "current.audio" | "current.video" | "current.av"
+
+ait_string                = ait_filter ".ait" ait_abs_path
+
+ait_filter                = "current" | service_string
+
+ait_abs_path              = "/app_root" | ait_application
+
+ait_application           = "/" org_id_part "." app_id_part [ "?" ait_params ]
+
+org_id_part               = lowposhex_string
+
+app_id_part               = lowposhex_string
+
+ait_params                = "arg_" 1*digit "=" *uric
+
+lowposhex_string          = LOWPOSHEXDIGIT *LOWHEX
+
+LOWHEX                    = DIGIT | "a" | "b" | "c" | "d" | "e" | "f"
+
+LOWPOSHEX                 = POSDIGIT | "a" | "b" | "c" | "d" | "e" | "f"
+
+POSDIGIT                  = "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"
+				 </artwork>
+			   </figure>
+			   <t>
+				 For further information, please see <xref target="DVB-MHP"/>.
+			   </t>
+			 </section>
+			 
+			 <section title="extension">
+			   <t>
+				 Future revisions of <xref target="DVB-URI"/> and related specifications may
+				 add additional syntax elements or otherwise extend the dvb URI scheme to
+				 support emerging DVB-based applications. For this reason, the extension
+				 element has the following intrinsic syntax:
+			   </t>
+			   <figure align="left">
+				 <artwork>
+extension = *pchar				
 
 pchar     = unreserved | pct-encoded | sub-delims | ":" | "@"
-                  </artwork>
-               </figure>
-            </section>
-         </section>
-
-         <section title="Encoding">
-            <t>Section 5 of <xref target="DVB-URI"/> specifies that: </t>
-
-            <t>&quot;All characters not within the range of characters allowed in a URI must be
+				 </artwork>
+			   </figure>
+			 </section>
+		   </section>
+		   
+		   <section title="Encoding">
+			 <t>
+			 Section 5 of <xref target="DVB-URI"/> specifies that:
+			 </t>
+			 
+			 <t>
+			   &quot;All characters not within the range of characters allowed in a URI must be
                encoded into UTF-8 and included in the URI as a sequence of escaped octets. An
                escaped octet is encoded as a character triplet, consisting of the percent character
                &quot;%&quot; followed by the two hexadecimal digits representing the octet
-               code.&quot; </t>
-         </section>
+               code.&quot;
+			 </t>
+		   </section>
+		   
+		   <section title="Community Considerations">
+			 <section title="Context of Use">
+			   <t>
+				 The "dvb" URIs are used as references to resources in digitial multimedia
+				 programmes, most often within the context of DVB itself: interactive television
+				 applications use them in order to locate resources and to reference services and
+				 programmes. These are typically broadcast via satellite, cable and terrestrial
+				 systems, but may also be retrieved on-demand from a server via the Internet.
+				 Providers of such broadcast services may e.g. reference programmes in the
+				 broadcast from an Electronic Programme Guide (EPG) which is published on their
+				 web- site. On another example, the metadata which is part of the multimedia
+				 broadcasts can also contain such URIs to establish hyperlinks between broadcast
+				 services. This might for instance include multi-angle video services (e.g. for
+				 sports events). Users of suitably-equipped clients -- i.e. with a suitable tuner
+				 card and software installed (Open Source tools including
+				 <eref target="http://www.linuxtv.org/"/> and <eref target="http://www.mythtv.org/"/>)
+				 -- are able to exchange such URIs (e.g. via an instant messaging service or
+				 email) to provide each other clickable hyperlinks to multimedia content they deem
+				 of interest.
+			  </t>
+			  
+			  <t>
+				DVB has published specifications for the distribution of multimedia services via
+				IP unicast and multicast mechanisms. In this context, such URIs are usable in any
+				player client software (no tuner card required) that implements the respective
+				protocols and has the relevant audio and video codecs installed.
+			  </t>
 
-         <section title="Community Considerations">
-            <section title="Context of Use">
-               <t>The "dvb" URIs are used as references to resources in digitial multimedia
-                  programmes, most often within the context of DVB itself: interactive television
-                  applications use them in order to locate resources and to reference services and
-                  programmes. These are typically broadcast via satellite, cable and terrestrial
-                  systems, but may also be retrieved on-demand from a server via the Internet.
-                  Providers of such broadcast services may e.g. reference programmes in the
-                  broadcast from an Electronic Programme Guide (EPG) which is published on their
-                  web- site. On another example, the metadata which is part of the multimedia
-                  broadcasts can also contain such URIs to establish hyperlinks between broadcast
-                  services. This might for instance include multi-angle video services (e.g. for
-                  sports events). Users of suitably equipepd clients - i.e. with a suitable tuner
-                  card and software installed (Open Source tools include e.g.
-                  http://www.linuxtv.org/ and http://www.mythtv.org/) - are able to exchange such
-                  URIs (e.g. via an instant messaging service or email) to provide each other
-                  clickable hyperlinks to multimedia content they deem of interest.</t>
-
-               <t>DVB has published specifications for the distribution of multimedia services via
-                  IP unicast and multicast mechanisms. In this context, such URIs are usable in any
-                  player client software (no tuner card required) that implements the respective
-                  protocols and has the relevant audio and video codecs installed. </t>
-               <t><list style="symbols">
-                     <t>For example, a receiver connected to a local area network might allow other
-                        devices to query it for information regarding the current programme or
-                        service: in this context, a dvb URI would typically be the most
-                        authoritative single identifier which could be used to to refer to that
-                        programme.</t>
-
-                     <t>Similarly, a web service can be implemented by a platform operator or a
-                        broadcaster (or some party working on their behalf) which allows resolution
-                        of dvb URIs - this would allow a device to retrieve web pages or other
-                        content which relate to the current programme (or some other entry in the
-                        device's Electronic Programme Guide).</t>
-                  </list></t>
-
-               <t>Implementing such a system naturally requires some mechanism for devices to
-                  discover an appropriate resolution service. DVB has developed has developed a
-                  service discovery and selection (SD&amp;S) solution as part of
-                  <xref target="DVB-IPTV"/>.
-               </t>
-            </section>
+			  <t><list style="symbols">
+				<t>
+				  For example, a receiver connected to a local area network might allow other
+				  devices to query it for information regarding the current programme or
+				  service: in this context, a dvb URI would typically be the most
+				  authoritative single identifier which could be used to to refer to that
+				  programme.
+				</t>
+				<t>
+				  Similarly, a web service can be implemented by a platform operator or a
+				  broadcaster (or some party working on their behalf) which allows resolution
+				  of dvb URIs - this would allow a device to retrieve web pages or other
+				  content which relate to the current programme (or some other entry in the
+				  device's Electronic Programme Guide).
+				</t>
+			  </list></t>
+			  
+			  <t>
+				Implementing such a system naturally requires some mechanism for devices to
+				discover an appropriate resolution service. DVB has developed has developed a
+				service discovery and selection (SD&amp;S) solution as part of
+				<xref target="DVB-IPTV"/>.
+			  </t>
+			 </section>
             
-            <section title="Resolution Considerations">
-               <t>The resolution is determined through the process of development of
-                  DVB standards by the Digital Video Broadcasting Project (DVB).</t>
+			 <section title="Resolution Considerations">
+               <t>
+				 The resolution process is determined through the development of
+				 DVB standards by the Digital Video Broadcasting Project (DVB).
+			   </t>
                
-               <t>Since the implementations envisaged cover a wide range of devices with quite
-                  different access methods and capabilities, no single resolution or delegation
-                  mechanism can be referenced in this document.</t>
+               <t>
+				 Since the implementations envisaged cover a wide range of devices with quite
+				 different access methods and capabilities, no single resolution or delegation
+				 mechanism can be referenced in this document.
+			   </t>
                
                <t>Currently 2 client system classes are covered by DVB specifications:</t>
                
                <t><list style="symbols">
-                     <t>A broadcast set-top box which only has a unidirectional, receive-only
-                        connection. Hence all DVB URIs need to be resolvable from the service
-                        discovery information received in the broadcast stream.</t>
-                  
-                     <t>A "home network end device" (HNED) which could be an IPTV set-top box,
-                        networked TV or personal digital recorder with an Ethernet or WLAN
-                        connection to a home gateway device.</t>
-               </list>
-               </t>
+				 <t>
+				   A broadcast set-top box or other receiver which only has a unidirectional,
+				   receive-only connection -- for example by way of a UHF radio receiver.
+				   Hence, all DVB URIs need to be resolvable from the service discovery
+				   information received within the broadcast stream.
+				 </t>
+				 
+				 <t>
+				   A "home network end device" (HNED) which could be an IPTV set-top box,
+				   networked TV or personal digital recorder with an Ethernet or WLAN
+				   connection to a home gateway device.
+				 </t>
+               </list></t>
                
-               <t>Further device classes will be addressed as DVB standardisation progresses. The
-                  dvb URIs must however remain valid. DVB will define appropriate resolution
-                  mechanisms to ensure that DVB URIs remain valid for those new device classes as
-                  well.</t>
+               <t>
+				 Further device classes will be addressed as DVB standardisation progresses. The
+				 dvb URIs must however remain valid. DVB will define appropriate resolution
+				 mechanisms to ensure that DVB URIs remain valid for those new device classes as
+				 well.
+			   </t>
                
-               <t>For the two above example device classes, 3 ways of conveying such resolution
-                  information are currently defined by DVB:</t>
+               <t>
+				 For the two above example device classes, three mechanisms of conveying such resolution
+				 information are currently defined by DVB:
+			   </t>
                
                <t><list style="symbols">
-                     <t>Repeated, cyclic transmission of service discovery information as auxiliary
-                        data in digital TV broadcast streams over satellite, cable or terrestrial
-                        transmissions according to <xref target="DVB-SI-SPEC"/>, <xref target="DVB-DATA"/>
-                        and <xref target="DVB-TVA"/>.</t>
-                  
-                     <t>Repeated, cyclic multicast transmission of SD&amp;S Records via the DVBSTP
-                        protocol according to <xref target="DVB-IPTV"/>.</t>
-                  
-                     <t>Unicast delivery of SD&amp;S Records in response to HTTP "GET /dvb/sdns"
-                        requests according to <xref target="DVB-IPTV"/>.</t>
+				 <t>
+				   Repeated, cyclic transmission of service discovery information as auxiliary
+				   data in digital TV broadcast streams over satellite, cable or terrestrial
+				   transmissions according to <xref target="DVB-SI-SPEC"/>, <xref target="DVB-DATA"/>
+				   and <xref target="DVB-TVA"/>. Typically, this information is collated and stored
+				   during a "service scan". It can then be looked up at point of resolution, and
+				   the receiver may tune to the associated frequency and if demultiplex the
+				   appropriate transport stream.
+				 </t>
+				 
+				 <t>
+				   Repeated, cyclic multicast transmission of SD&amp;S Records via the DVBSTP
+				   protocol according to <xref target="DVB-IPTV"/>.
+				 </t>
+						
+				 <t>
+				   Unicast delivery of SD&amp;S Records in response to HTTP "GET /dvb/sdns"
+				   requests according to <xref target="DVB-IPTV"/>.
+				 </t>
                </list></t>
             </section>
-
+			
             <section title="Implementation Considerations">
+			  
+			  <section title="Considerations for resolution server software">
+                  <t>
+					With on-going development of DVB standards, DVB will establish requirements and
+					seek candidates for operating resolution servers as appropriate.
+				  </t>
                
-               <section title="Considerations for resolution server software">
-                  <t>With on-going development of DVB standards, DVB will establish requirements and
-                     seek candidates for operating resolution servers as appropriate.</t>
-               
-                  <t>To boot-strap the resolution process, a DVB client needs to discover an entry
-                     point (or set of) from which to obtain an initial Service Discovery and
-                     Selection XML record:</t>
-               
+                  <t>
+					To boot-strap the resolution process, a DVB client needs to discover an entry
+					point (or set of) from which to obtain an initial Service Discovery and
+					Selection XML record:
+				  </t>
+				  
                   <t><list style="symbols">
-                        <t>By default, the service discovery information is provided on the IANA
-                           registered well-known port dvbservdsc (port number 3937) via tcp and udp
-                           (see <eref target="http://www.iana.org/assignments/port-numbers">
-                           http://www.iana.org/assignments/port-numbers</eref>) on the IANA
-                           registered well-known multicast addresses 224.0.23.14 (DvbServDisc on
-                           IPv4) and FF0X:0:0:0:0:0:0:12D (DvbServDisc on IPv6).</t>
-                     
+					<t>
+					  By default, the service discovery information is provided on the IANA
+					  registered well-known port dvbservdsc (port number 3937) via tcp and udp
+					  (see <eref target="http://www.iana.org/assignments/port-numbers">
+					  http://www.iana.org/assignments/port-numbers</eref>) on the IANA
+					  registered well-known multicast addresses 224.0.23.14 (DvbServDisc on
+					  IPv4) and FF0X:0:0:0:0:0:0:12D (DvbServDisc on IPv6).
+					</t>
+					
                         <t>As set forth in <xref target="DVB-IPTV"/>, a list of non-default Service
                            Discovery and Selection (SD&amp;S) entry points addresses may also be
                            provided via DNS based on the service location resource record (SRV RR)
