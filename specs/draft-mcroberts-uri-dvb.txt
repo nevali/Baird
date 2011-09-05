@@ -4,9 +4,9 @@
 Network Working Group                                  M. McRoberts, Ed.
 Internet-Draft                                      British Broadcasting
 Intended status: Informational                              Corportation
-Expires: January 9, 2012                                        A. Adolf
+Expires: March 8, 2012                                          A. Adolf
                                                          Condition-ALPHA
-                                                            July 8, 2011
+                                                       September 5, 2011
 
 
 Uniform Resource Identifier (URI) Scheme for Digital Video Broadcasting
@@ -52,12 +52,12 @@ Status of this Memo
 
 
 
-McRoberts & Adolf        Expires January 9, 2012                [Page 1]
+McRoberts & Adolf         Expires March 8, 2012                 [Page 1]
 
-Internet-Draft                URIs for DVB                     July 2011
+Internet-Draft                URIs for DVB                September 2011
 
 
-   This Internet-Draft will expire on January 9, 2012.
+   This Internet-Draft will expire on March 8, 2012.
 
 Copyright Notice
 
@@ -108,9 +108,9 @@ Copyright Notice
 
 
 
-McRoberts & Adolf        Expires January 9, 2012                [Page 2]
+McRoberts & Adolf         Expires March 8, 2012                 [Page 2]
 
-Internet-Draft                URIs for DVB                     July 2011
+Internet-Draft                URIs for DVB                September 2011
 
 
 1.  Introduction
@@ -164,9 +164,9 @@ Internet-Draft                URIs for DVB                     July 2011
 
 
 
-McRoberts & Adolf        Expires January 9, 2012                [Page 3]
+McRoberts & Adolf         Expires March 8, 2012                 [Page 3]
 
-Internet-Draft                URIs for DVB                     July 2011
+Internet-Draft                URIs for DVB                September 2011
 
 
 1.1.  Transmission Scheme
@@ -220,9 +220,9 @@ Internet-Draft                URIs for DVB                     July 2011
 
 
 
-McRoberts & Adolf        Expires January 9, 2012                [Page 4]
+McRoberts & Adolf         Expires March 8, 2012                 [Page 4]
 
-Internet-Draft                URIs for DVB                     July 2011
+Internet-Draft                URIs for DVB                September 2011
 
 
    o  An *original_network_id* is used where TV/radio programmes are
@@ -276,9 +276,9 @@ Internet-Draft                URIs for DVB                     July 2011
 
 
 
-McRoberts & Adolf        Expires January 9, 2012                [Page 5]
+McRoberts & Adolf         Expires March 8, 2012                 [Page 5]
 
-Internet-Draft                URIs for DVB                     July 2011
+Internet-Draft                URIs for DVB                September 2011
 
 
    globally active content provider may for example choose to register
@@ -332,9 +332,9 @@ Internet-Draft                URIs for DVB                     July 2011
 
 
 
-McRoberts & Adolf        Expires January 9, 2012                [Page 6]
+McRoberts & Adolf         Expires March 8, 2012                 [Page 6]
 
-Internet-Draft                URIs for DVB                     July 2011
+Internet-Draft                URIs for DVB                September 2011
 
 
    audio, teletext, subtitles, or other synchronised data or generic
@@ -388,9 +388,9 @@ Internet-Draft                URIs for DVB                     July 2011
 
 
 
-McRoberts & Adolf        Expires January 9, 2012                [Page 7]
+McRoberts & Adolf         Expires March 8, 2012                 [Page 7]
 
-Internet-Draft                URIs for DVB                     July 2011
+Internet-Draft                URIs for DVB                September 2011
 
 
 2.  Digital Video Broadcasting URI Scheme
@@ -444,9 +444,9 @@ Internet-Draft                URIs for DVB                     July 2011
 
 
 
-McRoberts & Adolf        Expires January 9, 2012                [Page 8]
+McRoberts & Adolf         Expires March 8, 2012                 [Page 8]
 
-Internet-Draft                URIs for DVB                     July 2011
+Internet-Draft                URIs for DVB                September 2011
 
 
 2.1.1.  dvb-scheme
@@ -500,9 +500,9 @@ hex-string                 = 1*HEXDIG
 
 
 
-McRoberts & Adolf        Expires January 9, 2012                [Page 9]
+McRoberts & Adolf         Expires March 8, 2012                 [Page 9]
 
-Internet-Draft                URIs for DVB                     July 2011
+Internet-Draft                URIs for DVB                September 2011
 
 
    o  A service, either through hexadecimal numeric identifiers or
@@ -556,9 +556,9 @@ iso639-language-code              = 3ALPHA
 
 
 
-McRoberts & Adolf        Expires January 9, 2012               [Page 10]
+McRoberts & Adolf         Expires March 8, 2012                [Page 10]
 
-Internet-Draft                URIs for DVB                     July 2011
+Internet-Draft                URIs for DVB                September 2011
 
 
 2.1.2.2.  event-constraint
@@ -612,9 +612,9 @@ Internet-Draft                URIs for DVB                     July 2011
 
 
 
-McRoberts & Adolf        Expires January 9, 2012               [Page 11]
+McRoberts & Adolf         Expires March 8, 2012                [Page 11]
 
-Internet-Draft                URIs for DVB                     July 2011
+Internet-Draft                URIs for DVB                September 2011
 
 
  dvb-app-entity   = ( "current" [ ( ".audio" / ".video" / ".av" ) ] )
@@ -668,9 +668,9 @@ Internet-Draft                URIs for DVB                     July 2011
 
 
 
-McRoberts & Adolf        Expires January 9, 2012               [Page 12]
+McRoberts & Adolf         Expires March 8, 2012                [Page 12]
 
-Internet-Draft                URIs for DVB                     July 2011
+Internet-Draft                URIs for DVB                September 2011
 
 
    resources and to reference services and programmes.  These are
@@ -724,9 +724,9 @@ Internet-Draft                URIs for DVB                     July 2011
 
 
 
-McRoberts & Adolf        Expires January 9, 2012               [Page 13]
+McRoberts & Adolf         Expires March 8, 2012                [Page 13]
 
-Internet-Draft                URIs for DVB                     July 2011
+Internet-Draft                URIs for DVB                September 2011
 
 
    document.
@@ -780,9 +780,9 @@ Internet-Draft                URIs for DVB                     July 2011
 
 
 
-McRoberts & Adolf        Expires January 9, 2012               [Page 14]
+McRoberts & Adolf         Expires March 8, 2012                [Page 14]
 
-Internet-Draft                URIs for DVB                     July 2011
+Internet-Draft                URIs for DVB                September 2011
 
 
    o  By default, the service discovery information is provided on the
@@ -836,9 +836,9 @@ Internet-Draft                URIs for DVB                     July 2011
 
 
 
-McRoberts & Adolf        Expires January 9, 2012               [Page 15]
+McRoberts & Adolf         Expires March 8, 2012                [Page 15]
 
-Internet-Draft                URIs for DVB                     July 2011
+Internet-Draft                URIs for DVB                September 2011
 
 
    use any such trademarks or service marks solely in exercising its
@@ -892,9 +892,9 @@ Internet-Draft                URIs for DVB                     July 2011
 
 
 
-McRoberts & Adolf        Expires January 9, 2012               [Page 16]
+McRoberts & Adolf         Expires March 8, 2012                [Page 16]
 
-Internet-Draft                URIs for DVB                     July 2011
+Internet-Draft                URIs for DVB                September 2011
 
 
 2.5.2.  Referring to service components
@@ -948,9 +948,9 @@ Internet-Draft                URIs for DVB                     July 2011
 
 
 
-McRoberts & Adolf        Expires January 9, 2012               [Page 17]
+McRoberts & Adolf         Expires March 8, 2012                [Page 17]
 
-Internet-Draft                URIs for DVB                     July 2011
+Internet-Draft                URIs for DVB                September 2011
 
 
    dvb://233a.1004.1044;8fff
@@ -1004,9 +1004,9 @@ Internet-Draft                URIs for DVB                     July 2011
 
 
 
-McRoberts & Adolf        Expires January 9, 2012               [Page 18]
+McRoberts & Adolf         Expires March 8, 2012                [Page 18]
 
-Internet-Draft                URIs for DVB                     July 2011
+Internet-Draft                URIs for DVB                September 2011
 
 
    dvb://233a..10bf.3$10a1240f/doc/form.pdf
@@ -1060,9 +1060,9 @@ Internet-Draft                URIs for DVB                     July 2011
 
 
 
-McRoberts & Adolf        Expires January 9, 2012               [Page 19]
+McRoberts & Adolf         Expires March 8, 2012                [Page 19]
 
-Internet-Draft                URIs for DVB                     July 2011
+Internet-Draft                URIs for DVB                September 2011
 
 
 3.  IANA Considerations
@@ -1116,9 +1116,9 @@ Internet-Draft                URIs for DVB                     July 2011
 
 
 
-McRoberts & Adolf        Expires January 9, 2012               [Page 20]
+McRoberts & Adolf         Expires March 8, 2012                [Page 20]
 
-Internet-Draft                URIs for DVB                     July 2011
+Internet-Draft                URIs for DVB                September 2011
 
 
       Name:  Mr. Peter Siebert
@@ -1172,9 +1172,9 @@ Internet-Draft                URIs for DVB                     July 2011
 
 
 
-McRoberts & Adolf        Expires January 9, 2012               [Page 21]
+McRoberts & Adolf         Expires March 8, 2012                [Page 21]
 
-Internet-Draft                URIs for DVB                     July 2011
+Internet-Draft                URIs for DVB                September 2011
 
 
 4.  References
@@ -1228,9 +1228,9 @@ Internet-Draft                URIs for DVB                     July 2011
 
 
 
-McRoberts & Adolf        Expires January 9, 2012               [Page 22]
+McRoberts & Adolf         Expires March 8, 2012                [Page 22]
 
-Internet-Draft                URIs for DVB                     July 2011
+Internet-Draft                URIs for DVB                September 2011
 
 
    [RFC2782]  Gulbrandsen, A., Vixie, P., and L. Esibov, "A DNS RR for
@@ -1284,9 +1284,9 @@ Internet-Draft                URIs for DVB                     July 2011
 
 
 
-McRoberts & Adolf        Expires January 9, 2012               [Page 23]
+McRoberts & Adolf         Expires March 8, 2012                [Page 23]
 
-Internet-Draft                URIs for DVB                     July 2011
+Internet-Draft                URIs for DVB                September 2011
 
 
 Authors' Addresses
@@ -1340,5 +1340,5 @@ Authors' Addresses
 
 
 
-McRoberts & Adolf        Expires January 9, 2012               [Page 24]
+McRoberts & Adolf         Expires March 8, 2012                [Page 24]
 
