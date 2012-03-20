@@ -3,8 +3,8 @@
 <rfc ipr="trust200902"
    submissionType="independent"
    category="info"
-   seriesNo="7"
-   docName="draft-mcroberts-uri-dvb-07">
+   seriesNo="8"
+   docName="draft-mcroberts-uri-dvb-08">
 
    <front>
       <title abbrev="URIs for DVB">Uniform Resource Identifier (URI) Scheme for Digital Video
@@ -31,7 +31,7 @@
       </address>
       </author>
 
-      <date day="5" month="September" year="2011"/>
+      <date day="20" month="March" year="2012"/>
 
       <area>General</area>
 
@@ -311,7 +311,7 @@
 
             <figure align="left">
                <artwork>
-DVB-URL    = dvb-scheme ":" dvb-path
+DVB-URI    = dvb-scheme ":" dvb-path
             
 dvb-scheme = "dvb"
             
@@ -617,6 +617,20 @@ lowposhex        = posdigit / "a" / "b" / "c" / "d" / "e" / "f"
                         requests according to <xref target="DVB-IPTV"/>.</t>
                   </list>
                </t>
+               
+               <section title="Identifier Management">
+                  <t>For some of the identifiers used in the DVB URI syntax, DVB provides a public
+                     registry which is operated by <xref target="DVB-SVCS">DVB Services S&agrave;rl</xref>
+                     and is available on the Web at
+                     <eref target="http://www.dvbservices.com/">http://www.dvbservices.com/.</eref>
+                     On that site, the registry tables can be viewed, downloaded, and applications
+                     for new identifiers can be submitted. Most of the identifiers not listed in the
+                     registry are under the scope of one of the registered identifiers (for example
+                     the service_id is under control of the holder of a network_id or
+                     original_network_id). A select few identifiers are not open for registration to
+                     the public, and are managed by DVB itself. For details on the nature of each
+                     identifier, please refer ot the corresponding DVB standard.</t>
+               </section>
             </section>
 
             <section title="Implementation Considerations">
@@ -847,7 +861,7 @@ lowposhex        = posdigit / "a" / "b" / "c" / "d" / "e" / "f"
       </section>
 
       <section title="IANA Considerations" anchor="iana">
-         <t>This specification requests the IANA provisionally register the "dvb" URI scheme as
+         <t>This specification requests the IANA permanently register the "dvb" URI scheme as
             specified in this document and summarized in the following template, per <xref
                target="BCP115"/>:</t>
 

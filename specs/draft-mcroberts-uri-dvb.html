@@ -146,12 +146,12 @@
 <tr><td class="header">Network Working Group</td><td class="header">M. McRoberts, Ed.</td></tr>
 <tr><td class="header">Internet-Draft</td><td class="header">British Broadcasting</td></tr>
 <tr><td class="header">Intended status: Informational</td><td class="header">Corportation</td></tr>
-<tr><td class="header">Expires: March 8, 2012</td><td class="header">A. Adolf</td></tr>
+<tr><td class="header">Expires: September 21, 2012</td><td class="header">A. Adolf</td></tr>
 <tr><td class="header">&nbsp;</td><td class="header">Condition-ALPHA</td></tr>
-<tr><td class="header">&nbsp;</td><td class="header">September 5, 2011</td></tr>
+<tr><td class="header">&nbsp;</td><td class="header">March 20, 2012</td></tr>
 </table></td></tr></table>
 <h1><br />Uniform Resource Identifier (URI) Scheme for Digital Video
-         Broadcasting (DVB) Programme Resources<br />draft-mcroberts-uri-dvb-07</h1>
+         Broadcasting (DVB) Programme Resources<br />draft-mcroberts-uri-dvb-08</h1>
 
 <h3>Abstract</h3>
 
@@ -188,11 +188,11 @@ and may be updated, replaced, or obsoleted by other documents at any time.
 It is inappropriate to use Internet-Drafts as reference material or to cite
 them other than as &ldquo;work in progress.&rdquo;</p>
 <p>
-This Internet-Draft will expire on March 8, 2012.</p>
+This Internet-Draft will expire on September 21, 2012.</p>
 
 <h3>Copyright Notice</h3>
 <p>
-Copyright (c) 2011 IETF Trust and the persons identified as the
+Copyright (c) 2012 IETF Trust and the persons identified as the
 document authors.  All rights reserved.</p>
 <p>
 This document is subject to BCP 78 and the IETF Trust's Legal
@@ -445,7 +445,7 @@ Syntax</h3>
 <p>This URI scheme is in conformance with the generic URI syntax <a class='info' href='#RFC3986'>[RFC3986]<span> (</span><span class='info'>Berners-Lee, T., Fielding, R., and L. Masinter, &ldquo;Uniform Resource Identifier (URI): Generic Syntax,&rdquo; January&nbsp;2005.</span><span>)</span></a> and uses the registry-based naming authority version of that. It takes the
                form:
 </p><div style='display: table; width: 0; margin-left: 3em; margin-right: auto'><pre>
-DVB-URL    = dvb-scheme ":" dvb-path
+DVB-URI    = dvb-scheme ":" dvb-path
 
 dvb-scheme = "dvb"
 
@@ -755,10 +755,26 @@ Resolution Considerations</h3>
                
 </p>
 <a name="anchor12"></a><br /><hr />
+<a name="rfc.section.2.3.2.1"></a><h3>2.3.2.1.&nbsp;
+Identifier Management</h3>
+
+<p>For some of the identifiers used in the DVB URI syntax, DVB provides a public
+                     registry which is operated by <a class='info' href='#DVB-SVCS'>DVB Services S&agrave;rl<span> (</span><span class='info'>, &ldquo;DVB Services S&agrave;rl,&rdquo; .</span><span>)</span></a> [DVB&#8209;SVCS]
+                     and is available on the Web at
+                     <a href='http://www.dvbservices.com/'>http://www.dvbservices.com/.</a>
+                     On that site, the registry tables can be viewed, downloaded, and applications
+                     for new identifiers can be submitted. Most of the identifiers not listed in the
+                     registry are under the scope of one of the registered identifiers (for example
+                     the service_id is under control of the holder of a network_id or
+                     original_network_id). A select few identifiers are not open for registration to
+                     the public, and are managed by DVB itself. For details on the nature of each
+                     identifier, please refer ot the corresponding DVB standard.
+</p>
+<a name="anchor13"></a><br /><hr />
 <a name="rfc.section.2.3.3"></a><h3>2.3.3.&nbsp;
 Implementation Considerations</h3>
 
-<a name="anchor13"></a><br /><hr />
+<a name="anchor14"></a><br /><hr />
 <a name="rfc.section.2.3.3.1"></a><h3>2.3.3.1.&nbsp;
 Considerations for resolution server software</h3>
 
@@ -791,7 +807,7 @@ Considerations for resolution server software</h3>
 </ul><p>
                   
 </p>
-<a name="anchor14"></a><br /><hr />
+<a name="anchor15"></a><br /><hr />
 <a name="rfc.section.2.3.3.2"></a><h3>2.3.3.2.&nbsp;
 Considerations for resolution client software</h3>
 
@@ -835,7 +851,7 @@ Examples</h3>
 <p>These examples make heavy use of the identifiers defined by DVB to identify entities.
                Please see <a class='info' href='#introduction'>Section&nbsp;1<span> (</span><span class='info'>Introduction</span><span>)</span></a> for an explanation of the concepts.
 </p>
-<a name="anchor15"></a><br /><hr />
+<a name="anchor16"></a><br /><hr />
 <a name="rfc.section.2.5.1"></a><h3>2.5.1.&nbsp;
 Referring to transport streams and services</h3>
 
@@ -879,7 +895,7 @@ Referring to transport streams and services</h3>
 </dl></blockquote><p>
                
 </p>
-<a name="anchor16"></a><br /><hr />
+<a name="anchor17"></a><br /><hr />
 <a name="rfc.section.2.5.2"></a><h3>2.5.2.&nbsp;
 Referring to service components</h3>
 
@@ -916,7 +932,7 @@ Referring to service components</h3>
 </dl></blockquote><p>
                
 </p>
-<a name="anchor17"></a><br /><hr />
+<a name="anchor18"></a><br /><hr />
 <a name="rfc.section.2.5.3"></a><h3>2.5.3.&nbsp;
 References for triggering</h3>
 
@@ -971,7 +987,7 @@ References for triggering</h3>
 </dl></blockquote><p>
                
 </p>
-<a name="anchor18"></a><br /><hr />
+<a name="anchor19"></a><br /><hr />
 <a name="rfc.section.2.5.4"></a><h3>2.5.4.&nbsp;
 Referring to data objects</h3>
 
@@ -1005,7 +1021,7 @@ Referring to data objects</h3>
 </dl></blockquote><p>
                
 </p>
-<a name="anchor19"></a><br /><hr />
+<a name="anchor20"></a><br /><hr />
 <a name="rfc.section.2.5.5"></a><h3>2.5.5.&nbsp;
 References used with interactive applications</h3>
 
@@ -1039,10 +1055,10 @@ References used with interactive applications</h3>
 <a name="rfc.section.3"></a><h3>3.&nbsp;
 IANA Considerations</h3>
 
-<p>This specification requests the IANA provisionally register the "dvb" URI scheme as
+<p>This specification requests the IANA permanently register the "dvb" URI scheme as
             specified in this document and summarized in the following template, per <a class='info' href='#BCP115'>[BCP115]<span> (</span><span class='info'>Hansen, T., Hardie, T., and L. Masinter, &ldquo;Guidelines and Registration Procedures for New URI Schemes,&rdquo; February&nbsp;2006.</span><span>)</span></a>:
 </p>
-<a name="anchor20"></a><br /><hr />
+<a name="anchor21"></a><br /><hr />
 <a name="rfc.section.3.1"></a><h3>3.1.&nbsp;
 DVB Registration Template</h3>
 

@@ -4,14 +4,14 @@
 Network Working Group                                  M. McRoberts, Ed.
 Internet-Draft                                      British Broadcasting
 Intended status: Informational                              Corportation
-Expires: March 8, 2012                                          A. Adolf
+Expires: September 21, 2012                                     A. Adolf
                                                          Condition-ALPHA
-                                                       September 5, 2011
+                                                          March 20, 2012
 
 
 Uniform Resource Identifier (URI) Scheme for Digital Video Broadcasting
                        (DVB) Programme Resources
-                       draft-mcroberts-uri-dvb-07
+                       draft-mcroberts-uri-dvb-08
 
 Abstract
 
@@ -52,16 +52,16 @@ Status of this Memo
 
 
 
-McRoberts & Adolf         Expires March 8, 2012                 [Page 1]
+McRoberts & Adolf      Expires September 21, 2012               [Page 1]
 
-Internet-Draft                URIs for DVB                September 2011
+Internet-Draft                URIs for DVB                    March 2012
 
 
-   This Internet-Draft will expire on March 8, 2012.
+   This Internet-Draft will expire on September 21, 2012.
 
 Copyright Notice
 
-   Copyright (c) 2011 IETF Trust and the persons identified as the
+   Copyright (c) 2012 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -108,9 +108,9 @@ Copyright Notice
 
 
 
-McRoberts & Adolf         Expires March 8, 2012                 [Page 2]
+McRoberts & Adolf      Expires September 21, 2012               [Page 2]
 
-Internet-Draft                URIs for DVB                September 2011
+Internet-Draft                URIs for DVB                    March 2012
 
 
 1.  Introduction
@@ -164,9 +164,9 @@ Internet-Draft                URIs for DVB                September 2011
 
 
 
-McRoberts & Adolf         Expires March 8, 2012                 [Page 3]
+McRoberts & Adolf      Expires September 21, 2012               [Page 3]
 
-Internet-Draft                URIs for DVB                September 2011
+Internet-Draft                URIs for DVB                    March 2012
 
 
 1.1.  Transmission Scheme
@@ -220,9 +220,9 @@ Internet-Draft                URIs for DVB                September 2011
 
 
 
-McRoberts & Adolf         Expires March 8, 2012                 [Page 4]
+McRoberts & Adolf      Expires September 21, 2012               [Page 4]
 
-Internet-Draft                URIs for DVB                September 2011
+Internet-Draft                URIs for DVB                    March 2012
 
 
    o  An *original_network_id* is used where TV/radio programmes are
@@ -276,9 +276,9 @@ Internet-Draft                URIs for DVB                September 2011
 
 
 
-McRoberts & Adolf         Expires March 8, 2012                 [Page 5]
+McRoberts & Adolf      Expires September 21, 2012               [Page 5]
 
-Internet-Draft                URIs for DVB                September 2011
+Internet-Draft                URIs for DVB                    March 2012
 
 
    globally active content provider may for example choose to register
@@ -332,9 +332,9 @@ Internet-Draft                URIs for DVB                September 2011
 
 
 
-McRoberts & Adolf         Expires March 8, 2012                 [Page 6]
+McRoberts & Adolf      Expires September 21, 2012               [Page 6]
 
-Internet-Draft                URIs for DVB                September 2011
+Internet-Draft                URIs for DVB                    March 2012
 
 
    audio, teletext, subtitles, or other synchronised data or generic
@@ -388,9 +388,9 @@ Internet-Draft                URIs for DVB                September 2011
 
 
 
-McRoberts & Adolf         Expires March 8, 2012                 [Page 7]
+McRoberts & Adolf      Expires September 21, 2012               [Page 7]
 
-Internet-Draft                URIs for DVB                September 2011
+Internet-Draft                URIs for DVB                    March 2012
 
 
 2.  Digital Video Broadcasting URI Scheme
@@ -427,7 +427,7 @@ Internet-Draft                URIs for DVB                September 2011
    [RFC3986] and uses the registry-based naming authority version of
    that.  It takes the form:
 
-   DVB-URL    = dvb-scheme ":" dvb-path
+   DVB-URI    = dvb-scheme ":" dvb-path
 
    dvb-scheme = "dvb"
 
@@ -444,9 +444,9 @@ Internet-Draft                URIs for DVB                September 2011
 
 
 
-McRoberts & Adolf         Expires March 8, 2012                 [Page 8]
+McRoberts & Adolf      Expires September 21, 2012               [Page 8]
 
-Internet-Draft                URIs for DVB                September 2011
+Internet-Draft                URIs for DVB                    March 2012
 
 
 2.1.1.  dvb-scheme
@@ -500,9 +500,9 @@ hex-string                 = 1*HEXDIG
 
 
 
-McRoberts & Adolf         Expires March 8, 2012                 [Page 9]
+McRoberts & Adolf      Expires September 21, 2012               [Page 9]
 
-Internet-Draft                URIs for DVB                September 2011
+Internet-Draft                URIs for DVB                    March 2012
 
 
    o  A service, either through hexadecimal numeric identifiers or
@@ -556,9 +556,9 @@ iso639-language-code              = 3ALPHA
 
 
 
-McRoberts & Adolf         Expires March 8, 2012                [Page 10]
+McRoberts & Adolf      Expires September 21, 2012              [Page 10]
 
-Internet-Draft                URIs for DVB                September 2011
+Internet-Draft                URIs for DVB                    March 2012
 
 
 2.1.2.2.  event-constraint
@@ -612,9 +612,9 @@ Internet-Draft                URIs for DVB                September 2011
 
 
 
-McRoberts & Adolf         Expires March 8, 2012                [Page 11]
+McRoberts & Adolf      Expires September 21, 2012              [Page 11]
 
-Internet-Draft                URIs for DVB                September 2011
+Internet-Draft                URIs for DVB                    March 2012
 
 
  dvb-app-entity   = ( "current" [ ( ".audio" / ".video" / ".av" ) ] )
@@ -668,9 +668,9 @@ Internet-Draft                URIs for DVB                September 2011
 
 
 
-McRoberts & Adolf         Expires March 8, 2012                [Page 12]
+McRoberts & Adolf      Expires September 21, 2012              [Page 12]
 
-Internet-Draft                URIs for DVB                September 2011
+Internet-Draft                URIs for DVB                    March 2012
 
 
    resources and to reference services and programmes.  These are
@@ -724,9 +724,9 @@ Internet-Draft                URIs for DVB                September 2011
 
 
 
-McRoberts & Adolf         Expires March 8, 2012                [Page 13]
+McRoberts & Adolf      Expires September 21, 2012              [Page 13]
 
-Internet-Draft                URIs for DVB                September 2011
+Internet-Draft                URIs for DVB                    March 2012
 
 
    document.
@@ -765,6 +765,28 @@ Internet-Draft                URIs for DVB                September 2011
    o  Unicast delivery of SD&S Records in response to HTTP "GET /dvb/
       sdns" requests according to [DVB-IPTV].
 
+2.3.2.1.  Identifier Management
+
+   For some of the identifiers used in the DVB URI syntax, DVB provides
+   a public registry which is operated by DVB Services Sarl [DVB-SVCS]
+   and is available on the Web at http://www.dvbservices.com/. [1] On
+   that site, the registry tables can be viewed, downloaded, and
+   applications for new identifiers can be submitted.  Most of the
+   identifiers not listed in the registry are under the scope of one of
+   the registered identifiers (for example the service_id is under
+   control of the holder of a network_id or original_network_id).  A
+   select few identifiers are not open for registration to the public,
+   and are managed by DVB itself.  For details on the nature of each
+
+
+
+McRoberts & Adolf      Expires September 21, 2012              [Page 14]
+
+Internet-Draft                URIs for DVB                    March 2012
+
+
+   identifier, please refer ot the corresponding DVB standard.
+
 2.3.3.  Implementation Considerations
 
 2.3.3.1.  Considerations for resolution server software
@@ -776,14 +798,6 @@ Internet-Draft                URIs for DVB                September 2011
    To boot-strap the resolution process, a DVB client needs to discover
    an entry point (or set of) from which to obtain an initial Service
    Discovery and Selection XML record:
-
-
-
-
-McRoberts & Adolf         Expires March 8, 2012                [Page 14]
-
-Internet-Draft                URIs for DVB                September 2011
-
 
    o  By default, the service discovery information is provided on the
       IANA registered well-known port dvbservdsc (port number 3937) via
@@ -819,6 +833,14 @@ Internet-Draft                URIs for DVB                September 2011
    resource record (SRV RR) [RFC2782].  The service name is
    "_dvbservdsc", the protocol may be tcp or udp, while the rest of the
    name is the domain name maintained by DVB for service discovery.
+
+
+
+McRoberts & Adolf      Expires September 21, 2012              [Page 15]
+
+Internet-Draft                URIs for DVB                    March 2012
+
+
    This domain name is set to "services.dvb.org".  So the lookup shall
    be either "_dvbservdsc._tcp.services.dvb.org" or
    "_dvbservdsc._udp.services.dvb.org".  This requires that the terminal
@@ -833,14 +855,6 @@ Internet-Draft                URIs for DVB                September 2011
    Conforming to section 7.4 of [RFC3978], the DVB Project who is the
    holder of various trademark and logo rights amongst others but not
    limited to the term "dvb", hereby grants IETF a perpetual license to
-
-
-
-McRoberts & Adolf         Expires March 8, 2012                [Page 15]
-
-Internet-Draft                URIs for DVB                September 2011
-
-
    use any such trademarks or service marks solely in exercising its
    rights to reproduce, publish and modify this IETF contribution.  This
    license does not authorize any IETF participant to use any trademark
@@ -875,6 +889,14 @@ Internet-Draft                URIs for DVB                September 2011
       The DVB service with id 0x10bf and with original network id
       0x233a.  This could be used as the link behind a "watch this now"
       button.  Note that compared to the previous example the transport
+
+
+
+McRoberts & Adolf      Expires September 21, 2012              [Page 16]
+
+Internet-Draft                URIs for DVB                    March 2012
+
+
       stream id is omitted.  This is possible in areas where
       [DVB-SI-GDL] is applicable.
 
@@ -884,18 +906,6 @@ Internet-Draft                URIs for DVB                September 2011
       necessarily unambiguous and requires more contextual information
       to be resolved.  For "speaking" or "promotional" URIs, [DVB-TVA]
       might be a more general alternative.
-
-
-
-
-
-
-
-
-McRoberts & Adolf         Expires March 8, 2012                [Page 16]
-
-Internet-Draft                URIs for DVB                September 2011
-
 
 2.5.2.  Referring to service components
 
@@ -935,23 +945,20 @@ Internet-Draft                URIs for DVB                September 2011
    and end times of TV/radio programmes.
 
    Creating accurate recordings of broadcast content is a non-trivial
+
+
+
+McRoberts & Adolf      Expires September 21, 2012              [Page 17]
+
+Internet-Draft                URIs for DVB                    March 2012
+
+
    task.  For a wider discussion of this, please see [DVB-TVA].
    Although individual service components can be selected for recording,
    all components of the service should generally be recorded where
    appropriate.  This would for instance enable to use the original
    language audio instead of the dubbed version on special playback
    occasions.
-
-
-
-
-
-
-
-McRoberts & Adolf         Expires March 8, 2012                [Page 17]
-
-Internet-Draft                URIs for DVB                September 2011
-
 
    dvb://233a.1004.1044;8fff
       Event with id 0x8fff within the indicated DVB service.  A receiver
@@ -993,21 +1000,19 @@ Internet-Draft                URIs for DVB                September 2011
       object is carried in the default object carousel of the referenced
       DVB service.
 
+
+
+
+
+McRoberts & Adolf      Expires September 21, 2012              [Page 18]
+
+Internet-Draft                URIs for DVB                    March 2012
+
+
    dvb:/image.png
       File in root directory of an object carousel, for which the root
       object is carried in the default object carousel of the current
       service.
-
-
-
-
-
-
-
-McRoberts & Adolf         Expires March 8, 2012                [Page 18]
-
-Internet-Draft                URIs for DVB                September 2011
-
 
    dvb://233a..10bf.3$10a1240f/doc/form.pdf
       File in a subdirectory of an object carousel, for which the root
@@ -1055,19 +1060,14 @@ Internet-Draft                URIs for DVB                September 2011
 
 
 
-
-
-
-
-
-McRoberts & Adolf         Expires March 8, 2012                [Page 19]
+McRoberts & Adolf      Expires September 21, 2012              [Page 19]
 
-Internet-Draft                URIs for DVB                September 2011
+Internet-Draft                URIs for DVB                    March 2012
 
 
 3.  IANA Considerations
 
-   This specification requests the IANA provisionally register the "dvb"
+   This specification requests the IANA permanently register the "dvb"
    URI scheme as specified in this document and summarized in the
    following template, per [BCP115]:
 
@@ -1116,9 +1116,9 @@ Internet-Draft                URIs for DVB                September 2011
 
 
 
-McRoberts & Adolf         Expires March 8, 2012                [Page 20]
+McRoberts & Adolf      Expires September 21, 2012              [Page 20]
 
-Internet-Draft                URIs for DVB                September 2011
+Internet-Draft                URIs for DVB                    March 2012
 
 
       Name:  Mr. Peter Siebert
@@ -1172,9 +1172,9 @@ Internet-Draft                URIs for DVB                September 2011
 
 
 
-McRoberts & Adolf         Expires March 8, 2012                [Page 21]
+McRoberts & Adolf      Expires September 21, 2012              [Page 21]
 
-Internet-Draft                URIs for DVB                September 2011
+Internet-Draft                URIs for DVB                    March 2012
 
 
 4.  References
@@ -1228,9 +1228,9 @@ Internet-Draft                URIs for DVB                September 2011
 
 
 
-McRoberts & Adolf         Expires March 8, 2012                [Page 22]
+McRoberts & Adolf      Expires September 21, 2012              [Page 22]
 
-Internet-Draft                URIs for DVB                September 2011
+Internet-Draft                URIs for DVB                    March 2012
 
 
    [RFC2782]  Gulbrandsen, A., Vixie, P., and L. Esibov, "A DNS RR for
@@ -1284,9 +1284,65 @@ Internet-Draft                URIs for DVB                September 2011
 
 
 
-McRoberts & Adolf         Expires March 8, 2012                [Page 23]
+McRoberts & Adolf      Expires September 21, 2012              [Page 23]
 
-Internet-Draft                URIs for DVB                September 2011
+Internet-Draft                URIs for DVB                    March 2012
+
+
+URIs
+
+   [1]  <http://www.dvbservices.com/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+McRoberts & Adolf      Expires September 21, 2012              [Page 24]
+
+Internet-Draft                URIs for DVB                    March 2012
 
 
 Authors' Addresses
@@ -1340,5 +1396,5 @@ Authors' Addresses
 
 
 
-McRoberts & Adolf         Expires March 8, 2012                [Page 24]
+McRoberts & Adolf      Expires September 21, 2012              [Page 25]
 
