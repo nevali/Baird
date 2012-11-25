@@ -1,7 +1,7 @@
 ## Override these in the environment or on the command-line
 ## if they don't suit.
 
-XML2RFC ?= /opt/xml2rfc/xml2rfc.tcl
+XML2RFC ?= xml2rfc
 TCLSH ?= tclsh
 
 ## Targets
@@ -22,7 +22,7 @@ clean:
 	rm -f $(OUT)
 
 %.txt: %.xml
-	$(TCLSH) $(XML2RFC) xml2rfc $< $@
+	$(XML2RFC) xml2rfc $< $@
 
 %.html: %.xml
-	$(TCLSH) $(XML2RFC) xml2rfc $< $@
+	$(XML2RFC) xml2rfc $< $@

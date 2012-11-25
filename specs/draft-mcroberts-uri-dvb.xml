@@ -3,8 +3,8 @@
 <rfc ipr="trust200902"
    submissionType="independent"
    category="info"
-   seriesNo="8"
-   docName="draft-mcroberts-uri-dvb-08">
+   seriesNo="9"
+   docName="draft-mcroberts-uri-dvb-09">
 
    <front>
       <title abbrev="URIs for DVB">Uniform Resource Identifier (URI) Scheme for Digital Video
@@ -31,7 +31,7 @@
       </address>
       </author>
 
-      <date day="26" month="March" year="2012"/>
+      <date day="26" month="September" year="2012"/>
 
       <area>General</area>
 
