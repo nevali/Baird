@@ -22,7 +22,7 @@ clean:
 	rm -f $(OUT)
 
 %.txt: %.xml
-	$(XML2RFC) xml2rfc $< $@
+	$(XML2RFC) $< $@
 
 %.html: %.xml
-	$(XML2RFC) xml2rfc $< $@
+	$(XML2RFC) $< $@
