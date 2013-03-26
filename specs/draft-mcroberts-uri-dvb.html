@@ -5,7 +5,7 @@
 <meta name="description" content="Uniform Resource Identifier (URI) Scheme for Digital Video
          Broadcasting (DVB) Programme Resources">
 <meta name="keywords" content="I-D, Internet-Draft, URI, Uniform Resource Identifier, DVB, Digital Video Broadcast, Digital Television, Video, Audio, Multimedia, Streaming">
-<meta name="generator" content="xml2rfc v1.36 (http://xml.resource.org/)">
+<meta name="generator" content="xml2rfc v1.35 (http://xml.resource.org/)">
 <style type='text/css'><!--
         body {
                 font-family: verdana, charcoal, helvetica, arial, sans-serif;
@@ -144,14 +144,13 @@
 <body>
 <table summary="layout" width="66%" border="0" cellpadding="0" cellspacing="0"><tr><td><table summary="layout" width="100%" border="0" cellpadding="2" cellspacing="1">
 <tr><td class="header">Network Working Group</td><td class="header">M. McRoberts, Ed.</td></tr>
-<tr><td class="header">Internet-Draft</td><td class="header">British Broadcasting</td></tr>
-<tr><td class="header">Intended status: Informational</td><td class="header">Corportation</td></tr>
-<tr><td class="header">Expires: March 30, 2013</td><td class="header">A. Adolf</td></tr>
-<tr><td class="header">&nbsp;</td><td class="header">Condition-ALPHA</td></tr>
-<tr><td class="header">&nbsp;</td><td class="header">September 26, 2012</td></tr>
+<tr><td class="header">Internet-Draft</td><td class="header">British Broadcasting Corportation</td></tr>
+<tr><td class="header">Intended status: Informational</td><td class="header">A. Adolf</td></tr>
+<tr><td class="header">Expires: September 27, 2013</td><td class="header">Condition-ALPHA</td></tr>
+<tr><td class="header">&nbsp;</td><td class="header">March 26, 2013</td></tr>
 </table></td></tr></table>
 <h1><br />Uniform Resource Identifier (URI) Scheme for Digital Video
-         Broadcasting (DVB) Programme Resources<br />draft-mcroberts-uri-dvb-09</h1>
+         Broadcasting (DVB) Programme Resources<br />draft-mcroberts-uri-dvb-10</h1>
 
 <h3>Abstract</h3>
 
@@ -188,11 +187,11 @@ and may be updated, replaced, or obsoleted by other documents at any time.
 It is inappropriate to use Internet-Drafts as reference material or to cite
 them other than as &ldquo;work in progress.&rdquo;</p>
 <p>
-This Internet-Draft will expire on March 30, 2013.</p>
+This Internet-Draft will expire on September 27, 2013.</p>
 
 <h3>Copyright Notice</h3>
 <p>
-Copyright (c) 2012 IETF Trust and the persons identified as the
+Copyright (c) 2013 IETF Trust and the persons identified as the
 document authors.  All rights reserved.</p>
 <p>
 This document is subject to BCP 78 and the IETF Trust's Legal
@@ -822,15 +821,19 @@ Considerations for resolution client software</h3>
                      defines that a list of Service Discovery and Selection (SD&amp;S) entry points
                      addresses may be acquired via DNS according to the service location resource
                      record (SRV RR) <a class='info' href='#RFC2782'>[RFC2782]<span> (</span><span class='info'>Gulbrandsen, A., Vixie, P., and L. Esibov, &ldquo;A DNS RR for specifying the location of services (DNS SRV),&rdquo; February&nbsp;2000.</span><span>)</span></a>. The service name is "_dvbservdsc",
-                     the protocol may be tcp or udp, while the rest of the name is the domain name
-                     maintained by DVB for service discovery. This domain name is set to
-                     "services.dvb.org". So the lookup shall be either
-                     "_dvbservdsc._tcp.services.dvb.org" or "_dvbservdsc._udp.services.dvb.org".
-                     This requires that the terminal support an SRV cognizant DNS client and
-                     according to the specification in <a class='info' href='#RFC2782'>[RFC2782]<span> (</span><span class='info'>Gulbrandsen, A., Vixie, P., and L. Esibov, &ldquo;A DNS RR for specifying the location of services (DNS SRV),&rdquo; February&nbsp;2000.</span><span>)</span></a>. The DVB
-                     organization will maintain the services.dvb.org domain name for service
-                     discovery. HTTP servers will be found via the tcp protocol method whilst the
-                     multicast addresses will be found via the udp protocol method.
+                     the protocol may be tcp or udp, whilst the suffix is implementation-defined.
+                     A client MAY attempt resolution using multiple suffixes if required, and MAY
+                     employ <a class='info' href='#RFC6762'>[RFC6762]<span> (</span><span class='info'>Cheshire, S. and M. Krochmal, &ldquo;Multicast DNS,&rdquo; February&nbsp;2013.</span><span>)</span></a> in order to perform resolution.
+</p>
+<p>HTTP servers are advertised through this mechanism using the "tcp" protocol,
+				     while multicast addresses are advertised using the "udp" protocol.
+</p>
+<p>SRV RRs will be published for the forseeable future with the suffix
+                     "services.dvb.org" (resulting in the fully-qualified domain names
+                     "_dvbservdsc._tcp.services.dvb.org" and "_dvbservdsc._udp.services.dvb.org").
+                     This suffix MAY be used for resolution as a fall-back in the event that
+                     resolution using any configuration- or implementation-defined suffixes
+                     fails.
 </p>
 <a name="trademarks"></a><br /><hr />
 <a name="rfc.section.2.4"></a><h3>2.4.&nbsp;
@@ -1202,6 +1205,8 @@ References</h3>
 <td class="author-text">&ldquo;<a href="http://www.tv-anytime.org/">TV-Anytime Forum</a>.&rdquo;</td></tr>
 <tr><td class="author-text" valign="top"><a name="RFC2782">[RFC2782]</a></td>
 <td class="author-text">Gulbrandsen, A., Vixie, P., and L. Esibov, &ldquo;<a href="http://tools.ietf.org/html/rfc2782">A DNS RR for specifying the location of services (DNS SRV)</a>,&rdquo; RFC&nbsp;2782, February&nbsp;2000.</td></tr>
+<tr><td class="author-text" valign="top"><a name="RFC6762">[RFC6762]</a></td>
+<td class="author-text">Cheshire, S. and M. Krochmal, &ldquo;<a href="http://tools.ietf.org/html/rfc6762">Multicast DNS</a>,&rdquo; RFC&nbsp;6762, February&nbsp;2013.</td></tr>
 <tr><td class="author-text" valign="top"><a name="DVB-IPTV">[DVB-IPTV]</a></td>
 <td class="author-text">DVB Project, &ldquo;<a href="http://www.etsi.org/deliver/etsi_ts/102000_102099/102034/01.04.01_60/ts_102034v010401p.pdf">Digital Video Broadcasting (DVB); Transport of MPEG-2 TS Based DVB Services
                   over IP Based Networks</a>,&rdquo; ETSI&nbsp;TS 102 034.</td></tr>
